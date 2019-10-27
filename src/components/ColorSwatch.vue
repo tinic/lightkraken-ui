@@ -194,7 +194,6 @@ export default {
 <style scoped>
 .color-picker {
   position: absolute;
-  background: red;
 }
 
 .color-picker__overlay {

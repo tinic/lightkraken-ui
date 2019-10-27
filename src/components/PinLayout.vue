@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="status">
-    <span class="terminal">Terminal A
+    <span class="terminal">{{ terminalNames[0] }}
       <div v-bind:key="pin.id" 
            v-for="(pin, index) in pinTable[settings.outputmode][stripTypes[settings.stripconfig[0].type].clock].slice(0, 4)">
         <span class="PIN" :class="pin.c">{{ index }}<br />{{ pin.t }}</span>
       </div>
     </span>
-    <span class="terminal">Terminal B
+    <span class="terminal">{{ terminalNames[1] }}
       <div v-bind:key="pin.id" 
            v-for="(pin,index) in pinTable[settings.outputmode][stripTypes[settings.stripconfig[1].type].clock].slice(4, 8)">
         <span class="PIN" :class="pin.c">{{ index+4 }}<br />{{ pin.t }}</span>
@@ -22,6 +22,7 @@ export default {
   name: "PinLayout",
   props: {
     settings: Object,
+    terminalNames: Array,
     stripTypes: Array,
     pinTable: Array
   }

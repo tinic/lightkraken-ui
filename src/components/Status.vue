@@ -40,7 +40,7 @@ export default {
 <style scoped>
 *.status {
   width: 729px;
-  height: 238px;
+  height: 244px;
   background-color: #ddeedd;
   padding: 10px;
   margin: 10px;
@@ -53,7 +53,7 @@ export default {
 }
 
 *.header {
-  height: 33px;
+  height: 40px;
   font-size: large;
   font-weight: bold;
 }

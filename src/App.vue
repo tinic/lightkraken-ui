@@ -6,40 +6,43 @@
     </div>
     <div v-if="this.settingsloading === false">
       <PinLayout
+        v-bind:terminalNames="terminalNames"
         v-bind:stripTypes="stripTypes"
         v-bind:settings="settings"
         v-bind:pinTable="pinTable"/>
       <NetworkInterface
-        v-bind:settings="settings"
-        v-bind:settingsInternal="settingsInternal"/>
+        v-bind:settings="settings"/>
       <OutputConfig
         v-bind:outputModes="outputModes"
-        v-bind:settings="settings"
-        v-bind:settingsInternal="settingsInternal"/>
+        v-bind:settings="settings"/>
       <StripConfig
         v-if="this.showConfigs[this.settings.outputmode].strip[0] === true"
-        v-bind:strip=0
+        v-bind:stripIndex=0
+        v-bind:terminalNames="terminalNames"
         v-bind:stripTypes="stripTypes"
         v-bind:showConfigs="showConfigs"
-        v-bind:settings="settings"
-        v-bind:settingsInternal="settingsInternal"/>
-      <StripConfig 
-        v-if="this.showConfigs[this.settings.outputmode].strip[1] === true"
-        v-bind:strip=1
-        v-bind:stripTypes="stripTypes"
-        v-bind:showConfigs="showConfigs"
-        v-bind:settings="settings"
-        v-bind:settingsInternal="settingsInternal"/>
+        v-bind:settings="settings"/>
       <RGBConfig
         v-if="this.showConfigs[this.settings.outputmode].rgb[0] === true"
-        v-bind:strip=0
-        v-bind:settings="settings"
-        v-bind:settingsInternal="settingsInternal"/>
+        v-bind:rgbIndex=0
+        v-bind:terminalNames="terminalNames"
+        v-bind:rgbTypes="rgbTypes"
+        v-bind:showConfigs="showConfigs"
+        v-bind:settings="settings"/>
+      <StripConfig 
+        v-if="this.showConfigs[this.settings.outputmode].strip[1] === true"
+        v-bind:stripIndex=1
+        v-bind:terminalNames="terminalNames"
+        v-bind:stripTypes="stripTypes"
+        v-bind:showConfigs="showConfigs"
+        v-bind:settings="settings"/>
       <RGBConfig 
         v-if="this.showConfigs[this.settings.outputmode].rgb[1] === true"
-        v-bind:strip=1
-        v-bind:settings="settings"
-        v-bind:settingsInternal="settingsInternal"/>
+        v-bind:rgbIndex=1
+        v-bind:terminalNames="terminalNames"
+        v-bind:rgbTypes="rgbTypes"
+        v-bind:showConfigs="showConfigs"
+        v-bind:settings="settings"/>
       <ActionBar
         v-bind:settings="settings"/>
     </div>
@@ -62,11 +65,10 @@ export default {
       statusloading: true,
       settings: null,
       settingsloading: true,
-      settingsInternal: {
-        ipv4addressInvalid : Boolean,
-        ipv4netmaskInvalid : Boolean,
-        ipv4gatewayInvalid : Boolean
-      },
+      terminalNames: [
+         "Terminal A",
+         "Terminal B",
+      ],
       outputModes: [
           { text: '2 x RGB Strip', value : 0 },
           { text: '1 x RGB Strip + 1 x RGB Analog', value : 1 },
@@ -75,11 +77,22 @@ export default {
           { text: '2 x RGB Analog', value : 4 },
       ],
       showConfigs: [
-          { strip: [true,  true ], rgb : [false, false], clock:1 },
-          { strip: [false, true ], rgb : [true,  false], clock:1 },
-          { strip: [true,  true ], rgb : [true,  false], clock:0 },
-          { strip: [false, true ], rgb : [true,  false], clock:0 },
-          { strip: [false, false], rgb : [true,  true ], clock:0 }
+          { strip: [true,  true ], rgb : [false, false], clock:[1, 1], components:[0, 0] },
+          { strip: [false, true ], rgb : [true,  false], clock:[0, 1], components:[3, 0] },
+          { strip: [true,  true ], rgb : [true,  false], clock:[0, 0], components:[3, 0] },
+          { strip: [false, true ], rgb : [true,  false], clock:[0, 0], components:[4, 0] },
+          { strip: [false, false], rgb : [true,  true ], clock:[0, 0], components:[3, 3] }
+      ],
+      rgbTypes: [
+          { text: 'RGB (8-bit, sRGB)',  value : 0,  components: 3, size:8  },
+          { text: 'RGBW (8-bit, sRGB)',  value : 1,  components: 4, size:8  },
+          { text: 'RGBWW (8-bit, sRGB)',  value : 2,  components: 5, size:8  },
+          { text: 'RGB (16-bit, sRGB)',  value : 3,  components: 3, size:16  },
+          { text: 'RGBW (16-bit, sRGB)',  value : 4,  components: 4, size:16  },
+          { text: 'RGBWW (16-bit, sRGB)',  value : 5,  components: 5, size:16  },
+          { text: 'RGB (16-bit, PWM Duty %)',  value : 6,  components: 3, size:16  },
+          { text: 'RGBW (16-bit, PWM Duty %)',  value : 7,  components: 4, size:16  },
+          { text: 'RGBWW (16-bit, PWM Duty %)',  value : 8,  components: 5, size:16  }
       ],
       stripTypes: [
           { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3  },
@@ -119,13 +132,14 @@ export default {
   },
   mounted() {
     this.axios
-      .get("https://my-json-server.typicode.com/tinic/lightguy-ui/status")
-      .then(response => { this.status = response.data })
+      .get("http://192.168.1.131/status")
+      .then(response => { this.status = response.data;
+        this.axios
+        .get("http://192.168.1.131/settings")
+        .then(response => { this.settings = response.data })
+        .finally(() => this.settingsloading = false);
+      })
       .finally(() => this.statusloading = false)
-    this.axios
-      .get("https://my-json-server.typicode.com/tinic/lightguy-ui/settings")
-      .then(response => { this.settings = response.data })
-      .finally(() => this.settingsloading = false)
   },
   components: {
     RGBConfig,

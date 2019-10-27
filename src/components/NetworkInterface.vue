@@ -18,18 +18,15 @@
     <div class="ip4setting" v-if="settings.dhcp !== undefined && settings.dhcp == false">  
       <div class="left">IPv4 Address</div>
       <div class="right">
-        <input class="valid" v-bind:class="{invalid : settingsInternal.ipv4addressInvalid}" 
-                             v-on:keyup="checkIPv4()" v-model="settings.ipv4address" type="text"/>
+        <input class="ipsetting" v-bind:style="{ border : checkIPv4Address() ? '2px solid green' : '2px solid red' }" v-model="settings.ipv4address" type="text"/>
       </div>
       <div class="left">IPv4 Netmask</div>
       <div class="right">
-        <input class="valid" v-bind:class="{invalid : settingsInternal.ipv4netmaskInvalid}" 
-                             v-on:keyup="checkIPv4()" v-model="settings.ipv4netmask" type="text"/>
+        <input class="ipsetting" v-bind:style="{ border : checkIPv4Netmask() ? '2px solid green' : '2px solid red' }" v-model="settings.ipv4netmask" type="text"/>
       </div>
       <div class="left">IPv4 Gateway</div>
       <div class="right">
-        <input class="valid" v-bind:class="{invalid : settingsInternal.ipv4gatewayInvalid}" 
-                             v-on:keyup="checkIPv4()" v-model="settings.ipv4gateway" type="text"/>
+        <input class="ipsetting" v-bind:style="{ border : checkIPv4Gateway() ? '2px solid green' : '2px solid red' }" v-model="settings.ipv4gateway" type="text"/>
       </div>
     </div>
   </div>
@@ -39,11 +36,9 @@
 export default {
   name: "NetworkInterface",
   props: {
-    settings: Object,
-    settingsInternal: Object,
+    settings: Object
   },
   beforeMount() {
-    this.checkIPv4()
   },
   methods: {
     validateIPv4(address) {
@@ -52,10 +47,14 @@ export default {
         }
         return false;
     },
-    checkIPv4() {
-      this.settingsInternal.ipv4addressInvalid = this.validateIPv4(this.settings.ipv4address) === false;
-      this.settingsInternal.ipv4netmaskInvalid = this.validateIPv4(this.settings.ipv4netmask) === false;
-      this.settingsInternal.ipv4gatewayInvalid = this.validateIPv4(this.settings.ipv4gateway) === false;
+    checkIPv4Address() {
+      return this.validateIPv4(this.settings.ipv4address);
+    },
+    checkIPv4Netmask() {
+      return this.validateIPv4(this.settings.ipv4netmask);
+    },
+    checkIPv4Gateway() {
+      return this.validateIPv4(this.settings.ipv4gateway);
     }
   }
 };
@@ -80,17 +79,9 @@ export default {
 }
 
 *.header {
-  height: 33px;
+  height: 40px;
   font-size: large;
   font-weight: bold;
-}
-
-.valid {
-  border: 2px solid green;
-}
-
-.invalid {
-  border: 2px solid red;
 }
 
 *.left {
@@ -110,4 +101,9 @@ export default {
   padding-left: 0.6em;
   text-align: left;
 }
+
+input.ipsetting {
+    width:140px;
+}
+
 </style>

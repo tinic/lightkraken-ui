@@ -22,7 +22,6 @@ export default {
   },
   methods: {
       changeMode() {
-         console.log(this.settings.outputmode);
       }
   }
 };
@@ -31,7 +30,7 @@ export default {
 <style scoped>
 *.output {
   width: 729px;
-  height: 60px;
+  height: 72px;
   background-color: #eeeeee;
   padding: 10px;
   margin: 10px;
@@ -47,7 +46,7 @@ export default {
 }
 
 *.header {
-  height: 33px;
+  height: 40px;
   font-size: large;
   font-weight: bold;
 }
