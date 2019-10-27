@@ -19,11 +19,10 @@ export default {
 *.rgb {
   width: 729px;
   height: 60px;
-  border-top: 1px solid black;
   background-color: #eeeeee;
-  border-bottom: 1px solid black;
   padding: 10px;
   margin: 10px;
+  border-radius: 16px;
 }
 
 *.header {

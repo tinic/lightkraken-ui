@@ -9,10 +9,13 @@
       </option>
     </select>
     </div>
+    <div class="left">Startup Color</div>
+    <div class="right"><ColorSwatch v-bind:change="colorChange"/></div>
   </div>
 </template>
 
 <script>
+import ColorSwatch from "./ColorSwatch.vue";
 export default {
   name: "StripConfig",
   data() {
@@ -20,6 +23,9 @@ export default {
     }
   },
   methods: {
+      colorChange(color) {
+        color;
+      },
       stripTypesFiltered(showConfig) {
           function filterStripType(stripType) {
             if (showConfig.clock == 0 &&
@@ -39,6 +45,9 @@ export default {
     stripTypes: Array,
     showConfigs: Array,
     settingsInternal: Object
+  },
+  components: {
+    ColorSwatch
   }
 };
 </script>
@@ -46,12 +55,11 @@ export default {
 <style scoped>
 *.strip {
   width: 729px;
-  height: 60px;
-  border-top: 1px solid black;
+  height: 120px;
   background-color: #eeeeee;
-  border-bottom: 1px solid black;
   padding: 10px;
   margin: 10px;
+  border-radius: 16px;
 }
 
 *.header {

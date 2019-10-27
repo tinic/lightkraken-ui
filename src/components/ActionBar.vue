@@ -41,6 +41,7 @@ export default {
   font-size: 16px;
   -webkit-transition-duration: 0.2s;
   transition-duration: 0.2s;
+  border-radius: 8px;
 }
 
 .button:hover {

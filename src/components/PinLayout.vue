@@ -47,8 +47,8 @@ export default {
   padding-right: 25px;
   padding-top: 5px;
   padding-bottom: 5px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-radius: 16px;
+  align-content: center;
 }
 
 .PIN {
@@ -58,8 +58,9 @@ export default {
   width: 50px;
   float: left;
   text-align: center;
-  margin: 10px;
-  padding: 2px;
+  margin: 8px;
+  padding: 6px;
+  border-radius: 16px;
 }
 .WHT {
   color: white;

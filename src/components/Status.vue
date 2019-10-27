@@ -40,12 +40,12 @@ export default {
 <style scoped>
 *.status {
   width: 729px;
-  height: 230px;
-  border-top: 1px solid black;
+  height: 238px;
   background-color: #ddeedd;
-  border-bottom: 1px solid black;
   padding: 10px;
   margin: 10px;
+  border-radius: 16px;
+  margin-bottom: 0px;
 }
 
 *.item {
@@ -63,7 +63,7 @@ export default {
   float: left;
   width: 40%;
   margin: 0 0 0.6em;
-  padding: 2px;
+  padding: 3px;
   text-align: right;
 }
 
@@ -83,8 +83,9 @@ export default {
   background-color: #eeffee;
   overflow: auto;
   margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
   text-align: left;
-  padding: 2px;
+  padding: 3px;
+  padding-left: 10px;
+  border-radius: 8px;
 }
 </style>
