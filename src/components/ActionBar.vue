@@ -1,8 +1,8 @@
 <template>
   <div class="actions">
         <input class="button" v-on:click="save" type="button" value="Save Configuration" />
-        <input class="button" type="button" value="Reset Configuration" />
-        <input class="button" type="button" value="Reboot Into Upgrade Mode" />
+        <input class="button" v-on:click="reset" type="button" value="Reset Configuration" />
+        <input class="button" v-on:click="reboot" type="button" value="Reboot Into Upgrade Mode" />
   </div>
 </template> 
 
@@ -10,14 +10,31 @@
 export default {
   name: "ActionBar",
   props: {
+      baseURL:String,
       settings:Object
   },
   methods: {
       save() {
+        console.log(this.baseURL + 'settings');
+        this.axios
+        .post(this.baseURL + 'settings', this.settings, { headers: { 'Content-Type': 'text/plain' }}) 
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       },
       reset() {
       },
       reboot() {
+        this.axios.post(this.baseURL + 'bootloader', {}, { headers: { 'Content-Type': 'text/plain' }})
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="rgb">
+  <div class="rgb" v-bind:style="{ height: panelHeight() + 'px' }">
     <div class="header">Analog RGB ({{ terminalNames[rgbIndex] }})</div>
     <div class="left">RGB type</div>
     <div class="right">
@@ -19,8 +19,11 @@
         <div class="universelabel">{{ item.text }}</div>
         <input class="universefield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].universe">
         <input class="offsetfield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
-        <span class="footnote">
-           DMX Channels: <b>1 ... {{ 1 }}</b>
+        <span v-if="dmxLength() == 2" class="footnote">
+           DMX Channels: <b>{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</b>
+        </span>
+        <span v-if="dmxLength() == 1" class="footnote">
+           DMX Channel: <b>{{ dmxIndex(itemIndex) }}</b>
         </span>
         <br>
       </div>
@@ -40,7 +43,8 @@ export default {
     rgbTypes: Array,
     settings: Object,
     showConfigs: Array,
-    settingsInternal: Object
+    settingsInternal: Object,
+    rgbType: String
   },
   data() {
     return {
@@ -54,6 +58,15 @@ export default {
     };
   },
   methods: {
+      panelHeight() {
+        return 140 + this.componentsSplice().length * 32;
+      },
+      dmxLength() {
+        return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].type].size == 16 ? 2 : 1;
+      },
+      dmxIndex(itemIndex) {
+        return parseInt(this.settings.rgbconfig[this.rgbIndex].components[itemIndex].offset) + 1;
+      },
       colorChange(color) {
         color;
       },
@@ -127,6 +140,7 @@ export default {
   position: relative;
   left: 0px;
   width: 60px;
+  height: 25px;
 }
 
 *.offsetfield {
@@ -141,6 +155,7 @@ export default {
   position: relative;
   left: 20px;
   width: 60px;
+  height: 25px;
 }
 
 *.left {

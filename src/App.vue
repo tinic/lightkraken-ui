@@ -44,6 +44,7 @@
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <ActionBar
+        v-bind:baseURL="baseURL"
         v-bind:settings="settings"/>
     </div>
   </div>
@@ -61,6 +62,7 @@ export default {
   name: "app",
   data() {
     return {
+      baseURL: 'http://192.168.1.131/',
       status: null,
       statusloading: true,
       settings: null,
@@ -130,12 +132,55 @@ export default {
       ]
     };
   },
+  computed: {
+    outputMode() {
+      return this.settings ? this.settings.outputmode : 0;
+    },
+  },
+  methods: {
+    patchLEDType() {
+        // Live patch LED type
+        for (var c = 0; c < this.settings.stripconfig.length; c++) {
+          if (this.stripTypes[this.settings.stripconfig[c].type].clock === 1 &&
+              this.showConfigs[this.settings.outputmode].clock[c] === 0) {
+              for (var d = 0; d <this.stripTypes.length; d++) {
+                if (this.stripTypes[d].clock == 0) {
+                  this.settings.stripconfig[c].type = this.stripTypes[d].value;
+                  break;
+                }
+              }
+          }
+        }
+    },
+    patchRGBType() {
+        // Live patch RGB type
+        for (var c = 0; c < this.settings.rgbconfig.length; c++) {
+          if (this.showConfigs[this.settings.outputmode].components[c] != 0 &&
+              this.showConfigs[this.settings.outputmode].components[c] != this.rgbTypes[this.settings.rgbconfig[c].type].components) {
+            for (var d = 0; d <this.rgbTypes.length; d++) {
+              if (this.showConfigs[this.settings.outputmode].components[c] == this.rgbTypes[d].components) {
+                this.settings.rgbconfig[c].type = this.rgbTypes[d].value;
+                break;
+              }
+            }
+          }
+        }
+    }
+  },
+  watch: {
+    outputMode() {
+      if (this.settings) {
+        this.patchLEDType();
+        this.patchRGBType();
+      }
+    }
+  },
   mounted() {
     this.axios
-      .get("http://192.168.1.131/status")
+      .get(this.baseURL + "status")
       .then(response => { this.status = response.data;
         this.axios
-        .get("http://192.168.1.131/settings")
+        .get(this.baseURL + "settings")
         .then(response => { this.settings = response.data })
         .finally(() => this.settingsloading = false);
       })
