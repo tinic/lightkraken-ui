@@ -15,25 +15,16 @@ export default {
   },
   methods: {
       save() {
-        console.log(this.baseURL + 'settings');
         this.axios
         .post(this.baseURL + 'settings', this.settings, { headers: { 'Content-Type': 'text/plain' }}) 
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
+        .finally(function () {
         });
       },
       reset() {
       },
       reboot() {
         this.axios.post(this.baseURL + 'bootloader', {}, { headers: { 'Content-Type': 'text/plain' }})
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
+        .finally(function () {
         });
       }
   }

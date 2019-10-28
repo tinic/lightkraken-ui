@@ -1,10 +1,14 @@
 <template>
   <div id="app">
-    <div v-if="this.statusloading === false">
+    <div v-if="this.loadingSomething === true">
+    </div>
+    <div v-if="this.savingSomething === true">
+    </div>
+    <div v-if="this.statusLoading === false">
       <Status
         v-bind:status="status"/>
     </div>
-    <div v-if="this.settingsloading === false">
+    <div v-if="this.settingsLoading === false">
       <PinLayout
         v-bind:terminalNames="terminalNames"
         v-bind:stripTypes="stripTypes"
@@ -44,6 +48,7 @@
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <ActionBar
+        v-bind:savingSomething="savingSomething"
         v-bind:baseURL="baseURL"
         v-bind:settings="settings"/>
     </div>
@@ -62,10 +67,12 @@ export default {
   name: "app",
   data() {
     return {
+      loadingSomething: false,
+      savingSomething: false,
       status: null,
-      statusloading: true,
+      statusLoading: true,
       settings: null,
-      settingsloading: true,
+      settingsLoading: true,
       terminalNames: [
          "Terminal A",
          "Terminal B",
@@ -184,15 +191,23 @@ export default {
     }
   },
   mounted() {
+    this.loadingSomething = true;
     this.axios
       .get(this.baseURL + "status")
       .then(response => { this.status = response.data;
+        this.loadingSomething = true;
         this.axios
         .get(this.baseURL + "settings")
         .then(response => { this.settings = response.data })
-        .finally(() => this.settingsloading = false);
+        .finally(() => {
+          this.settingsLoading = false;
+          this.loadingSomething = false;
+        });
       })
-      .finally(() => this.statusloading = false)
+      .finally(() => {
+        this.statusLoading = false;
+        this.loadingSomething = false;
+      })
   },
   components: {
     RGBConfig,
