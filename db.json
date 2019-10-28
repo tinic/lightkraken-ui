@@ -19,28 +19,48 @@
 		"globillum": 1.0,
 		"rgbconfig": [
 			{ "type": 0, 
-			  "universes": [
-			    { "universe": 0, "offset": 0 },
-			    { "universe": 0, "offset": 1 },
-			    { "universe": 0, "offset": 2 },
-			    { "universe": 0, "offset": 3 }
+			  "components": [
+			    { "universe": 0, "offset": 0, "value": 0 },
+			    { "universe": 0, "offset": 1, "value": 0 },
+			    { "universe": 0, "offset": 2, "value": 0 },
+			    { "universe": 0, "offset": 3, "value": 0 },
+			    { "universe": 0, "offset": 4, "value": 0 }
 			  ]
 			}, 
 			{ "type": 1,
-			  "universes": [
-			    { "universe": 0, "offset": 4 },
-			    { "universe": 0, "offset": 5 },
-			    { "universe": 0, "offset": 6 },
-			    { "universe": 0, "offset": 7 }
+			  "components": [
+			    { "universe": 0, "offset": 4, "value": 0 },
+			    { "universe": 0, "offset": 5, "value": 0 },
+			    { "universe": 0, "offset": 6, "value": 0 },
+			    { "universe": 0, "offset": 7, "value": 0 },
+			    { "universe": 0, "offset": 8, "value": 0 }
 			  ]
 			}
 		],
 		"stripconfig": [
 			{ "type": 0,
-			  "universes": [ 0, 1, 2, 3, 4, 5 ] 
+  			  "length": 200,
+			  "color" : "0x00000000",
+			  "universes": [ 
+			  	{ "universe" : 0 },
+			  	{ "universe" : 1 },
+			  	{ "universe" : 2 },
+			  	{ "universe" : 3 },
+			  	{ "universe" : 4 },
+			  	{ "universe" : 5 }
+			  ]
 			}, 
 			{ "type": 1,
-			  "universes": [ 6, 7, 8, 9, 10, 11 ]
+  			  "length": 200,
+			  "color" : "0x00000000",
+			  "universes": [ 
+			  	{ "universe" : 6 },
+			  	{ "universe" : 7 },
+			  	{ "universe" : 8 },
+			  	{ "universe" : 9 },
+			  	{ "universe" : 10 },
+			  	{ "universe" : 11 }
+			  ]
 			}
 		]
 	}
