@@ -1,0 +1,47 @@
+{
+	"status": {
+		"buildnumber": 49,
+		"ipv4address": "192.168.1.131",
+		"ipv4netmask": "255.255.255.0",
+		"ipv4gateway": "192.168.1.1",
+		"macaddress": "12:34:56:78:90:12",
+		"hostname": "lightguy-56789012"
+	},
+	"settings": {
+		"broadcast": false,
+		"dhcp": true,
+		"ipv4address": "169.154.55.55",
+		"ipv4netmask": "255.255.0.0",
+		"ipv4gateway": "169.154.55.1",
+		"outputmode": 0,
+		"globpwmlimit": 1.0,
+		"globcomplimit": 1.0,
+		"globillum": 1.0,
+		"rgbconfig": [
+			{ "type": 0, 
+			  "universes": [
+			    { "universe": 0, "offset": 0 },
+			    { "universe": 0, "offset": 1 },
+			    { "universe": 0, "offset": 2 },
+			    { "universe": 0, "offset": 3 }
+			  ]
+			}, 
+			{ "type": 1,
+			  "universes": [
+			    { "universe": 0, "offset": 4 },
+			    { "universe": 0, "offset": 5 },
+			    { "universe": 0, "offset": 6 },
+			    { "universe": 0, "offset": 7 }
+			  ]
+			}
+		],
+		"stripconfig": [
+			{ "type": 0,
+			  "universes": [ 0, 1, 2, 3, 4, 5 ] 
+			}, 
+			{ "type": 1,
+			  "universes": [ 6, 7, 8, 9, 10, 11 ]
+			}
+		]
+	}
+}
