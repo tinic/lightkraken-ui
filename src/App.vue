@@ -62,7 +62,6 @@ export default {
   name: "app",
   data() {
     return {
-      baseURL: 'http://192.168.1.131/',
       status: null,
       statusloading: true,
       settings: null,
@@ -136,6 +135,12 @@ export default {
     outputMode() {
       return this.settings ? this.settings.outputmode : 0;
     },
+    baseURL() {
+      if(process.env.NODE_ENV !== "production") {
+        return 'http://my-json-server.typicode.com/tinic/lightkraken-ui/';
+      }
+      return '/';
+    }
   },
   methods: {
     patchLEDType() {

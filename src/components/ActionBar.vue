@@ -47,7 +47,7 @@ export default {
 }
 
 *.button {
-  background-color: #0050AF; /* Green */
+  background-color: #0050AF; 
   border: none;
   color: white;
   margin: 4px;
@@ -62,7 +62,7 @@ export default {
 }
 
 .button:hover {
-  background-color: rgb(92, 139, 226); /* Green */
+  background-color: rgb(92, 139, 226);
   color: white;
 }
 
