@@ -136,8 +136,11 @@ export default {
       return this.settings ? this.settings.outputmode : 0;
     },
     baseURL() {
-      if(process.env.NODE_ENV !== "production") {
+      if(process.env.NODE_ENV === "development") {
         return 'http://my-json-server.typicode.com/tinic/lightkraken-ui/';
+      }
+      if(process.env.NODE_ENV === "test") {
+        return 'http://192.168.1.131/';
       }
       return '/';
     }
