@@ -13,6 +13,7 @@
         <div class="PIN" :class="pin.c">{{ index+4 }}<br />{{ pin.t }}</div>
       </div>
     </span>
+    <div class="spacer" style="clear: both;"></div>
     </div>
     <div class="spacer" style="clear: both;"></div>
   </div>
@@ -41,19 +42,17 @@ export default {
 
 <style scoped>
 .status {
-  max-width: 760px;
-  max-height: 130px;
+  max-width: 800px;
   align-content: center;
 }
 
 .terminal {
+  display: inline-block;
   font-weight: 600;
   font-size: 20px;
-  min-width: 330px;
-  width: 40%;
+  min-width: 300px;
   color: black;
   background-color: #eeeeee;
-  float: left;
   text-align: center;
   margin: 10px;
   border-radius: 16px;
@@ -64,11 +63,11 @@ export default {
   font-family: monospace;
   font-weight: bold;
   font-size: 20px;
-  width: 15%;
+  width: 50px;
   float: left;
   clear: right;
   text-align: center;
-  margin: 8px;
+  margin: 6px;
   padding: 6px;
   border-radius: 16px;
   white-space: nowrap;
