@@ -41,7 +41,6 @@ export default {
 <style scoped>
 *.status {
   max-width: 760px;
-  height: 244px;
   background-color: #ddeedd;
   padding: 10px;
   margin: 10px;
@@ -68,9 +67,6 @@ export default {
   margin: 0 0 0.6em;
   padding: 3px;
   text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 *.right {
@@ -95,8 +91,5 @@ export default {
   padding: 3px;
   padding-left: 10px;
   border-radius: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 </style>

@@ -89,8 +89,8 @@ export default {
   clear: left;
   float: left;
   width: 40%;
-  margin: 0 0 0.6em;
-  padding: 2px;
+  margin: 2px;
+  padding-top: 2px;
   text-align: right;
 }
 
@@ -100,12 +100,9 @@ export default {
   width: 36%;
   min-width: 160px;
   max-width: 300px;
-  margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
+  margin: 2px;
+  padding-left: 10px;
   text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 input.ipsetting {

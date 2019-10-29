@@ -9,6 +9,7 @@
         </option>
       </select>
     </div>
+    <div class="spacer" style="clear: both;"></div>
   </div>
 </template> 
 
@@ -30,7 +31,6 @@ export default {
 <style scoped>
 *.output {
   max-width: 760px;
-  height: 72px;
   background-color: #eeeeee;
   padding: 10px;
   margin: 10px;
@@ -55,8 +55,8 @@ export default {
   clear: left;
   float: left;
   width: 40%;
-  margin: 0 0 0.6em;
-  padding: 2px;
+  margin: 2px;
+  padding-top: 2px;
   text-align: right;
   white-space: nowrap;
   overflow: hidden;
@@ -67,8 +67,8 @@ export default {
   float: left;
   overflow: auto;
   width: 50%;
-  margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
+  margin: 2px;
+  padding-left: 10px;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;

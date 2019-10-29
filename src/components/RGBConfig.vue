@@ -1,5 +1,5 @@
 <template>
-  <div class="rgb" v-bind:style="{ height: panelHeight() + 'px' }">
+  <div class="rgb">
     <div class="header">Analog RGB ({{ terminalNames[rgbIndex] }})</div>
     <div class="left">RGB type</div>
     <div class="right">
@@ -9,29 +9,23 @@
       </option>
     </select>
     </div>
-		<div class="left_universe">DMX Mapping
+    <div class="left_universe">DMX Mapping</div>
+    <div class="right_universe">
+      <div class="universefield" style="font-size: 80%; padding-top:2px;">Universe</div>
+      <div class="offsetfield" style="font-size: 80%; padding-top:2px;">Offset</div>
     </div>
-		<div v-if="!isMobile()" class="right_universe">
-      <div class="universelabel"><br></div>
-      <div class="universefield">Universe</div>
-      <div class="offsetfieldtitle">Offset</div>
-      <div class="universe" v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
-        <div class="universelabel">{{ item.text }}</div>
+    <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
+      <div class="left_universe">{{ item.text }}</div>
+      <div class="right_universe">
         <input class="universefield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].universe">
         <input class="offsetfield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
-        <span v-if="dmxLength() == 2" class="footnote">
-           DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
+        <span v-if="dmxLength() == 2 && !isMobile()" class="footnote">
+            DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
         </span>
-        <span v-if="dmxLength() == 1" class="footnote">
-           DMX Channel: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }}</span>
+        <span v-if="dmxLength() == 1 && !isMobile()" class="footnote">
+            DMX Channel: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }}</span>
         </span>
       </div>
-		</div>
-		<div v-if="isMobile()" class="right_universe_mobile">
-      <div class="universe" v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
-       <input class="universefield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].universe">
-       <input class="offsetfield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
-       </div>
     </div>
     <div class="left_color">Startup Color</div>
     <div class="right_color"><ColorSwatch v-bind:change="colorChange"/></div>
@@ -70,9 +64,6 @@ export default {
         } else {
           return false
         }
-      },
-      panelHeight() {
-        return 140 + this.componentsSplice().length * 32;
       },
       dmxLength() {
         return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].type].size == 16 ? 2 : 1;
@@ -116,7 +107,6 @@ export default {
 <style scoped>
 *.rgb {
   max-width: 760px;
-  height: 300px;
   background-color: #eeeeee;
   padding: 10px;
   margin: 10px;
@@ -129,18 +119,6 @@ export default {
   font-weight: 600;
 }
 
-*.field {
-  width: 80x;
-}
-
-*.universelabel {
-  float: left;
-  position: relative;
-  top: 2px;
-  left: 0px;
-  width: 62px;
-}
-
 *.universefield {
   float: left;
   position: relative;
@@ -148,116 +126,73 @@ export default {
   width: 60px;
 }
 
-*.universetitle {
-  float: left;
-  position: relative;
-  left: 0px;
-  width: 60px;
-  height: 25px;
-}
-
 *.offsetfield {
   float: left;
   position: relative;
-  left: 15px;
+  left: 10px;
   width: 40px;
-}
-
-*.offsetfieldtitle {
-  float: left;
-  position: relative;
-  left: 20px;
-  width: 60px;
-  height: 25px;
 }
 
 *.left {
   clear: left;
   float: left;
   width: 40%;
-  margin: 0 0 0.6em;
-  padding: 2px;
+  margin: 2px;
+  margin-top: 4px;
   text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 *.right {
   float: left;
   overflow: auto;
   width: 50%;
-  margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
+  margin: 2px;
+  margin-top: 4px;
+  padding-left: 10px;
   text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 *.left_color {
   clear: left;
   float: left;
   width: 40%;
-  margin: 0 0 0.6em;
-  padding: 2px;
+  margin: 2px;
+  margin-top: 4px;
   text-align: right;
   padding-top: 6px;
   padding-bottom: 6px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 *.right_color {
   float: left;
   overflow: auto;
   width: 50%;
-  margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
+  margin: 2px;
+  margin-top: 4px;
+  padding-left: 10px;
   text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 *.left_universe {
   clear: left;
   float: left;
   width: 40%;
-  margin: 0 0 0.6em;
-  padding: 2px;
+  margin: 2px;
+  margin-top: 4px;
+  padding-top: 2px;
   text-align: right;
 }
 
 *.right_universe {
   float: left;
   overflow: auto;
-  width: 55%;
-  min-width: 100px;
-  max-width: 400px;
-  margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
-  text-align: left;
-  padding-top: 2px;
-}
-
-*.right_universe_mobile {
-  float: left;
-  overflow: auto;
   width: 50%;
+  padding-left: 10px;
   min-width: 100px;
   max-width: 400px;
-  margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
+  margin: 2px;
+  margin-top: 4px;
   text-align: left;
-  padding-top: 2px;
-}
-
-*.universe {
-  float: left;
-  height: 32px;
-  padding-right: 10px;
 }
 
 *.footnote {

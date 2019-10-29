@@ -1,5 +1,5 @@
 <template>
-  <div class="strip" v-bind:style="{ height: panelHeight() + 'px' }">
+  <div class="strip">
     <div class="header">LED Strip ({{ terminalNames[stripIndex] }})</div>
     <div class="left">LED type</div>
     <div class="right">
@@ -16,19 +16,15 @@
         Maximum: <span style="font-weight:600;">{{ maxLEDLength(settings.stripconfig[stripIndex]) }}</span>
       </span>
 		</div>
-		<div class="left_universe">DMX Universe{{ (universesFiltered(settings.stripconfig[stripIndex]).length == 1 ||
-                                  universesFiltered(settings.stripconfig[stripIndex]).length == 0 ) ? "" : "s" }}</div>
-		<div v-if="!isMobile()" class="right_universe">
-      <div class="universe" v-for="(item, itemIndex) in universesFiltered(settings.stripconfig[stripIndex])" v-bind:key="item.id">
+    <div class="universe" v-for="(item, itemIndex) in universesFiltered(settings.stripconfig[stripIndex])" v-bind:key="item.id">
+      <div v-if="itemIndex == 0" class="left_universe">DMX Universe{{ (universesFiltered(settings.stripconfig[stripIndex]).length == 1 ||
+                                                                       universesFiltered(settings.stripconfig[stripIndex]).length == 0 ) ? "" : "s" }}</div>
+      <div v-else class="left_universe"></div>
+      <div class="right_universe">
         <input class="smallnumber" v-bind:style="{ border : validateUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="item.universe">
-        <span class="footnote">
-           DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(settings.stripconfig[stripIndex], itemIndex) }}</span>
+        <span v-if="!isMobile()" class="footnote">
+            DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(settings.stripconfig[stripIndex], itemIndex) }}</span>
         </span>
-      </div>
-		</div>
-		<div v-if="isMobile()" class="right">
-      <div v-for="(item, itemIndex) in universesFiltered(settings.stripconfig[stripIndex])" v-bind:key="item.id">
-        <input class="smallnumber" v-bind:style="{ border : validateUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="item.universe">
       </div>
 		</div>
     <div class="left_color">Startup Color</div>
@@ -146,22 +142,19 @@ export default {
   clear: left;
   float: left;
   width: 40%;
-  margin: 0 0 0.6em;
-  padding: 2px;
+  margin: 2px;
+  margin-top: 5px;
   text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 *.right {
   float: left;
   overflow: auto;
   width: 50%;
+  margin: 2px;
+  padding-left: 10px;
   min-width: 100px;
   max-width: 400px;
-  margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
   text-align: left;
 }
 
@@ -169,57 +162,44 @@ export default {
   clear: left;
   float: left;
   width: 40%;
-  margin: 0 0 0.6em;
-  padding: 2px;
+  margin: 2px;
+  margin-top: 6px;
   text-align: right;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 *.right_color {
   float: left;
   overflow: auto;
   width: 50%;
-  margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
+  margin: 2px;
+  padding-left: 10px;
   text-align: left;
 }
 
 *.left_universe {
+  clear: left;
   float: left;
   width: 40%;
-  margin: 0 0 0.6em;
-  padding: 2px;
+  margin: 2px;
+  margin-top: 4px;
   text-align: right;
 }
 
-
 *.right_universe {
   float: left;
-  width: 55%;
+  width: 50%;
+  margin: 2px;
+  padding-left: 10px;
   min-width: 100px;
   max-width: 400px;
-  margin: 0 0 0.6em 0.4em;
-  padding-left: 0.6em;
   text-align: left;
-  overflow: auto;
-}
-
-*.universe {
-  float: left;
-  height: 32px;
-  padding-right: 10px;
 }
 
 *.universeIndex {
   float: left;
   width: 8px;
   text-align: center;
-  padding-top: 3px;
-  padding-right: 10px;
+  padding: 2px;
 }
 
 *.footnote {
