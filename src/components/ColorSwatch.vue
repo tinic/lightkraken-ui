@@ -14,13 +14,13 @@
             </div>
             <div class="color-picker__inner">
             <div class="control" v-bind:style="gradientH">
-                <input type="range" min="0" max="360" v-model="h" />
+                <input type="range" min="0" max="360" v-model="h" v-on:change="emitColor()" />
             </div>
             <div class="control" v-bind:style="gradientS">
-                <input type="range" min="0" max="100" v-model="s" />
+                <input type="range" min="0" max="100" v-model="s" v-on:change="emitColor()" />
             </div>
             <div class="control" v-bind:style="gradientL">
-                <input type="range" min="0" max="100" v-model="l" />
+                <input type="range" min="0" max="100" v-model="l" v-on:change="emitColor()" />
             </div>
             </div>
         </div>
@@ -50,14 +50,8 @@ export default {
   computed: {
     color: function() {
       var hsl = this.hsb2hsl(parseFloat(this.h) / 360, parseFloat(this.s) / 100, parseFloat(this.l) / 100)
-      var rgb = this.hsv2rgb(parseFloat(this.h) / 360, parseFloat(this.s) / 100, parseFloat(this.l) / 100)
       var c = hsl.h + ", " + hsl.s + "%, " + hsl.l + "%";
-      var d = rgb.r + ", " + rgb.g + "," + rgb.b;
       var s = "hsl(" + c + ")";
-      var t = "rgb(" + d + ")";
-      this.change({
-        color: t
-      });
       return s;
     },
     hslColorString: function() {
@@ -110,6 +104,9 @@ export default {
     }
   },
   methods: {
+    emitColor() {
+      this.change(this.hsv2rgb(parseFloat(this.h) / 360, parseFloat(this.s) / 100, parseFloat(this.l) / 100));
+    },
     rgb2hsv : function(r, g, b) {
       if (arguments.length === 1) {
         g = r.g, b = r.b, r = r.r;
@@ -193,7 +190,7 @@ export default {
   },
   mounted: function () {
     var rgb = this.initial();
-    var hsv = this.rgb2hsv(rgb.red, rgb.green, rgb.blue);
+    var hsv = this.rgb2hsv(rgb.r, rgb.g, rgb.b);
     this.h = hsv.h * 360;
     this.s = hsv.s * 100;
     this.l = hsv.v * 100;

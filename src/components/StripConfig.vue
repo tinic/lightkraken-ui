@@ -52,15 +52,15 @@ export default {
       hexToRgb(hex) {
         var result = /^0x?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         return result ? {
-          a: parseInt(result[0], 16),
-          r: parseInt(result[1], 16),
-          g: parseInt(result[2], 16),
-          b: parseInt(result[3], 16)
+          a: parseInt(result[1], 16),
+          r: parseInt(result[2], 16),
+          g: parseInt(result[3], 16),
+          b: parseInt(result[4], 16)
         } : null;
       },
       initialColor() {
         var col = this.hexToRgb(this.settings.stripconfig[this.stripIndex].color);
-        return { red: col.r, green: col.g, blue: col.b};
+        return { r: col.r, g: col.g, b: col.b};
       },
       checkInteger(value, min, max) {
         return (!isNaN(Number(value)) &&
@@ -81,14 +81,6 @@ export default {
             return false;
           }
       },
-      getRGB(str){
-        var match = str.match(/rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/);
-        return match ? {
-          red: match[1],
-          green: match[2],
-          blue: match[3]
-        } : {};
-      },
       to2Hex(value) {
         var hex = Number(value).toString(16);
         if (hex.length < 2) {
@@ -97,8 +89,7 @@ export default {
         return hex;
       },
       colorChange(color) {
-        var c = this.getRGB(color.color);
-        var hex = "0x00" + this.to2Hex(c.red) + this.to2Hex(c.green) + this.to2Hex(c.blue);
+        var hex = "0x00" + this.to2Hex(color.r) + this.to2Hex(color.g) + this.to2Hex(color.b);
         this.settings.stripconfig[this.stripIndex].color = hex;
       },
       panelHeight() {

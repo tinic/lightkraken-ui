@@ -71,24 +71,15 @@ export default {
       dmxIndex(itemIndex) {
         return parseInt(this.settings.rgbconfig[this.rgbIndex].components[itemIndex].offset) + 1;
       },
-      getRGB(str){
-        var match = str.match(/rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/);
-        return match ? {
-          red: match[1],
-          green: match[2],
-          blue: match[3]
-        } : {};
-      },
       colorChange(color) {
-        var c = this.getRGB(color.color);
-        this.settings.rgbconfig[this.rgbIndex].components[0].value = c.red;
-        this.settings.rgbconfig[this.rgbIndex].components[1].value = c.green;
-        this.settings.rgbconfig[this.rgbIndex].components[2].value = c.blue;
+        this.settings.rgbconfig[this.rgbIndex].components[0].value = color.r;
+        this.settings.rgbconfig[this.rgbIndex].components[1].value = color.g;
+        this.settings.rgbconfig[this.rgbIndex].components[2].value = color.b;
       },
       initialColor() {
-        return { red:   this.settings.rgbconfig[this.rgbIndex].components[0].value, 
-                 green: this.settings.rgbconfig[this.rgbIndex].components[1].value, 
-                 blue:  this.settings.rgbconfig[this.rgbIndex].components[2].value};
+        return { r: this.settings.rgbconfig[this.rgbIndex].components[0].value, 
+                 g: this.settings.rgbconfig[this.rgbIndex].components[1].value, 
+                 b: this.settings.rgbconfig[this.rgbIndex].components[2].value};
       },
       validateComponent(index) {
          index;

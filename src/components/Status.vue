@@ -2,7 +2,7 @@
   <div class="status">
     <div class="header">Current Status</div>
     <div class="item">
-    <span class="left">Firmware revision</span>
+    <span class="left">Firmware</span>
     <span class="statusfield">{{ status.buildnumber }}</span>
     </div>
     <div class="item">
