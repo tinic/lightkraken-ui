@@ -28,7 +28,7 @@
       </div>
 		</div>
     <div class="left_color">Startup Color</div>
-    <div class="right_color"><ColorSwatch v-bind:change="colorChange"/></div>
+    <div class="right_color"><ColorSwatch v-bind:change="colorChange" v-bind:initial="initialColor"/></div>
     <div class="spacer" style="clear: both;"></div>
   </div>
 </template>
@@ -49,6 +49,19 @@ export default {
           return false
         }
       },
+      hexToRgb(hex) {
+        var result = /^0x?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          a: parseInt(result[0], 16),
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : null;
+      },
+      initialColor() {
+        var col = this.hexToRgb(this.settings.stripconfig[this.stripIndex].color);
+        return { red: col.r, green: col.g, blue: col.b};
+      },
       checkInteger(value, min, max) {
         return (!isNaN(Number(value)) &&
                  parseInt(value) <= max &&
@@ -68,8 +81,25 @@ export default {
             return false;
           }
       },
+      getRGB(str){
+        var match = str.match(/rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/);
+        return match ? {
+          red: match[1],
+          green: match[2],
+          blue: match[3]
+        } : {};
+      },
+      to2Hex(value) {
+        var hex = Number(value).toString(16);
+        if (hex.length < 2) {
+            hex = "0" + hex;
+        }
+        return hex;
+      },
       colorChange(color) {
-        color;
+        var c = this.getRGB(color.color);
+        var hex = "0x00" + this.to2Hex(c.red) + this.to2Hex(c.green) + this.to2Hex(c.blue);
+        this.settings.stripconfig[this.stripIndex].color = hex;
       },
       panelHeight() {
         return 180 + (Math.max(0,this.universesFiltered(this.settings.stripconfig[this.stripIndex]).length-1)) * 32;

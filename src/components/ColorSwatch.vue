@@ -35,13 +35,16 @@
 <script>
 export default {
   name: "ColorSwatch",
-  props: ["change", "initial"],
-  data: function() {
+  props: {
+    change : Function,
+    initial : Function
+  },
+  data: function() { 
     return {
       isVisible: true,
-      h: 265,
-      s: 80,
-      l: 99
+      h: 0,
+      s: 0,
+      l: 0
     }
   },
   computed: {
@@ -189,6 +192,11 @@ export default {
     }
   },
   mounted: function () {
+    var rgb = this.initial();
+    var hsv = this.rgb2hsv(rgb.red, rgb.green, rgb.blue);
+    this.h = hsv.h * 360;
+    this.s = hsv.s * 100;
+    this.l = hsv.v * 100;
     this.hide();
   }
 };
@@ -212,7 +220,7 @@ export default {
 
 .color-picker__flyout {
   float:left;
-  width: 320px;
+  width: 220px;
   border: 1px solid #eee;
   border-radius: 4px;
   background: white;

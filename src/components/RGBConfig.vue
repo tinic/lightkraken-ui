@@ -17,8 +17,8 @@
     <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
       <div class="left_universe">{{ item.text }}</div>
       <div class="right_universe">
-        <input class="universefield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].universe">
-        <input class="offsetfield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
+        <input class="universefield" v-bind:style="{ border : validateUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].universe">
+        <input class="offsetfield" v-bind:style="{ border : validateChannelOffset(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
         <span v-if="dmxLength() == 2 && !isMobile()" class="footnote">
             DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
         </span>
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="left_color">Startup Color</div>
-    <div class="right_color"><ColorSwatch v-bind:change="colorChange"/></div>
+    <div class="right_color"><ColorSwatch v-bind:change="colorChange" v-bind:initial="initialColor"/></div>
     <div class="spacer" style="clear: both;"></div>
   </div>
 </template>
@@ -71,12 +71,50 @@ export default {
       dmxIndex(itemIndex) {
         return parseInt(this.settings.rgbconfig[this.rgbIndex].components[itemIndex].offset) + 1;
       },
+      getRGB(str){
+        var match = str.match(/rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/);
+        return match ? {
+          red: match[1],
+          green: match[2],
+          blue: match[3]
+        } : {};
+      },
       colorChange(color) {
-        color;
+        var c = this.getRGB(color.color);
+        this.settings.rgbconfig[this.rgbIndex].components[0].value = c.red;
+        this.settings.rgbconfig[this.rgbIndex].components[1].value = c.green;
+        this.settings.rgbconfig[this.rgbIndex].components[2].value = c.blue;
+      },
+      initialColor() {
+        return { red:   this.settings.rgbconfig[this.rgbIndex].components[0].value, 
+                 green: this.settings.rgbconfig[this.rgbIndex].components[1].value, 
+                 blue:  this.settings.rgbconfig[this.rgbIndex].components[2].value};
       },
       validateComponent(index) {
          index;
           return true;
+      },
+      checkInteger(value, min, max) {
+        return (!isNaN(Number(value)) &&
+                 parseInt(value) <= max &&
+                 parseInt(value) >= min &&
+                 Number(value) == parseInt(value));
+      },
+      validateUniverse(index) {
+          var value = this.settings.rgbconfig[this.rgbIndex].components[index].universe;
+          if (this.checkInteger(value, 0, 32767)) {
+            return true;
+          } else {
+            return false;
+          }
+      },
+      validateChannelOffset(index) {
+          var value = this.settings.rgbconfig[this.rgbIndex].components[index].offset;
+          if (this.checkInteger(value, 0, 255)) {
+            return true;
+          } else {
+            return false;
+          }
       },
       componentsSplice() {
           var components = this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].type].components;
