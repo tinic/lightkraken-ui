@@ -13,7 +13,7 @@
 		<div class="right">
 			<input class="smallnumber" v-bind:style="{ border : validateLEDs() ? '2px solid green' : '2px solid red' }" v-model="settings.stripconfig[stripIndex].length">
       <span class="footnote">
-        Maximum: <b>{{ maxLEDLength(settings.stripconfig[stripIndex]) }}</b>
+        Maximum: <span style="font-weight:600;">{{ maxLEDLength(settings.stripconfig[stripIndex]) }}</span>
       </span>
 		</div>
 		<div class="left_universe">DMX Universe{{ (universesFiltered(settings.stripconfig[stripIndex]).length == 1 ||
@@ -22,7 +22,7 @@
       <div class="universe" v-for="(item, itemIndex) in universesFiltered(settings.stripconfig[stripIndex])" v-bind:key="item.id">
         <input class="smallnumber" v-bind:style="{ border : validateUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="item.universe">
         <span class="footnote">
-           DMX Channels: <b>1 ... {{ universesDMXLength(settings.stripconfig[stripIndex], itemIndex) }}</b>
+           DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(settings.stripconfig[stripIndex], itemIndex) }}</span>
         </span>
         <br>
       </div>
@@ -128,7 +128,7 @@ export default {
 *.header {
   height: 40px;
   font-size: large;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 *.left {

@@ -20,10 +20,10 @@
         <input class="universefield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].universe">
         <input class="offsetfield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
         <span v-if="dmxLength() == 2" class="footnote">
-           DMX Channels: <b>{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</b>
+           DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
         </span>
         <span v-if="dmxLength() == 1" class="footnote">
-           DMX Channel: <b>{{ dmxIndex(itemIndex) }}</b>
+           DMX Channel: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }}</span>
         </span>
         <br>
       </div>
@@ -113,7 +113,7 @@ export default {
 *.header {
   height: 40px;
   font-size: large;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 *.field {

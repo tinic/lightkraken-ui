@@ -55,7 +55,7 @@ export default {
 *.header {
   height: 40px;
   font-size: large;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 *.left {

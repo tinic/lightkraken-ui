@@ -36,7 +36,7 @@ export default {
 }
 
 .terminal {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 20px;
   width: 314px;
   color: black;
