@@ -19,13 +19,22 @@ export default {
         this.axios
         .post(this.baseURL + 'settings', this.settings, { headers: { 'Content-Type': 'text/plain' }}) 
         .finally(function () {
+          location.reload();
         });
       },
       reset() {
+        this.axios
+        .delete(this.baseURL + 'settings', {}, { headers: { 'Content-Type': 'text/plain' }}) 
+        .finally(function () {
+          location.reload();
+        });
       },
       reboot() {
         this.axios.post(this.baseURL + 'bootloader', {}, { headers: { 'Content-Type': 'text/plain' }})
         .finally(function () {
+          setTimeout(function(){
+            location.reload();
+          }, 10000);
         });
       }
   }

@@ -158,6 +158,25 @@ export default {
     }
   },
   methods: {
+    load() {
+      this.loadingSomething = true;
+      this.axios
+        .get(this.baseURL + "status")
+        .then(response => { this.status = response.data;
+          this.loadingSomething = true;
+          this.axios
+          .get(this.baseURL + "settings")
+          .then(response => { this.settings = response.data })
+          .finally(() => {
+            this.settingsLoading = false;
+            this.loadingSomething = false;
+          });
+        })
+        .finally(() => {
+          this.statusLoading = false;
+          this.loadingSomething = false;
+        })
+    },
     patchLEDType() {
         // Live patch LED type
         for (var c = 0; c < this.settings.stripconfig.length; c++) {
@@ -196,23 +215,7 @@ export default {
     }
   },
   mounted() {
-    this.loadingSomething = true;
-    this.axios
-      .get(this.baseURL + "status")
-      .then(response => { this.status = response.data;
-        this.loadingSomething = true;
-        this.axios
-        .get(this.baseURL + "settings")
-        .then(response => { this.settings = response.data })
-        .finally(() => {
-          this.settingsLoading = false;
-          this.loadingSomething = false;
-        });
-      })
-      .finally(() => {
-        this.statusLoading = false;
-        this.loadingSomething = false;
-      })
+    this.load();
   },
   components: {
     RGBConfig,
