@@ -80,7 +80,7 @@ export default {
   font-family: inherit;
   font-size: 100%;
   font-weight: 600;
-  width: 36%;
+  width: 40%;
   min-width: 140px;
   max-width: 300px;
   float: left;

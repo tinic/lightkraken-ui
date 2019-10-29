@@ -44,7 +44,9 @@ export default {
 <style scoped>
 *.actions {
   max-width: 760px;
+  margin: 8px;
   align-content: center;
+  text-align: center;
 }
 
 *.button {
@@ -55,7 +57,6 @@ export default {
   padding: 8px 16px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
   -webkit-transition-duration: 0.2s;
   transition-duration: 0.2s;

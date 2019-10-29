@@ -56,6 +56,7 @@
         v-bind:savingSomething="savingSomething"
         v-bind:baseURL="baseURL"
         v-bind:settings="settings"/>
+      <div class="credit">Lightkraken was designed and built<br>by Tinic Uro in 2019</div>
     </div>
   </div>
 </template>
@@ -238,6 +239,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  display: inline-block;
 }
 
 body {
@@ -330,6 +332,13 @@ input[type=checkbox]
             black 25%
         ) center / 12.5% 12.5%;
     mix-blend-mode: color-dodge;
+}
+
+.credit {
+  display: inline-block;
+  font-size:80%;
+  color: #555555;
+  padding-top: 20px;
 }
 
 </style>
