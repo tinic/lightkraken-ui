@@ -1,8 +1,9 @@
 <template>
   <div class="actions">
-        <input class="button" v-on:click="save" type="button" value="Save Configuration" />
-        <input class="button" v-on:click="reset" type="button" value="Reset Configuration" />
-        <input class="button" v-on:click="reboot" type="button" value="Reboot Into Upgrade Mode" />
+    <input class="button" v-on:click="save" type="button" value="Save Configuration" />
+    <input class="button" v-on:click="reset" type="button" value="Reset Configuration" />
+    <input class="button" v-on:click="reboot" type="button" value="Reboot Into Upgrade Mode" />
+    <div class="spacer" style="clear: both;"></div>
   </div>
 </template> 
 
@@ -33,7 +34,7 @@ export default {
 
 <style scoped>
 *.actions {
-  width: 729px;
+  max-width: 760px;
   align-content: center;
 }
 

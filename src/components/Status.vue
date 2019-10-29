@@ -25,6 +25,7 @@
     <span class="left">Hostname</span>
     <span class="statusfield">{{ status.hostname }}</span>
     </div>
+    <div class="spacer" style="clear: both;"></div>
   </div>
 </template>
 
@@ -39,7 +40,7 @@ export default {
 
 <style scoped>
 *.status {
-  width: 729px;
+  max-width: 760px;
   height: 244px;
   background-color: #ddeedd;
   padding: 10px;
@@ -62,9 +63,14 @@ export default {
   clear: left;
   float: left;
   width: 40%;
+  min-width: 30px;
+  max-width: 300px;
   margin: 0 0 0.6em;
   padding: 3px;
   text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 *.right {
@@ -78,7 +84,9 @@ export default {
   font-family: inherit;
   font-size: 100%;
   font-weight: 600;
-  width: 30%;
+  width: 36%;
+  min-width: 140px;
+  max-width: 300px;
   float: left;
   background-color: #eeffee;
   overflow: auto;
@@ -87,5 +95,8 @@ export default {
   padding: 3px;
   padding-left: 10px;
   border-radius: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

@@ -84,10 +84,10 @@ export default {
       ],
       outputModes: [
           { text: '2 x RGB Strip', value : 0 },
-          { text: '1 x RGB Strip + 1 x RGB Analog', value : 1 },
-          { text: '2 x RGB Strip + 1 x RGB Analog', value : 2 },
-          { text: '1 x RGB Strip + 1 x RGB+W Analog', value : 3 },
-          { text: '2 x RGB Analog', value : 4 },
+          { text: '1 x RGB Strip + 1 x Analog RGB', value : 1 },
+          { text: '2 x RGB Strip + 1 x Analog RGB', value : 2 },
+          { text: '1 x RGB Strip + 1 x Analog RGB+W', value : 3 },
+          { text: '2 x Analog RGB', value : 4 },
       ],
       showConfigs: [
           { strip: [true,  true ], rgb : [false, false], clock:[1, 1], components:[0, 0] },
@@ -103,9 +103,9 @@ export default {
           { text: 'RGB (16-bit, sRGB)',  value : 3,  components: 3, size:16  },
           { text: 'RGBW (16-bit, sRGB)',  value : 4,  components: 4, size:16  },
           { text: 'RGBWW (16-bit, sRGB)',  value : 5,  components: 5, size:16  },
-          { text: 'RGB (16-bit, PWM Duty %)',  value : 6,  components: 3, size:16  },
-          { text: 'RGBW (16-bit, PWM Duty %)',  value : 7,  components: 4, size:16  },
-          { text: 'RGBWW (16-bit, PWM Duty %)',  value : 8,  components: 5, size:16  }
+          { text: 'RGB (16-bit, PWM%',  value : 6,  components: 3, size:16  },
+          { text: 'RGBW (16-bit, PWM%)',  value : 7,  components: 4, size:16  },
+          { text: 'RGBWW (16-bit, PWM%)',  value : 8,  components: 5, size:16  }
       ],
       stripTypes: [
           { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3  },
@@ -244,6 +244,9 @@ button, input, select, textarea {
   font-family : inherit;
   font-size   : 100%;
   font-weight : 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .active {
@@ -290,7 +293,7 @@ button, input, select, textarea {
 }
 
 .neon {
-    width: 729px;
+    max-width: 760px;
     position: relative;
     overflow: hidden;
     filter: brightness(220%);

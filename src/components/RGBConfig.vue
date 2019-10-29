@@ -11,7 +11,7 @@
     </div>
 		<div class="left_universe">DMX Mapping
     </div>
-		<div class="right_universe">
+		<div v-if="!isMobile()" class="right_universe">
       <div class="universelabel"><br></div>
       <div class="universefield">Universe</div>
       <div class="offsetfieldtitle">Offset</div>
@@ -25,11 +25,17 @@
         <span v-if="dmxLength() == 1" class="footnote">
            DMX Channel: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }}</span>
         </span>
-        <br>
       </div>
 		</div>
+		<div v-if="isMobile()" class="right_universe_mobile">
+      <div class="universe" v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
+       <input class="universefield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].universe">
+       <input class="offsetfield" v-bind:style="{ border : validateComponent(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
+       </div>
+    </div>
     <div class="left_color">Startup Color</div>
     <div class="right_color"><ColorSwatch v-bind:change="colorChange"/></div>
+    <div class="spacer" style="clear: both;"></div>
   </div>
 </template>
 
@@ -58,6 +64,13 @@ export default {
     };
   },
   methods: {
+      isMobile() {
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          return true
+        } else {
+          return false
+        }
+      },
       panelHeight() {
         return 140 + this.componentsSplice().length * 32;
       },
@@ -102,7 +115,7 @@ export default {
 
 <style scoped>
 *.rgb {
-  width: 729px;
+  max-width: 760px;
   height: 300px;
   background-color: #eeeeee;
   padding: 10px;
@@ -165,6 +178,9 @@ export default {
   margin: 0 0 0.6em;
   padding: 2px;
   text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 *.right {
@@ -174,6 +190,9 @@ export default {
   margin: 0 0 0.6em 0.4em;
   padding-left: 0.6em;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 *.left_color {
@@ -185,6 +204,9 @@ export default {
   text-align: right;
   padding-top: 6px;
   padding-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 *.right_color {
@@ -194,6 +216,9 @@ export default {
   margin: 0 0 0.6em 0.4em;
   padding-left: 0.6em;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 *.left_universe {
@@ -205,11 +230,24 @@ export default {
   text-align: right;
 }
 
-
 *.right_universe {
   float: left;
   overflow: auto;
-  width: 400px;
+  width: 55%;
+  min-width: 100px;
+  max-width: 400px;
+  margin: 0 0 0.6em 0.4em;
+  padding-left: 0.6em;
+  text-align: left;
+  padding-top: 2px;
+}
+
+*.right_universe_mobile {
+  float: left;
+  overflow: auto;
+  width: 50%;
+  min-width: 100px;
+  max-width: 400px;
   margin: 0 0 0.6em 0.4em;
   padding-left: 0.6em;
   text-align: left;
@@ -219,18 +257,18 @@ export default {
 *.universe {
   float: left;
   height: 32px;
-  width: 380px;
   padding-right: 10px;
 }
 
 *.footnote {
-  float:left;
-  padding-left: 40px;
   font-size: 80%;
-  padding-top: 6px;
+  position: relative;
+  left: 28px;
+  top: 2px;
 }
 
 input.smallnumber {
+  float: left;
     width:60px;
 }
 

@@ -12,23 +12,28 @@
 		<div class="left">Number of LEDs</div>
 		<div class="right">
 			<input class="smallnumber" v-bind:style="{ border : validateLEDs() ? '2px solid green' : '2px solid red' }" v-model="settings.stripconfig[stripIndex].length">
-      <span class="footnote">
+      <span v-if="!isMobile()" class="footnote">
         Maximum: <span style="font-weight:600;">{{ maxLEDLength(settings.stripconfig[stripIndex]) }}</span>
       </span>
 		</div>
 		<div class="left_universe">DMX Universe{{ (universesFiltered(settings.stripconfig[stripIndex]).length == 1 ||
                                   universesFiltered(settings.stripconfig[stripIndex]).length == 0 ) ? "" : "s" }}</div>
-		<div class="right_universe">
+		<div v-if="!isMobile()" class="right_universe">
       <div class="universe" v-for="(item, itemIndex) in universesFiltered(settings.stripconfig[stripIndex])" v-bind:key="item.id">
         <input class="smallnumber" v-bind:style="{ border : validateUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="item.universe">
         <span class="footnote">
            DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(settings.stripconfig[stripIndex], itemIndex) }}</span>
         </span>
-        <br>
+      </div>
+		</div>
+		<div v-if="isMobile()" class="right">
+      <div v-for="(item, itemIndex) in universesFiltered(settings.stripconfig[stripIndex])" v-bind:key="item.id">
+        <input class="smallnumber" v-bind:style="{ border : validateUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="item.universe">
       </div>
 		</div>
     <div class="left_color">Startup Color</div>
     <div class="right_color"><ColorSwatch v-bind:change="colorChange"/></div>
+    <div class="spacer" style="clear: both;"></div>
   </div>
 </template>
 
@@ -41,6 +46,13 @@ export default {
     }
   },
   methods: {
+      isMobile() {
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          return true
+        } else {
+          return false
+        }
+      },
       checkInteger(value, min, max) {
         return (!isNaN(Number(value)) &&
                  parseInt(value) <= max &&
@@ -117,8 +129,7 @@ export default {
 
 <style scoped>
 *.strip {
-  width: 729px;
-  height: 300px;
+  max-width: 760px;
   background-color: #eeeeee;
   padding: 10px;
   margin: 10px;
@@ -138,12 +149,17 @@ export default {
   margin: 0 0 0.6em;
   padding: 2px;
   text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 *.right {
   float: left;
   overflow: auto;
   width: 50%;
+  min-width: 100px;
+  max-width: 400px;
   margin: 0 0 0.6em 0.4em;
   padding-left: 0.6em;
   text-align: left;
@@ -158,6 +174,9 @@ export default {
   text-align: right;
   padding-top: 6px;
   padding-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 *.right_color {
@@ -170,7 +189,6 @@ export default {
 }
 
 *.left_universe {
-  clear: left;
   float: left;
   width: 40%;
   margin: 0 0 0.6em;
@@ -181,17 +199,18 @@ export default {
 
 *.right_universe {
   float: left;
-  overflow: auto;
-  width: 400px;
+  width: 55%;
+  min-width: 100px;
+  max-width: 400px;
   margin: 0 0 0.6em 0.4em;
   padding-left: 0.6em;
   text-align: left;
+  overflow: auto;
 }
 
 *.universe {
   float: left;
   height: 32px;
-  width: 380px;
   padding-right: 10px;
 }
 
@@ -204,12 +223,13 @@ export default {
 }
 
 *.footnote {
-  padding-left: 140px;
+  padding-left: 10px;
   font-size: 80%;
 }
 
 input.smallnumber {
     width:60px;
+    margin-bottom: 4px;
 }
 
 </style>

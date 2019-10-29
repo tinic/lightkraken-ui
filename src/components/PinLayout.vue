@@ -4,16 +4,17 @@
     <span class="terminal">{{ terminalNames[0] }}
       <div v-bind:key="pin.id" 
            v-for="(pin, index) in pinTable[settings.outputmode][stripTypes[settings.stripconfig[0].type].clock].slice(0, 4)">
-        <span class="PIN" :class="pin.c">{{ index }}<br />{{ pin.t }}</span>
+        <div class="PIN" :class="pin.c">{{ index }}<br />{{ pin.t }}</div>
       </div>
     </span>
     <span class="terminal">{{ terminalNames[1] }}
       <div v-bind:key="pin.id" 
            v-for="(pin,index) in pinTable[settings.outputmode][stripTypes[settings.stripconfig[1].type].clock].slice(4, 8)">
-        <span class="PIN" :class="pin.c">{{ index+4 }}<br />{{ pin.t }}</span>
+        <div class="PIN" :class="pin.c">{{ index+4 }}<br />{{ pin.t }}</div>
       </div>
     </span>
     </div>
+    <div class="spacer" style="clear: both;"></div>
   </div>
 </template>
 
@@ -25,44 +26,68 @@ export default {
     terminalNames: Array,
     stripTypes: Array,
     pinTable: Array
+  },
+  methods: {
+      isMobile() {
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          return true
+        } else {
+          return false
+        }
+      }
   }
 };
 </script>
 
 <style scoped>
 .status {
-  height: 120px;
+  max-width: 760px;
+  max-height: 130px;
   align-content: center;
 }
 
 .terminal {
   font-weight: 600;
   font-size: 20px;
-  width: 314px;
+  min-width: 330px;
+  width: 40%;
   color: black;
   background-color: #eeeeee;
   float: left;
   text-align: center;
   margin: 10px;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 5px;
-  padding-bottom: 5px;
   border-radius: 16px;
-  align-content: center;
+  padding: 4px;
 }
 
 .PIN {
   font-family: monospace;
   font-weight: bold;
   font-size: 20px;
-  width: 50px;
+  width: 15%;
   float: left;
+  clear: right;
   text-align: center;
   margin: 8px;
   padding: 6px;
   border-radius: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+.PIN_mobile {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 15px;
+  width: 35px;
+  float: left;
+  text-align: center;
+  margin: 1px;
+  padding: 1px;
+  border-radius: 4px;
+}
+
 .WHT {
   color: white;
   background-color: #aaaaaa;

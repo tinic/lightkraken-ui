@@ -29,6 +29,7 @@
         <input class="ipsetting" v-bind:style="{ border : checkIPv4Gateway() ? '2px solid green' : '2px solid red' }" v-model="settings.ipv4gateway" type="text"/>
       </div>
     </div>
+    <div class="spacer" style="clear: both;"></div>
   </div>
 </template> 
 
@@ -63,7 +64,7 @@ export default {
 <style scoped>
 
 *.status {
-  width: 729px;
+  max-width: 760px;
   background-color: #eeeeee;
   padding: 10px;
   margin: 10px;
@@ -96,10 +97,15 @@ export default {
 *.right {
   float: left;
   overflow: auto;
-  width: 30%;
+  width: 36%;
+  min-width: 160px;
+  max-width: 300px;
   margin: 0 0 0.6em 0.4em;
   padding-left: 0.6em;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 input.ipsetting {

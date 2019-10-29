@@ -29,7 +29,7 @@ export default {
 
 <style scoped>
 *.output {
-  width: 729px;
+  max-width: 760px;
   height: 72px;
   background-color: #eeeeee;
   padding: 10px;
@@ -58,6 +58,9 @@ export default {
   margin: 0 0 0.6em;
   padding: 2px;
   text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 *.right {
@@ -67,6 +70,19 @@ export default {
   margin: 0 0 0.6em 0.4em;
   padding-left: 0.6em;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+select {
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow:ellipsis;
+}
+select option {
+    text-overflow:ellipsis;
+    overflow:hidden;
 }
 
 </style>

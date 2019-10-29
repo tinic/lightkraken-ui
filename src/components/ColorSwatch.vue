@@ -1,30 +1,33 @@
 <template>
-  <div class="color-picker">
-    <div class="color-picker__overlay" v-if="isVisible" v-on:click="hide"></div>
-    <transition name="pop">
-      <div class="color-picker__flyout" v-if="isVisible">
-        <div class="color-chip" v-bind:style="{'background': color}">
-          <div class="color-chip__inner">
-            <div class="color-chip__title">HSL</div>
-            <div class="color-chip__subtitle">{{ hslColorString }}</div>
-            <div class="color-chip__title">RGB</div>
-            <div class="color-chip__subtitle">{{ rgbColorString }}</div>
-          </div>
+  <div>
+    <div class="color-picker">
+        <div class="color-picker__overlay" v-if="isVisible" v-on:click="hide"></div>
+        <transition name="pop">
+        <div class="color-picker__flyout" v-if="isVisible">
+            <div class="color-chip" v-bind:style="{'background': color}">
+            <div class="color-chip__inner">
+                <div class="color-chip__title">HSL</div>
+                <div class="color-chip__subtitle">{{ hslColorString }}</div>
+                <div class="color-chip__title">RGB</div>
+                <div class="color-chip__subtitle">{{ rgbColorString }}</div>
+            </div>
+            </div>
+            <div class="color-picker__inner">
+            <div class="control" v-bind:style="gradientH">
+                <input type="range" min="0" max="360" v-model="h" />
+            </div>
+            <div class="control" v-bind:style="gradientS">
+                <input type="range" min="0" max="100" v-model="s" />
+            </div>
+            <div class="control" v-bind:style="gradientL">
+                <input type="range" min="0" max="100" v-model="l" />
+            </div>
+            </div>
         </div>
-        <div class="color-picker__inner">
-          <div class="control" v-bind:style="gradientH">
-            <input type="range" min="0" max="360" v-model="h" />
-          </div>
-          <div class="control" v-bind:style="gradientS">
-            <input type="range" min="0" max="100" v-model="s" />
-          </div>
-          <div class="control" v-bind:style="gradientL">
-            <input type="range" min="0" max="100" v-model="l" />
-          </div>
-        </div>
-      </div>
-    </transition>
-    <div class="swatch" v-bind:style="{'background': color}" v-on:click="toggle"></div>
+        </transition>
+        <div class="swatch" v-bind:style="{'background': color}" v-on:click="toggle"></div>
+    </div>
+    <div class="spacer" style="clear: both;"></div>
   </div>
 
 </template>
