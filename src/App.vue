@@ -4,6 +4,11 @@
     </div>
     <div v-if="this.savingSomething === true">
     </div>
+    <div class="neon">
+      <span class="text" data-text="lightkraken">lightkraken</span>
+      <span class="gradient"></span>
+      <span class="spotlight"></span>
+    </div>
     <div v-if="this.statusLoading === false">
       <Status
         v-bind:status="status"/>
@@ -224,6 +229,7 @@ export default {
 <style>
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400);
 @import url(http://fonts.googleapis.com/css?family=Montserrat:600);
+@import url(http://fonts.googleapis.com/css?family=Montserrat:900);
 #app {
   font-family: "Montserrat", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -232,7 +238,7 @@ export default {
 }
 
 body {
-  background-color: #cccccc;
+  background-color: #d4d4d4;
 }
 button, input, select, textarea {
   font-family : inherit;
@@ -273,6 +279,70 @@ button, input, select, textarea {
 	top: 0px;
 	left: 3px;
 	color: #000000;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 200%;
+  padding: 10px;
+  margin: 10px;
+  width: 729px;
+}
+
+.neon {
+    width: 729px;
+    position: relative;
+    overflow: hidden;
+    filter: brightness(220%);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 16px;
+}
+
+.text {
+    color: white;
+    font-size: 40px;
+    font-weight: 900;
+    position: relative;
+    user-select: none;
+}
+
+.text::before {
+    content: attr(data-text);
+    position: absolute;
+    color: white;
+    filter: blur(0.02em);
+    mix-blend-mode: difference;
+}
+
+.gradient {
+    position: absolute;
+    background: linear-gradient(45deg, red, gold, green, blue, red);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    mix-blend-mode: multiply;
+}
+
+.spotlight {
+    position: absolute;
+    top: -100%;
+    left: -140%;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(
+            circle,
+            white,
+            transparent 50%
+        ) center / 25% 25%,
+        radial-gradient(
+            circle,
+            white,
+            black 25%
+        ) center / 12.5% 12.5%;
+    mix-blend-mode: color-dodge;
 }
 
 </style>
