@@ -29,6 +29,14 @@
     </div>
     <div class="left_color">Startup Color</div>
     <div class="right_color"><ColorSwatch v-bind:change="colorChange" v-bind:initial="initialColor"/></div>
+    <div v-if="compLength() >= 4" class="left_color">Startup White</div>
+    <div v-if="compLength() >= 4" class="right_universe">
+      <input class="universefield" v-bind:style="{ border : validateComponentValue(3) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[3].value">
+    </div>
+    <div v-if="compLength() >= 5" class="left_color">Startup Warm White</div>
+    <div v-if="compLength() >= 5" class="right_universe">
+      <input class="universefield" v-bind:style="{ border : validateComponentValue(4) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[4].value">
+    </div>
     <div class="spacer" style="clear: both;"></div>
   </div>
 </template>
@@ -65,6 +73,9 @@ export default {
           return false
         }
       },
+      compLength() {
+        return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].type].components;
+      },
       dmxLength() {
         return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].type].size == 16 ? 2 : 1;
       },
@@ -94,6 +105,14 @@ export default {
       validateUniverse(index) {
           var value = this.settings.rgbconfig[this.rgbIndex].components[index].universe;
           if (this.checkInteger(value, 0, 32767)) {
+            return true;
+          } else {
+            return false;
+          }
+      },
+      validateComponentValue(index) {
+          var value = this.settings.rgbconfig[this.rgbIndex].components[index].value;
+          if (this.checkInteger(value, 0, 255)) {
             return true;
           } else {
             return false;
