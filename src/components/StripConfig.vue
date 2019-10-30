@@ -27,8 +27,16 @@
         </span>
       </div>
 		</div>
-    <div class="left_color">Startup Color</div>
-    <div class="right_color"><ColorSwatch v-bind:change="colorChange" v-bind:initial="initialColor"/></div>
+    <div class="universe">
+      <div class="left_color">Startup Color</div>
+      <div class="right_color"><ColorSwatch v-bind:change="colorChange" v-bind:initial="initialColor"/></div>
+    </div>
+    <div class="universe">
+      <div v-if="compLength() >= 4" class="left_color">Startup White</div>
+      <div v-if="compLength() >= 4" class="right_universe">
+        <input class="smallnumber" v-bind:style="{ border : validateAlphaValue() ? '2px solid green' : '2px solid red' }" v-model="settings.stripconfig[stripIndex].color.a">
+      </div>
+    </div>
     <div class="spacer" style="clear: both;"></div>
   </div>
 </template>
@@ -49,24 +57,29 @@ export default {
           return false
         }
       },
-      hexToRgb(hex) {
-        var result = /^0x?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-          a: parseInt(result[1], 16),
-          r: parseInt(result[2], 16),
-          g: parseInt(result[3], 16),
-          b: parseInt(result[4], 16)
-        } : null;
-      },
       initialColor() {
-        var col = this.hexToRgb(this.settings.stripconfig[this.stripIndex].color);
-        return { r: col.r, g: col.g, b: col.b};
+        return { 
+          r: this.settings.stripconfig[this.stripIndex].color.r, 
+          g: this.settings.stripconfig[this.stripIndex].color.g,  
+          b: this.settings.stripconfig[this.stripIndex].color.b
+        };
       },
       checkInteger(value, min, max) {
         return (!isNaN(Number(value)) &&
                  parseInt(value) <= max &&
                  parseInt(value) >= min &&
                  Number(value) == parseInt(value));
+      },
+      compLength() {
+        return this.stripTypes[this.settings.stripconfig[this.stripIndex].type].components;
+      },
+      validateAlphaValue() {
+          var value = this.settings.stripconfig[this.stripIndex].color.a;
+          if (this.checkInteger(value, 0, 255)) {
+            return true;
+          } else {
+            return false;
+          }
       },
       validateLEDs() {
         var length = this.settings.stripconfig[this.stripIndex].length;
@@ -81,16 +94,10 @@ export default {
             return false;
           }
       },
-      to2Hex(value) {
-        var hex = Number(value).toString(16);
-        if (hex.length < 2) {
-            hex = "0" + hex;
-        }
-        return hex;
-      },
       colorChange(color) {
-        var hex = "0x00" + this.to2Hex(color.r) + this.to2Hex(color.g) + this.to2Hex(color.b);
-        this.settings.stripconfig[this.stripIndex].color = hex;
+        this.settings.stripconfig[this.stripIndex].color.r = color.r;
+        this.settings.stripconfig[this.stripIndex].color.g = color.g;
+        this.settings.stripconfig[this.stripIndex].color.b = color.b;
       },
       panelHeight() {
         return 180 + (Math.max(0,this.universesFiltered(this.settings.stripconfig[this.stripIndex]).length-1)) * 32;
@@ -184,8 +191,10 @@ export default {
   float: left;
   width: 40%;
   margin: 2px;
-  margin-top: 6px;
+  margin-top: 4px;
   text-align: right;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 *.right_color {
@@ -193,6 +202,7 @@ export default {
   overflow: auto;
   width: 50%;
   margin: 2px;
+  margin-top: 4px;
   padding-left: 10px;
   text-align: left;
 }
