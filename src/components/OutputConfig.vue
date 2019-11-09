@@ -3,12 +3,18 @@
     <div class="header">Output Config</div>
     <div class="left">Output Mode</div>
     <div class="right">
-      <select v-on:change="changeMode()" v-model="settings.outputmode">
+      <select v-on:change="changeMode()" v-model="settings.outputconfig">
         <option v-for="mode in outputModes" v-bind:value="mode.value" 
                 v-bind:key="mode.id">{{ mode.text }}
         </option>
       </select>
     </div>
+      <div class="left" v-if="outputModes[settings.outputconfig].strips !== 0">
+        <label for="broadcast">Drive strip{{ outputModes[settings.outputconfig].strips > 1 ? "s" : ""}} using interrupt</label>
+      </div>
+      <div class="right" v-if="outputModes[settings.outputconfig].strips !== 0">
+        <input class="checkbox" type="checkbox" id="outputmode" v-model="settings.outputmode">
+      </div>
     <div class="spacer" style="clear: both;"></div>
   </div>
 </template> 

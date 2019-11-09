@@ -104,7 +104,7 @@ export default {
       },
       maxLEDLength(stripconfig) {
         var components = this.stripTypes[stripconfig.type].components;
-        return (parseInt(512 / components)) * 6;
+        return (parseInt(512 / components)) * this.settings.stripconfig[this.stripIndex].universes.length;
       },
       universesDMXLength(stripconfig, index) {
         var components = this.stripTypes[stripconfig.type].components;

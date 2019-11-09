@@ -84,11 +84,11 @@ export default {
          "Terminal B",
       ],
       outputModes: [
-          { text: '2 x RGB Strip', value : 0 },
-          { text: '1 x RGB Strip + 1 x Analog RGB', value : 1 },
-          { text: '2 x RGB Strip + 1 x Analog RGB', value : 2 },
-          { text: '1 x RGB Strip + 1 x Analog RGB+W', value : 3 },
-          { text: '2 x Analog RGB', value : 4 },
+          { text: '2 x RGB Strip', value : 0, strips : 2 },
+          { text: '1 x RGB Strip + 1 x Analog RGB', value : 1, strips : 1 },
+          { text: '2 x RGB Strip + 1 x Analog RGB', value : 2, strips : 2 },
+          { text: '1 x RGB Strip + 1 x Analog RGB+W', value : 3, strips : 1 },
+          { text: '2 x Analog RGB', value : 4, strips : 0 },
       ],
       showConfigs: [
           { strip: [true,  true ], rgb : [false, false], clock:[1, 1], components:[0, 0] },
@@ -153,7 +153,7 @@ export default {
         return 'http://my-json-server.typicode.com/tinic/lightkraken-ui/';
       }
       if(process.env.NODE_ENV === "test") {
-        return 'http://192.168.1.131/';
+        return 'http://192.168.1.148/';
       }
       return '/';
     }
@@ -169,6 +169,7 @@ export default {
           .get(this.baseURL + "settings")
           .then(response => { this.settings = response.data })
           .finally(() => {
+            console.log(this.settings);
             this.settingsLoading = false;
             this.loadingSomething = false;
           });
