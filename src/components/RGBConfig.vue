@@ -3,13 +3,13 @@
     <div class="header">Analog RGB ({{ terminalNames[rgbIndex] }})</div>
     <div class="left">RGB type</div>
     <div class="right">
-    <select v-model="settings.rgbconfig[rgbIndex].type">
-      <option v-for="rgbType in rgbTypeFiltered(showConfigs[settings.outputmode], rgbIndex)" 
+    <select v-model="settings.rgbconfig[rgbIndex].outputtype">
+      <option v-for="rgbType in rgbTypeFiltered(showConfigs[settings.outputconfig], rgbIndex)" 
               v-bind:value="rgbType.value" v-bind:key="rgbType.id" >{{ rgbType.text }}
       </option>
     </select>
     </div>
-    <div class="left_universe">DMX Mapping</div>
+    <div class="left_universe">ArtNet Mapping</div>
     <div class="right_universe">
       <div class="universefield" style="font-size: 80%; padding-top:2px;">Universe</div>
       <div class="offsetfield" style="font-size: 80%; padding-top:2px;">Offset</div>
@@ -17,7 +17,25 @@
     <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
       <div class="left_universe">{{ item.text }}</div>
       <div class="right_universe">
-        <input class="universefield" v-bind:style="{ border : validateUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].universe">
+        <input class="universefield" v-bind:style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].artnet">
+        <input class="offsetfield" v-bind:style="{ border : validateChannelOffset(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
+        <span v-if="dmxLength() == 2 && !isMobile()" class="footnote">
+            DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
+        </span>
+        <span v-if="dmxLength() == 1 && !isMobile()" class="footnote">
+            DMX Channel: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }}</span>
+        </span>
+      </div>
+    </div>
+    <div class="left_universe">E1.31 Mapping</div>
+    <div class="right_universe">
+      <div class="universefield" style="font-size: 80%; padding-top:2px;">Universe</div>
+      <div class="offsetfield" style="font-size: 80%; padding-top:2px;">Offset</div>
+    </div>
+    <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
+      <div class="left_universe">{{ item.text }}</div>
+      <div class="right_universe">
+        <input class="universefield" v-bind:style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].e131">
         <input class="offsetfield" v-bind:style="{ border : validateChannelOffset(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
         <span v-if="dmxLength() == 2 && !isMobile()" class="footnote">
             DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
@@ -74,10 +92,10 @@ export default {
         }
       },
       compLength() {
-        return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].type].components;
+        return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].components;
       },
       dmxLength() {
-        return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].type].size == 16 ? 2 : 1;
+        return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].size == 16 ? 2 : 1;
       },
       dmxIndex(itemIndex) {
         return parseInt(this.settings.rgbconfig[this.rgbIndex].components[itemIndex].offset) + 1;
@@ -102,8 +120,16 @@ export default {
                  parseInt(value) >= min &&
                  Number(value) == parseInt(value));
       },
-      validateUniverse(index) {
-          var value = this.settings.rgbconfig[this.rgbIndex].components[index].universe;
+      validateArtnetUniverse(index) {
+          var value = this.settings.rgbconfig[this.rgbIndex].components[index].artnet;
+          if (this.checkInteger(value, 0, 32767)) {
+            return true;
+          } else {
+            return false;
+          }
+      },
+      validateE131Universe(index) {
+          var value = this.settings.rgbconfig[this.rgbIndex].components[index].e131;
           if (this.checkInteger(value, 0, 32767)) {
             return true;
           } else {
@@ -127,7 +153,7 @@ export default {
           }
       },
       componentsSplice() {
-          var components = this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].type].components;
+          var components = this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].components;
           function filterComponentType(componentType) {
             if (components >= componentType.components) {
               return true;

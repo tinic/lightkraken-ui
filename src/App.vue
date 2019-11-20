@@ -4,11 +4,6 @@
     </div>
     <div v-if="this.savingSomething === true">
     </div>
-    <div class="neon">
-      <span class="text" data-text="lightkraken">lightkraken</span>
-      <span class="gradient"></span>
-      <span class="spotlight"></span>
-    </div>
     <div v-if="this.statusLoading === false">
       <Status
         v-bind:status="status"/>
@@ -25,28 +20,28 @@
         v-bind:outputModes="outputModes"
         v-bind:settings="settings"/>
       <StripConfig
-        v-if="this.showConfigs[this.settings.outputmode].strip[0] === true"
+        v-if="this.showConfigs[this.settings.outputconfig].strip[0] === true"
         v-bind:stripIndex=0
         v-bind:terminalNames="terminalNames"
         v-bind:stripTypes="stripTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <RGBConfig
-        v-if="this.showConfigs[this.settings.outputmode].rgb[0] === true"
+        v-if="this.showConfigs[this.settings.outputconfig].rgb[0] === true"
         v-bind:rgbIndex=0
         v-bind:terminalNames="terminalNames"
         v-bind:rgbTypes="rgbTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <StripConfig 
-        v-if="this.showConfigs[this.settings.outputmode].strip[1] === true"
+        v-if="this.showConfigs[this.settings.outputconfig].strip[1] === true"
         v-bind:stripIndex=1
         v-bind:terminalNames="terminalNames"
         v-bind:stripTypes="stripTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <RGBConfig 
-        v-if="this.showConfigs[this.settings.outputmode].rgb[1] === true"
+        v-if="this.showConfigs[this.settings.outputconfig].rgb[1] === true"
         v-bind:rgbIndex=1
         v-bind:terminalNames="terminalNames"
         v-bind:rgbTypes="rgbTypes"
@@ -153,7 +148,7 @@ export default {
         return 'http://my-json-server.typicode.com/tinic/lightkraken-ui/';
       }
       if(process.env.NODE_ENV === "test") {
-        return 'http://192.168.1.148/';
+        return 'http://lightkraken-09dfe272/';
       }
       return '/';
     }
