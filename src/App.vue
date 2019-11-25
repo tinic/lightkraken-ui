@@ -88,19 +88,21 @@ export default {
           { text: '2 x RGB Strip + 1 x Analog RGB', value : 2, strips : 2 },
           { text: '1 x RGB Strip + 1 x Analog RGB+W', value : 3, strips : 1 },
           { text: '2 x Analog RGB', value : 4, strips : 0 },
+          { text: '1 x Analog RGB+W+WW', value : 5, strips : 0 }
       ],
       showConfigs: [
           { strip: [true,  true ], rgb : [false, false], clock:[1, 1], components:[0, 0] },
           { strip: [false, true ], rgb : [true,  false], clock:[0, 1], components:[3, 0] },
           { strip: [true,  true ], rgb : [true,  false], clock:[0, 0], components:[3, 0] },
           { strip: [false, true ], rgb : [true,  false], clock:[0, 0], components:[4, 0] },
-          { strip: [false, false], rgb : [true,  true ], clock:[0, 0], components:[3, 3] }
+          { strip: [false, false], rgb : [true,  true ], clock:[0, 0], components:[3, 3] },
+          { strip: [false, false], rgb : [true,  false], clock:[0, 0], components:[5, 0] }
       ],
       stripInputTypes: [
           { text: 'RGB (8-bit, Device)', value : 0, components: 3, size:8 },
-          { text: 'RGBW (8-bit, Device)', value : 1, components: 4, size:8 },
+          { text: 'RGB+W (8-bit, Device)', value : 1, components: 4, size:8 },
           { text: 'RGB (8-bit, sRGB)', value : 2, components: 3, size:8 },
-          { text: 'RGBW (8-bit, sRGB)', value : 3, components: 4, size:8 }
+          { text: 'RGB+W (8-bit, sRGB)', value : 3, components: 4, size:8 }
       ],
       stripOutputTypes: [
           { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3, globillum: false },
@@ -120,16 +122,16 @@ export default {
       ],
       rgbInputTypes: [
           { text: 'RGB (8-bit, Device)',  value : 0,  components: 3, size:8  },
-          { text: 'RGBW (8-bit, Device)',  value : 1,  components: 4, size:8  },
-          { text: 'RGBWW (8-bit, Device)',  value : 2,  components: 5, size:8  },
+          { text: 'RGB+W (8-bit, Device)',  value : 1,  components: 4, size:8  },
+          { text: 'RGB+W+WW (8-bit, Device)',  value : 2,  components: 5, size:8  },
           { text: 'RGB (8-bit, sRGB)',  value : 3,  components: 3, size:8  },
-          { text: 'RGBW (8-bit, sRGB)',  value : 4,  components: 4, size:8  },
-          { text: 'RGBWW (8-bit, sRGB)',  value : 5,  components: 5, size:8  },
+          { text: 'RGB+W (8-bit, sRGB)',  value : 4,  components: 4, size:8  },
+          { text: 'RGB+W+WW (8-bit, sRGB)',  value : 5,  components: 5, size:8  },
       ],
       rgbOutputTypes: [
           { text: 'RGB (14-bit)',  value : 0,  components: 3, size:8  },
-          { text: 'RGBW (14-bit)',  value : 1,  components: 4, size:8  },
-          { text: 'RGBWW (14-bit)',  value : 2,  components: 5, size:8  },
+          { text: 'RGB+W (14-bit)',  value : 1,  components: 4, size:8  },
+          { text: 'RGB+W+WW (14-bit)',  value : 2,  components: 5, size:8  },
       ],
       pinTable: [
         [ 
@@ -147,6 +149,9 @@ export default {
         ],[
           [{t:"BLU0",c:"BLU"},{t:"RED0",c:"RED"},{t:"GRN0",c:"GRN"},{t:"VCC",c:"VCC"},{t:"BLU1",c:"BLU"},{t:"RED1",c:"RED"},{t:"GRN1",c:"GRN"},{t:"VCC",c:"VCC"}],
           [{t:"BLU0",c:"BLU"},{t:"RED0",c:"RED"},{t:"GRN0",c:"GRN"},{t:"VCC",c:"VCC"},{t:"BLU1",c:"BLU"},{t:"RED1",c:"RED"},{t:"GRN1",c:"GRN"},{t:"VCC",c:"VCC"}]
+        ],[
+          [{t:"BLU0",c:"BLU"},{t:"RED0",c:"RED"},{t:"GRN0",c:"GRN"},{t:"VCC",c:"VCC"},{t:"WHT",c:"WHT"},{t:"WWHT",c:"WHT"},{t:"---",c:"NIL"},{t:"VCC",c:"VCC"}],
+          [{t:"BLU0",c:"BLU"},{t:"RED0",c:"RED"},{t:"GRN0",c:"GRN"},{t:"VCC",c:"VCC"},{t:"WHT",c:"WHT"},{t:"WWHT",c:"WHT"},{t:"---",c:"NIL"},{t:"VCC",c:"VCC"}]
         ]
       ]
     };

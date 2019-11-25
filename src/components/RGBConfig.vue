@@ -17,6 +17,13 @@
       </option>
     </select>
     </div>
+		<div class="left">Limit Brightness</div>
+		<div class="right">
+			<input class="smallnumber" v-bind:style="{ border : validatePwmLimit() ? '2px solid green' : '2px solid red' }" v-model="rgbConfig().pwmlimit">
+      <span class="footnote">
+        %
+      </span>
+		</div>
     <div class="left_universe">ArtNet Mapping</div>
     <div class="right_universe">
       <div class="universefield" style="font-size: 80%; padding-top:2px;">Universe</div>
@@ -131,11 +138,21 @@ export default {
          index;
           return true;
       },
+      checkFloat(value, min, max) {
+        return (!isNaN(Number(value)) &&
+                 parseFloat(value) <= max &&
+                 parseFloat(value) >= min &&
+                 Number(value) == parseFloat(value));
+      },
       checkInteger(value, min, max) {
         return (!isNaN(Number(value)) &&
                  parseInt(value) <= max &&
                  parseInt(value) >= min &&
                  Number(value) == parseInt(value));
+      },
+      validatePwmLimit() {
+        var pwm = this.rgbConfig().pwmlimit;
+        return this.checkFloat(pwm, 0, 100);
       },
       validateArtnetUniverse(index) {
           var value = this.rgbComponents(index).artnet;
