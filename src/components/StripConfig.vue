@@ -12,7 +12,7 @@
     <div v-if="hasGlobIllum()">
 		<div class="left">Global Illumination</div>
 		<div class="right">
-			<input class="smallnumber" v-bind:style="{ border : validatePercentage() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().globillum">
+			<input class="smallnumber" v-bind:style="{ border : validateGlobIllum() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().globillum">
       <span class="footnote">
         %
       </span>
@@ -20,7 +20,7 @@
     </div>
 		<div class="left">Limit Brightness</div>
 		<div class="right">
-			<input class="smallnumber" v-bind:style="{ border : validatePercentage() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().complimit">
+			<input class="smallnumber" v-bind:style="{ border : validateCompLimit() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().complimit">
       <span class="footnote">
         %
       </span>
@@ -123,8 +123,12 @@ export default {
             return false;
           }
       },
-      validatePercentage() {
+      validateCompLimit() {
         var length = this.stripConfig().complimit;
+        return this.checkFloat(length, 0, 100);
+      },
+      validateGlobIllum() {
+        var length = this.stripConfig().globillum;
         return this.checkFloat(length, 0, 100);
       },
       validateLEDs() {

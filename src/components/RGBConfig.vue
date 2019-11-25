@@ -1,7 +1,7 @@
 <template>
   <div class="rgb">
     <div class="header">Analog RGB ({{ terminalNames[rgbIndex] }})</div>
-    <div class="left">RGB Input type</div>
+    <div class="left">Input Data Type</div>
     <div class="right">
     <select v-model="rgbConfig().inputtype">
       <option v-for="rgbType in rgbInputTypeFiltered(showConfigs[settings.outputconfig], rgbIndex)" 
