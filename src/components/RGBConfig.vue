@@ -66,7 +66,7 @@ export default {
   props: {
     rgbIndex: Number,
     terminalNames: Array,
-    rgbTypes: Array,
+    rgbInputTypes: Array,
     settings: Object,
     showConfigs: Array,
     settingsInternal: Object,
@@ -92,10 +92,10 @@ export default {
         }
       },
       compLength() {
-        return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].components;
+        return this.rgbInputTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].components;
       },
       dmxLength() {
-        return this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].size == 16 ? 2 : 1;
+        return this.rgbInputTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].size == 16 ? 2 : 1;
       },
       dmxIndex(itemIndex) {
         return parseInt(this.settings.rgbconfig[this.rgbIndex].components[itemIndex].offset) + 1;
@@ -153,7 +153,7 @@ export default {
           }
       },
       componentsSplice() {
-          var components = this.rgbTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].components;
+          var components = this.rgbInputTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].components;
           function filterComponentType(componentType) {
             if (components >= componentType.components) {
               return true;
@@ -169,7 +169,7 @@ export default {
             }
             return true;
           }
-          return this.rgbTypes.filter(filterRGBType);
+          return this.rgbInputTypes.filter(filterRGBType);
       }
   },
   components: {

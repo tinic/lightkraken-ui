@@ -9,6 +9,13 @@
       </option>
     </select>
     </div>
+		<div class="left">Limit Brightness</div>
+		<div class="right">
+			<input class="smallnumber" v-bind:style="{ border : validateBrightnessLimit() ? '2px solid green' : '2px solid red' }" v-model="settings.stripconfig[stripIndex].complimit">
+      <span v-if="!isMobile()" class="footnote">
+        %
+      </span>
+		</div>
 		<div class="left">Number of LEDs</div>
 		<div class="right">
 			<input class="smallnumber" v-bind:style="{ border : validateLEDs() ? '2px solid green' : '2px solid red' }" v-model="settings.stripconfig[stripIndex].length">
@@ -81,6 +88,12 @@ export default {
                  parseInt(value) >= min &&
                  Number(value) == parseInt(value));
       },
+      checkFloat(value, min, max) {
+        return (!isNaN(Number(value)) &&
+                 parseFloat(value) <= max &&
+                 parseFloat(value) >= min &&
+                 Number(value) == parseFloat(value));
+      },
       compLength() {
         return this.stripTypes[this.settings.stripconfig[this.stripIndex].outputtype].components;
       },
@@ -91,6 +104,10 @@ export default {
           } else {
             return false;
           }
+      },
+      validateBrightnessLimit() {
+        var length = this.settings.stripconfig[this.stripIndex].complimit;
+        return this.checkFloat(length, 0, 100);
       },
       validateLEDs() {
         var length = this.settings.stripconfig[this.stripIndex].length;
@@ -161,6 +178,7 @@ export default {
     terminalNames: Array,
     settings: Object,
     stripTypes: Array,
+    stripInputTypes: Array,
     showConfigs: Array,
     settingsInternal: Object
   },

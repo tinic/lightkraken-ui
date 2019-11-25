@@ -24,13 +24,14 @@
         v-bind:stripIndex=0
         v-bind:terminalNames="terminalNames"
         v-bind:stripTypes="stripTypes"
+        v-bind:stripInputTypes="stripInputTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <RGBConfig
         v-if="this.showConfigs[this.settings.outputconfig].rgb[0] === true"
         v-bind:rgbIndex=0
         v-bind:terminalNames="terminalNames"
-        v-bind:rgbTypes="rgbTypes"
+        v-bind:rgbInputTypes="rgbInputTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <StripConfig 
@@ -38,13 +39,14 @@
         v-bind:stripIndex=1
         v-bind:terminalNames="terminalNames"
         v-bind:stripTypes="stripTypes"
+        v-bind:stripInputTypes="stripInputTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <RGBConfig 
         v-if="this.showConfigs[this.settings.outputconfig].rgb[1] === true"
         v-bind:rgbIndex=1
         v-bind:terminalNames="terminalNames"
-        v-bind:rgbTypes="rgbTypes"
+        v-bind:rgbInputTypes="rgbInputTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <ActionBar
@@ -92,16 +94,19 @@ export default {
           { strip: [false, true ], rgb : [true,  false], clock:[0, 0], components:[4, 0] },
           { strip: [false, false], rgb : [true,  true ], clock:[0, 0], components:[3, 3] }
       ],
-      rgbTypes: [
-          { text: 'RGB (8-bit, sRGB)',  value : 0,  components: 3, size:8  },
-          { text: 'RGBW (8-bit, sRGB)',  value : 1,  components: 4, size:8  },
-          { text: 'RGBWW (8-bit, sRGB)',  value : 2,  components: 5, size:8  },
-          { text: 'RGB (16-bit, sRGB)',  value : 3,  components: 3, size:16  },
-          { text: 'RGBW (16-bit, sRGB)',  value : 4,  components: 4, size:16  },
-          { text: 'RGBWW (16-bit, sRGB)',  value : 5,  components: 5, size:16  },
-          { text: 'RGB (16-bit, PWM%',  value : 6,  components: 3, size:16  },
-          { text: 'RGBW (16-bit, PWM%)',  value : 7,  components: 4, size:16  },
-          { text: 'RGBWW (16-bit, PWM%)',  value : 8,  components: 5, size:16  }
+      stripInputTypes: [
+          { text: 'RGB (8-bit, Device)', value : 0, components: 3, size:8 },
+          { text: 'RGBW (8-bit, Device)', value : 0, components: 4, size:8 },
+          { text: 'RGB (8-bit, sRGB)', value : 0, components: 3, size:8 },
+          { text: 'RGBW (8-bit, sRGB)', value : 0, components: 4, size:8 }
+      ],
+      rgbInputTypes: [
+          { text: 'RGB (8-bit, PWM%)',  value : 0,  components: 3, size:8  },
+          { text: 'RGBW (8-bit, PWM%)',  value : 1,  components: 4, size:8  },
+          { text: 'RGBWW (8-bit, PWM%)',  value : 2,  components: 5, size:8  },
+          { text: 'RGB (8-bit, sRGB)',  value : 3,  components: 3, size:8  },
+          { text: 'RGBW (8-bit, sRGB)',  value : 4,  components: 4, size:8  },
+          { text: 'RGBWW (8-bit, sRGB)',  value : 5,  components: 5, size:8  },
       ],
       stripTypes: [
           { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3  },
