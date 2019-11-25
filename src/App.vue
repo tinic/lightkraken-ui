@@ -11,7 +11,7 @@
     <div v-if="this.settingsLoading === false">
       <PinLayout
         v-bind:terminalNames="terminalNames"
-        v-bind:stripTypes="stripTypes"
+        v-bind:stripOutputTypes="stripOutputTypes"
         v-bind:settings="settings"
         v-bind:pinTable="pinTable"/>
       <NetworkInterface
@@ -23,7 +23,7 @@
         v-if="this.showConfigs[this.settings.outputconfig].strip[0] === true"
         v-bind:stripIndex=0
         v-bind:terminalNames="terminalNames"
-        v-bind:stripTypes="stripTypes"
+        v-bind:stripOutputTypes="stripOutputTypes"
         v-bind:stripInputTypes="stripInputTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
@@ -32,13 +32,14 @@
         v-bind:rgbIndex=0
         v-bind:terminalNames="terminalNames"
         v-bind:rgbInputTypes="rgbInputTypes"
+        v-bind:rgbOutputTypes="rgbOutputTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <StripConfig 
         v-if="this.showConfigs[this.settings.outputconfig].strip[1] === true"
         v-bind:stripIndex=1
         v-bind:terminalNames="terminalNames"
-        v-bind:stripTypes="stripTypes"
+        v-bind:stripOutputTypes="stripOutputTypes"
         v-bind:stripInputTypes="stripInputTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
@@ -47,6 +48,7 @@
         v-bind:rgbIndex=1
         v-bind:terminalNames="terminalNames"
         v-bind:rgbInputTypes="rgbInputTypes"
+        v-bind:rgbOutputTypes="rgbOutputTypes"
         v-bind:showConfigs="showConfigs"
         v-bind:settings="settings"/>
       <ActionBar
@@ -100,7 +102,7 @@ export default {
           { text: 'RGB (8-bit, sRGB)', value : 0, components: 3, size:8 },
           { text: 'RGBW (8-bit, sRGB)', value : 0, components: 4, size:8 }
       ],
-      stripTypes: [
+      stripOutputTypes: [
           { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3, globillum: false },
           { text: 'SK6812 (RGB)',  value : 1,  clock : 0, components: 3, globillum: false },
           { text: 'TM1804 (RGB)',  value : 2,  clock : 0, components: 3, globillum: false },
@@ -123,6 +125,11 @@ export default {
           { text: 'RGB (8-bit, sRGB)',  value : 3,  components: 3, size:8  },
           { text: 'RGBW (8-bit, sRGB)',  value : 4,  components: 4, size:8  },
           { text: 'RGBWW (8-bit, sRGB)',  value : 5,  components: 5, size:8  },
+      ],
+      rgbOutputTypes: [
+          { text: 'RGB (14-bit)',  value : 0,  components: 3, size:8  },
+          { text: 'RGBW (14-bit)',  value : 1,  components: 4, size:8  },
+          { text: 'RGBWW (14-bit)',  value : 2,  components: 5, size:8  },
       ],
       pinTable: [
         [ 
@@ -182,11 +189,11 @@ export default {
     patchLEDType() {
         // Live patch LED type
         for (var c = 0; c < this.settings.stripconfig.length; c++) {
-          if (this.stripTypes[this.settings.stripconfig[c].type].clock === 1 &&
+          if (this.stripOutputTypes[this.settings.stripconfig[c].type].clock === 1 &&
               this.showConfigs[this.settings.outputmode].clock[c] === 0) {
-              for (var d = 0; d <this.stripTypes.length; d++) {
-                if (this.stripTypes[d].clock == 0) {
-                  this.settings.stripconfig[c].type = this.stripTypes[d].value;
+              for (var d = 0; d <this.stripOutputTypes.length; d++) {
+                if (this.stripOutputTypes[d].clock == 0) {
+                  this.settings.stripconfig[c].type = this.stripOutputTypes[d].value;
                   break;
                 }
               }

@@ -4,7 +4,7 @@
     <div class="left">LED type</div>
     <div class="right">
     <select v-model="stripConfig().outputtype">
-      <option v-for="stripType in stripTypesFiltered(showConfigs[settings.outputconfig], stripIndex)" 
+      <option v-for="stripType in stripOutputTypesFiltered(showConfigs[settings.outputconfig], stripIndex)" 
               v-bind:value="stripType.value" v-bind:key="stripType.id" >{{ stripType.text }}
       </option>
     </select>
@@ -96,7 +96,7 @@ export default {
         return this.settings.stripconfig[this.stripIndex];
       },
       stripType() {
-        return this.stripTypes[this.stripConfig().outputtype];
+        return this.stripOutputTypes[this.stripConfig().outputtype];
       },
       stripInputType() {
         return this.stripInputTypes[this.stripConfig().inputtype];
@@ -185,7 +185,7 @@ export default {
         return (this.stripConfig().length % perUniverse) * components;
       },
       universesFiltered(stripconfig) {
-        var components = this.stripTypes[stripconfig.outputtype].components;
+        var components = this.stripOutputTypes[stripconfig.outputtype].components;
         function filterUniverses(universe, index) {
           if ((parseInt(512 / components) * (index + 0)) < stripconfig.length) {
             return true;
@@ -194,7 +194,7 @@ export default {
         }
         return stripconfig.universes.filter(filterUniverses);
       },
-      stripTypesFiltered(showConfig, index) {
+      stripOutputTypesFiltered(showConfig, index) {
           function filterStripType(stripType) {
             if (showConfig.clock[index] == 0 &&
                 stripType.clock === 1) {
@@ -202,7 +202,7 @@ export default {
             }
             return true;
           }
-          return this.stripTypes.filter(filterStripType);
+          return this.stripOutputTypes.filter(filterStripType);
       }
   },
   computed: {
@@ -211,7 +211,7 @@ export default {
     stripIndex: Number,
     terminalNames: Array,
     settings: Object,
-    stripTypes: Array,
+    stripOutputTypes: Array,
     stripInputTypes: Array,
     showConfigs: Array,
     settingsInternal: Object

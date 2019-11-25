@@ -4,8 +4,16 @@
     <div class="left">Input Data Type</div>
     <div class="right">
     <select v-model="rgbConfig().inputtype">
-      <option v-for="rgbType in rgbInputTypeFiltered(showConfigs[settings.outputconfig], rgbIndex)" 
-              v-bind:value="rgbType.value" v-bind:key="rgbType.id" >{{ rgbType.text }}
+      <option v-for="rgbInputType in rgbInputTypes" 
+              v-bind:value="rgbInputType.value" v-bind:key="rgbInputType.id" >{{ rgbInputType.text }}
+      </option>
+    </select>
+    </div>
+    <div class="left">Output Type</div>
+    <div class="right">
+    <select v-model="rgbConfig().outputtype">
+      <option v-for="rgbOutputType in rgbOutputTypeFiltered(showConfigs[settings.outputconfig], rgbIndex)" 
+              v-bind:value="rgbOutputType.value" v-bind:key="rgbOutputType.id" >{{ rgbOutputType.text }}
       </option>
     </select>
     </div>
@@ -67,6 +75,7 @@ export default {
     rgbIndex: Number,
     terminalNames: Array,
     rgbInputTypes: Array,
+    rgbOutputTypes: Array,
     settings: Object,
     showConfigs: Array,
     settingsInternal: Object
@@ -170,14 +179,14 @@ export default {
           }
           return this.componentTypes.filter(filterComponentType);
       },
-      rgbInputTypeFiltered(showConfig, index) {
+      rgbOutputTypeFiltered(showConfig, index) {
           function filterRGBType(rgbType) {
             if (showConfig.components[index] < rgbType.components) {
               return false;
             }
             return true;
           }
-          return this.rgbInputTypes.filter(filterRGBType);
+          return this.rgbOutputTypes.filter(filterRGBType);
       }
   },
   components: {
