@@ -4,7 +4,7 @@
     <div class="left">RGB Input type</div>
     <div class="right">
     <select v-model="rgbConfig().inputtype">
-      <option v-for="rgbType in rgbInputTypes" 
+      <option v-for="rgbType in rgbInputTypeFiltered(showConfigs[settings.outputconfig], rgbIndex)" 
               v-bind:value="rgbType.value" v-bind:key="rgbType.id" >{{ rgbType.text }}
       </option>
     </select>
@@ -172,7 +172,7 @@ export default {
       },
       rgbInputTypeFiltered(showConfig, index) {
           function filterRGBType(rgbType) {
-            if (showConfig.components[index] !== rgbType.components) {
+            if (showConfig.components[index] < rgbType.components) {
               return false;
             }
             return true;

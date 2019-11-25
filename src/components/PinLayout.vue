@@ -3,13 +3,13 @@
     <div class="status">
     <span class="terminal">{{ terminalNames[0] }}
       <div v-bind:key="pin.id" 
-           v-for="(pin, index) in pinTable[settings.outputmode][stripTypes[settings.stripconfig[0].outputtype].clock].slice(0, 4)">
+           v-for="(pin, index) in pinTable[settings.outputconfig][stripTypes[settings.stripconfig[0].outputtype].clock].slice(0, 4)">
         <div class="PIN" :class="pin.c">{{ index }}<br />{{ pin.t }}</div>
       </div>
     </span>
     <span class="terminal">{{ terminalNames[1] }}
       <div v-bind:key="pin.id" 
-           v-for="(pin,index) in pinTable[settings.outputmode][stripTypes[settings.stripconfig[1].outputtype].clock].slice(4, 8)">
+           v-for="(pin,index) in pinTable[settings.outputconfig][stripTypes[settings.stripconfig[1].outputtype].clock].slice(4, 8)">
         <div class="PIN" :class="pin.c">{{ index+4 }}<br />{{ pin.t }}</div>
       </div>
     </span>
