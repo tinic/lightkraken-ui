@@ -1,10 +1,10 @@
 <template>
   <div class="rgb">
     <div class="header">Analog RGB ({{ terminalNames[rgbIndex] }})</div>
-    <div class="left">RGB type</div>
+    <div class="left">RGB Input type</div>
     <div class="right">
-    <select v-model="settings.rgbconfig[rgbIndex].outputtype">
-      <option v-for="rgbType in rgbTypeFiltered(showConfigs[settings.outputconfig], rgbIndex)" 
+    <select v-model="rgbConfig().inputtype">
+      <option v-for="rgbType in rgbInputTypes" 
               v-bind:value="rgbType.value" v-bind:key="rgbType.id" >{{ rgbType.text }}
       </option>
     </select>
@@ -17,8 +17,8 @@
     <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
       <div class="left_universe">{{ item.text }}</div>
       <div class="right_universe">
-        <input class="universefield" v-bind:style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].artnet">
-        <input class="offsetfield" v-bind:style="{ border : validateChannelOffset(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
+        <input class="universefield" v-bind:style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).artnet">
+        <input class="offsetfield" v-bind:style="{ border : validateChannelOffset(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).offset">
         <span v-if="dmxLength() == 2 && !isMobile()" class="footnote">
             DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
         </span>
@@ -35,8 +35,8 @@
     <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
       <div class="left_universe">{{ item.text }}</div>
       <div class="right_universe">
-        <input class="universefield" v-bind:style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].e131">
-        <input class="offsetfield" v-bind:style="{ border : validateChannelOffset(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[itemIndex].offset">
+        <input class="universefield" v-bind:style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).e131">
+        <input class="offsetfield" v-bind:style="{ border : validateChannelOffset(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).offset">
         <span v-if="dmxLength() == 2 && !isMobile()" class="footnote">
             DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
         </span>
@@ -49,11 +49,11 @@
     <div class="right_color"><ColorSwatch v-bind:change="colorChange" v-bind:initial="initialColor"/></div>
     <div v-if="compLength() >= 4" class="left_color">Startup White</div>
     <div v-if="compLength() >= 4" class="right_universe">
-      <input class="universefield" v-bind:style="{ border : validateComponentValue(3) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[3].value">
+      <input class="universefield" v-bind:style="{ border : validateComponentValue(3) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(3).value">
     </div>
     <div v-if="compLength() >= 5" class="left_color">Startup Warm White</div>
     <div v-if="compLength() >= 5" class="right_universe">
-      <input class="universefield" v-bind:style="{ border : validateComponentValue(4) ? '2px solid green' : '2px solid red' }" v-model="settings.rgbconfig[rgbIndex].components[4].value">
+      <input class="universefield" v-bind:style="{ border : validateComponentValue(4) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(4).value">
     </div>
     <div class="spacer" style="clear: both;"></div>
   </div>
@@ -69,8 +69,7 @@ export default {
     rgbInputTypes: Array,
     settings: Object,
     showConfigs: Array,
-    settingsInternal: Object,
-    rgbType: String
+    settingsInternal: Object
   },
   data() {
     return {
@@ -79,7 +78,7 @@ export default {
           { text: 'Green', components : 3 },
           { text: 'Blue', components : 3 },
           { text: 'White', components : 4 },
-          { text: 'White', components : 5 }
+          { text: 'Warm White', components : 5 }
       ],
     };
   },
@@ -91,24 +90,33 @@ export default {
           return false
         }
       },
+      rgbConfig() {
+        return this.settings.rgbconfig[this.rgbIndex];
+      },
+      rgbInputType() {
+        return this.rgbInputTypes[this.rgbConfig().inputtype];
+      },
+      rgbComponents(index) {
+        return this.rgbConfig().components[index];
+      },
       compLength() {
-        return this.rgbInputTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].components;
+        return this.rgbInputType().components;
       },
       dmxLength() {
-        return this.rgbInputTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].size == 16 ? 2 : 1;
+        return this.rgbInputType().size == 16 ? 2 : 1;
       },
       dmxIndex(itemIndex) {
-        return parseInt(this.settings.rgbconfig[this.rgbIndex].components[itemIndex].offset) + 1;
+        return parseInt(this.rgbComponents(itemIndex).offset) + 1;
       },
       colorChange(color) {
-        this.settings.rgbconfig[this.rgbIndex].components[0].value = color.r;
-        this.settings.rgbconfig[this.rgbIndex].components[1].value = color.g;
-        this.settings.rgbconfig[this.rgbIndex].components[2].value = color.b;
+        this.rgbComponents(0).value = color.r;
+        this.rgbComponents(1).value = color.g;
+        this.rgbComponents(2).value = color.b;
       },
       initialColor() {
-        return { r: this.settings.rgbconfig[this.rgbIndex].components[0].value, 
-                 g: this.settings.rgbconfig[this.rgbIndex].components[1].value, 
-                 b: this.settings.rgbconfig[this.rgbIndex].components[2].value};
+        return { r: this.rgbComponents(0).value, 
+                 g: this.rgbComponents(1).value, 
+                 b: this.rgbComponents(2).value};
       },
       validateComponent(index) {
          index;
@@ -121,7 +129,7 @@ export default {
                  Number(value) == parseInt(value));
       },
       validateArtnetUniverse(index) {
-          var value = this.settings.rgbconfig[this.rgbIndex].components[index].artnet;
+          var value = this.rgbComponents(index).artnet;
           if (this.checkInteger(value, 0, 32767)) {
             return true;
           } else {
@@ -129,7 +137,7 @@ export default {
           }
       },
       validateE131Universe(index) {
-          var value = this.settings.rgbconfig[this.rgbIndex].components[index].e131;
+          var value = this.rgbComponents(index).e131;
           if (this.checkInteger(value, 0, 32767)) {
             return true;
           } else {
@@ -137,7 +145,7 @@ export default {
           }
       },
       validateComponentValue(index) {
-          var value = this.settings.rgbconfig[this.rgbIndex].components[index].value;
+          var value = this.rgbComponents(index).value;
           if (this.checkInteger(value, 0, 255)) {
             return true;
           } else {
@@ -145,7 +153,7 @@ export default {
           }
       },
       validateChannelOffset(index) {
-          var value = this.settings.rgbconfig[this.rgbIndex].components[index].offset;
+          var value = this.rgbComponents(index).offset;
           if (this.checkInteger(value, 0, 255)) {
             return true;
           } else {
@@ -153,7 +161,7 @@ export default {
           }
       },
       componentsSplice() {
-          var components = this.rgbInputTypes[this.settings.rgbconfig[this.rgbIndex].outputtype].components;
+          var components = this.rgbInputType().components;
           function filterComponentType(componentType) {
             if (components >= componentType.components) {
               return true;
@@ -162,7 +170,7 @@ export default {
           }
           return this.componentTypes.filter(filterComponentType);
       },
-      rgbTypeFiltered(showConfig, index) {
+      rgbInputTypeFiltered(showConfig, index) {
           function filterRGBType(rgbType) {
             if (showConfig.components[index] !== rgbType.components) {
               return false;

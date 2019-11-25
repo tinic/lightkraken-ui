@@ -100,14 +100,6 @@ export default {
           { text: 'RGB (8-bit, sRGB)', value : 0, components: 3, size:8 },
           { text: 'RGBW (8-bit, sRGB)', value : 0, components: 4, size:8 }
       ],
-      rgbInputTypes: [
-          { text: 'RGB (8-bit, PWM%)',  value : 0,  components: 3, size:8  },
-          { text: 'RGBW (8-bit, PWM%)',  value : 1,  components: 4, size:8  },
-          { text: 'RGBWW (8-bit, PWM%)',  value : 2,  components: 5, size:8  },
-          { text: 'RGB (8-bit, sRGB)',  value : 3,  components: 3, size:8  },
-          { text: 'RGBW (8-bit, sRGB)',  value : 4,  components: 4, size:8  },
-          { text: 'RGBWW (8-bit, sRGB)',  value : 5,  components: 5, size:8  },
-      ],
       stripTypes: [
           { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3, globillum: false },
           { text: 'SK6812 (RGB)',  value : 1,  clock : 0, components: 3, globillum: false },
@@ -123,6 +115,14 @@ export default {
           { text: 'LPD8806 (RGB)', value : 11, clock : 0, components: 3, globillum: false },
           { text: 'TLS3001 (RGB)', value : 12, clock : 0, components: 3, globillum: false },
           { text: 'TM1829 (RGB)',  value : 13, clock : 0, components: 3, globillum: false }
+      ],
+      rgbInputTypes: [
+          { text: 'RGB (8-bit, PWM%)',  value : 0,  components: 3, size:8  },
+          { text: 'RGBW (8-bit, PWM%)',  value : 1,  components: 4, size:8  },
+          { text: 'RGBWW (8-bit, PWM%)',  value : 2,  components: 5, size:8  },
+          { text: 'RGB (8-bit, sRGB)',  value : 3,  components: 3, size:8  },
+          { text: 'RGBW (8-bit, sRGB)',  value : 4,  components: 4, size:8  },
+          { text: 'RGBWW (8-bit, sRGB)',  value : 5,  components: 5, size:8  },
       ],
       pinTable: [
         [ 
