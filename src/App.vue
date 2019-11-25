@@ -98,9 +98,9 @@ export default {
       ],
       stripInputTypes: [
           { text: 'RGB (8-bit, Device)', value : 0, components: 3, size:8 },
-          { text: 'RGBW (8-bit, Device)', value : 0, components: 4, size:8 },
-          { text: 'RGB (8-bit, sRGB)', value : 0, components: 3, size:8 },
-          { text: 'RGBW (8-bit, sRGB)', value : 0, components: 4, size:8 }
+          { text: 'RGBW (8-bit, Device)', value : 1, components: 4, size:8 },
+          { text: 'RGB (8-bit, sRGB)', value : 2, components: 3, size:8 },
+          { text: 'RGBW (8-bit, sRGB)', value : 3, components: 4, size:8 }
       ],
       stripOutputTypes: [
           { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3, globillum: false },

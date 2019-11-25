@@ -95,14 +95,14 @@ export default {
       stripConfig() {
         return this.settings.stripconfig[this.stripIndex];
       },
-      stripType() {
+      stripOutputType() {
         return this.stripOutputTypes[this.stripConfig().outputtype];
       },
       stripInputType() {
         return this.stripInputTypes[this.stripConfig().inputtype];
       },
       hasGlobIllum() {
-        return this.stripType().globillum;
+        return this.stripOutputType().globillum;
       },
       initialColor() {
         return { 
@@ -124,7 +124,7 @@ export default {
                  Number(value) == parseFloat(value));
       },
       compLength() {
-        return this.stripType().components;
+        return this.stripInputType().components;
       },
       validateAlphaValue() {
           var value = this.stripConfig().color.a;
@@ -172,8 +172,7 @@ export default {
         return 180 + (Math.max(0,this.universesFiltered(this.stripConfig()).length-1)) * 32;
       },
       maxLEDLength() {
-        console.log(this.settings);
-        var components = this.stripInputType().components;
+        var components = Math.max(this.stripOutputType().components, this.stripInputType().components);
         return (parseInt(512 / components)) * this.stripConfig().universes.length;
       },
       universesDMXLength(index) {
