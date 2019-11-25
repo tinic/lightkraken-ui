@@ -3,45 +3,54 @@
     <div class="header">LED Strip ({{ terminalNames[stripIndex] }})</div>
     <div class="left">LED type</div>
     <div class="right">
-    <select v-model="settings.stripconfig[stripIndex].outputtype">
+    <select v-model="stripConfig().outputtype">
       <option v-for="stripType in stripTypesFiltered(showConfigs[settings.outputmode], stripIndex)" 
               v-bind:value="stripType.value" v-bind:key="stripType.id" >{{ stripType.text }}
       </option>
     </select>
     </div>
+    <div v-if="hasGlobIllum()">
+		<div class="left">Global Illumination</div>
+		<div class="right">
+			<input class="smallnumber" v-bind:style="{ border : validatePercentage() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().globillum">
+      <span class="footnote">
+        %
+      </span>
+		</div>
+    </div>
 		<div class="left">Limit Brightness</div>
 		<div class="right">
-			<input class="smallnumber" v-bind:style="{ border : validateBrightnessLimit() ? '2px solid green' : '2px solid red' }" v-model="settings.stripconfig[stripIndex].complimit">
-      <span v-if="!isMobile()" class="footnote">
+			<input class="smallnumber" v-bind:style="{ border : validatePercentage() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().complimit">
+      <span class="footnote">
         %
       </span>
 		</div>
 		<div class="left">Number of LEDs</div>
 		<div class="right">
-			<input class="smallnumber" v-bind:style="{ border : validateLEDs() ? '2px solid green' : '2px solid red' }" v-model="settings.stripconfig[stripIndex].length">
+			<input class="smallnumber" v-bind:style="{ border : validateLEDs() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().length">
       <span v-if="!isMobile()" class="footnote">
-        Maximum: <span style="font-weight:600;">{{ maxLEDLength(settings.stripconfig[stripIndex]) }}</span>
+        Maximum: <span style="font-weight:600;">{{ maxLEDLength() }}</span>
       </span>
 		</div>
-    <div class="universe" v-for="(item, itemIndex) in universesFiltered(settings.stripconfig[stripIndex])" v-bind:key="item.id">
-      <div v-if="itemIndex == 0" class="left_universe">ArtNet Universe{{ (universesFiltered(settings.stripconfig[stripIndex]).length == 1 ||
-                                                                       universesFiltered(settings.stripconfig[stripIndex]).length == 0 ) ? "" : "s" }}</div>
+    <div class="universe" v-for="(item, itemIndex) in universesFiltered(stripConfig())" v-bind:key="item.id">
+      <div v-if="itemIndex == 0" class="left_universe">ArtNet Universe{{ (universesFiltered(stripConfig()).length == 1 ||
+                                                                       universesFiltered(stripConfig()).length == 0 ) ? "" : "s" }}</div>
       <div v-else class="left_universe"></div>
       <div class="right_universe">
         <input class="smallnumber" v-bind:style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="item.artnet">
         <span v-if="!isMobile()" class="footnote">
-            DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(settings.stripconfig[stripIndex], itemIndex) }}</span>
+            DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(itemIndex) }}</span>
         </span>
       </div>
 		</div>
-    <div class="universe" v-for="(item, itemIndex) in universesFiltered(settings.stripconfig[stripIndex])" v-bind:key="item.id">
-      <div v-if="itemIndex == 0" class="left_universe">E1.31 Universe{{ (universesFiltered(settings.stripconfig[stripIndex]).length == 1 ||
-                                                                       universesFiltered(settings.stripconfig[stripIndex]).length == 0 ) ? "" : "s" }}</div>
+    <div class="universe" v-for="(item, itemIndex) in universesFiltered(stripConfig())" v-bind:key="item.id">
+      <div v-if="itemIndex == 0" class="left_universe">E1.31 Universe{{ (universesFiltered(stripConfig()).length == 1 ||
+                                                                       universesFiltered(stripConfig()).length == 0 ) ? "" : "s" }}</div>
       <div v-else class="left_universe"></div>
       <div class="right_universe">
         <input class="smallnumber" v-bind:style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="item.e131">
         <span v-if="!isMobile()" class="footnote">
-            DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(settings.stripconfig[stripIndex], itemIndex) }}</span>
+            DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(itemIndex) }}</span>
         </span>
       </div>
 		</div>
@@ -52,7 +61,7 @@
     <div class="universe">
       <div v-if="compLength() >= 4" class="left_color">Startup White</div>
       <div v-if="compLength() >= 4" class="right_universe">
-        <input class="smallnumber" v-bind:style="{ border : validateAlphaValue() ? '2px solid green' : '2px solid red' }" v-model="settings.stripconfig[stripIndex].color.a">
+        <input class="smallnumber" v-bind:style="{ border : validateAlphaValue() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().color.a">
       </div>
     </div>
     <div class="spacer" style="clear: both;"></div>
@@ -75,11 +84,20 @@ export default {
           return false
         }
       },
+      stripConfig() {
+        return this.settings.stripconfig[this.stripIndex];
+      },
+      stripType() {
+        return this.stripTypes[this.stripConfig().outputtype];
+      },
+      hasGlobIllum() {
+        return this.stripType().globillum;
+      },
       initialColor() {
         return { 
-          r: this.settings.stripconfig[this.stripIndex].color.r, 
-          g: this.settings.stripconfig[this.stripIndex].color.g,  
-          b: this.settings.stripconfig[this.stripIndex].color.b
+          r: this.stripConfig().color.r, 
+          g: this.stripConfig().color.g,  
+          b: this.stripConfig().color.b
         };
       },
       checkInteger(value, min, max) {
@@ -95,27 +113,27 @@ export default {
                  Number(value) == parseFloat(value));
       },
       compLength() {
-        return this.stripTypes[this.settings.stripconfig[this.stripIndex].outputtype].components;
+        return this.stripType().components;
       },
       validateAlphaValue() {
-          var value = this.settings.stripconfig[this.stripIndex].color.a;
+          var value = this.stripConfig().color.a;
           if (this.checkInteger(value, 0, 255)) {
             return true;
           } else {
             return false;
           }
       },
-      validateBrightnessLimit() {
-        var length = this.settings.stripconfig[this.stripIndex].complimit;
+      validatePercentage() {
+        var length = this.stripConfig().complimit;
         return this.checkFloat(length, 0, 100);
       },
       validateLEDs() {
-        var length = this.settings.stripconfig[this.stripIndex].length;
-        var maxLength = this.maxLEDLength(this.settings.stripconfig[this.stripIndex]);
+        var length = this.stripConfig().length;
+        var maxLength = this.maxLEDLength(this.stripConfig());
         return this.checkInteger(length, 1, maxLength);
       },
       validateArtnetUniverse(index) {
-          var value = this.settings.stripconfig[this.stripIndex].universes[index].artnet;
+          var value = this.stripConfig().universes[index].artnet;
           if (this.checkInteger(value, 0, 32767)) {
             return true;
           } else {
@@ -123,7 +141,7 @@ export default {
           }
       },
       validateE131Universe(index) {
-          var value = this.settings.stripconfig[this.stripIndex].universes[index].e131;
+          var value = this.stripConfig().universes[index].e131;
           if (this.checkInteger(value, 1, 63999)) {
             return true;
           } else {
@@ -131,24 +149,24 @@ export default {
           }
       },
       colorChange(color) {
-        this.settings.stripconfig[this.stripIndex].color.r = color.r;
-        this.settings.stripconfig[this.stripIndex].color.g = color.g;
-        this.settings.stripconfig[this.stripIndex].color.b = color.b;
+        this.stripConfig().color.r = color.r;
+        this.stripConfig().color.g = color.g;
+        this.stripConfig().color.b = color.b;
       },
       panelHeight() {
-        return 180 + (Math.max(0,this.universesFiltered(this.settings.stripconfig[this.stripIndex]).length-1)) * 32;
+        return 180 + (Math.max(0,this.universesFiltered(this.stripConfig()).length-1)) * 32;
       },
-      maxLEDLength(stripconfig) {
-        var components = this.stripTypes[stripconfig.outputtype].components;
-        return (parseInt(512 / components)) * this.settings.stripconfig[this.stripIndex].universes.length;
+      maxLEDLength() {
+        var components = this.stripType().components;
+        return (parseInt(512 / components)) * this.stripConfig().universes.length;
       },
-      universesDMXLength(stripconfig, index) {
-        var components = this.stripTypes[stripconfig.outputtype].components;
+      universesDMXLength(index) {
+        var components = this.stripType().components;
         var perUniverse = parseInt(512 / components);
-        if ((parseInt(512 / components) * (index + 1)) <= stripconfig.length) {
+        if ((parseInt(512 / components) * (index + 1)) <= this.stripConfig().length) {
           return perUniverse * components;
         }
-        return (stripconfig.length % perUniverse) * components;
+        return (this.stripConfig().length % perUniverse) * components;
       },
       universesFiltered(stripconfig) {
         var components = this.stripTypes[stripconfig.outputtype].components;
