@@ -21,7 +21,7 @@
 		"rgbconfig": [
 			{ "outputtype": 0, 
 			  "inputtype": 0, 
-			  "pwmlimit": 1.0,
+			  "pwmlimit": 100.0,
 			  "rgbspace" : {
 			    "xw" : 0.34567, "yw" : 0.35850,
 			    "xr" : 0.67630, "yr" : 0.32370,
@@ -38,7 +38,7 @@
 			}, 
 			{ "outputtype": 1,
 			  "inputtype": 0, 
-			  "pwmlimit": 1.0,
+			  "pwmlimit": 100.0,
 			  "rgbspace" : {
 			    "xw" : 0.34567, "yw" : 0.35850,
 			    "xr" : 0.67630, "yr" : 0.32370,
@@ -57,8 +57,8 @@
 		"stripconfig": [
 			{ "outputtype": 0,
 			  "inputtype": 0,
-			  "globillum": 1.0,
-			  "complimit": 1.0,
+			  "globillum": 100.0,
+			  "complimit": 100.0,
   			  "length": 200,
 			  "rgbspace" : {
 			    "xw" : 0.34567, "yw" : 0.35850,
@@ -83,8 +83,8 @@
 			}, 
 			{ "outputtype": 1,
 			  "inputtype": 0,
-			  "globillum": 1.0,
-			  "complimit": 1.0,
+			  "globillum": 100.0,
+			  "complimit": 100.0,
   			  "length": 200,
 			  "rgbspace" : {
 			    "xw" : 0.34567, "yw" : 0.35850,
