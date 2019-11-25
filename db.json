@@ -56,7 +56,7 @@
 		],
 		"stripconfig": [
 			{ "outputtype": 0,
-			  "inputtype": 0,
+			  "inputtype": 1,
 			  "globillum": 100.0,
 			  "complimit": 100.0,
   			  "length": 200,
@@ -82,7 +82,7 @@
 			  ]
 			}, 
 			{ "outputtype": 1,
-			  "inputtype": 0,
+			  "inputtype": 2,
 			  "globillum": 100.0,
 			  "complimit": 100.0,
   			  "length": 200,
