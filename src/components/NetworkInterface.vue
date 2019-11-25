@@ -29,6 +29,12 @@
         <input class="ipsetting" v-bind:style="{ border : checkIPv4Gateway() ? '2px solid green' : '2px solid red' }" v-model="settings.ipv4gateway" type="text"/>
       </div>
     </div>
+      <div class="left">
+        <label for="tag">Description</label>
+      </div>
+      <div class="right">
+        <textarea maxlength="255" class="text" id="tag" v-model="settings.tag"/>
+      </div>
     <div class="spacer" style="clear: both;"></div>
   </div>
 </template> 
@@ -107,6 +113,15 @@ export default {
 
 input.ipsetting {
     width:140px;
+}
+
+textarea.text {
+  height:50px;
+  width: 90%;
+  color: black;
+  font-size: 15px;
+  font-weight: 300;
+  text-align: left-top;
 }
 
 </style>
