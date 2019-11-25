@@ -4,8 +4,16 @@
     <div class="left">LED type</div>
     <div class="right">
     <select v-model="stripConfig().outputtype">
-      <option v-for="stripType in stripTypesFiltered(showConfigs[settings.outputmode], stripIndex)" 
+      <option v-for="stripType in stripTypesFiltered(showConfigs[settings.outputconfig], stripIndex)" 
               v-bind:value="stripType.value" v-bind:key="stripType.id" >{{ stripType.text }}
+      </option>
+    </select>
+    </div>
+    <div class="left">Input Data Type</div>
+    <div class="right">
+    <select v-model="stripConfig().inputtype">
+      <option v-for="stripInputType in stripInputTypes" 
+              v-bind:value="stripInputType.value" v-bind:key="stripInputType.id" >{{ stripInputType.text }}
       </option>
     </select>
     </div>
@@ -90,6 +98,9 @@ export default {
       stripType() {
         return this.stripTypes[this.stripConfig().outputtype];
       },
+      stripInputType() {
+        return this.stripInputTypes[this.stripConfig().inputtype];
+      },
       hasGlobIllum() {
         return this.stripType().globillum;
       },
@@ -161,11 +172,12 @@ export default {
         return 180 + (Math.max(0,this.universesFiltered(this.stripConfig()).length-1)) * 32;
       },
       maxLEDLength() {
-        var components = this.stripType().components;
+        console.log(this.settings);
+        var components = this.stripInputType().components;
         return (parseInt(512 / components)) * this.stripConfig().universes.length;
       },
       universesDMXLength(index) {
-        var components = this.stripType().components;
+        var components = this.stripInputType().components;
         var perUniverse = parseInt(512 / components);
         if ((parseInt(512 / components) * (index + 1)) <= this.stripConfig().length) {
           return perUniverse * components;

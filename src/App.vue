@@ -117,9 +117,9 @@ export default {
           { text: 'TM1829 (RGB)',  value : 13, clock : 0, components: 3, globillum: false }
       ],
       rgbInputTypes: [
-          { text: 'RGB (8-bit, PWM%)',  value : 0,  components: 3, size:8  },
-          { text: 'RGBW (8-bit, PWM%)',  value : 1,  components: 4, size:8  },
-          { text: 'RGBWW (8-bit, PWM%)',  value : 2,  components: 5, size:8  },
+          { text: 'RGB (8-bit, Device)',  value : 0,  components: 3, size:8  },
+          { text: 'RGBW (8-bit, Device)',  value : 1,  components: 4, size:8  },
+          { text: 'RGBWW (8-bit, Device)',  value : 2,  components: 5, size:8  },
           { text: 'RGB (8-bit, sRGB)',  value : 3,  components: 3, size:8  },
           { text: 'RGBW (8-bit, sRGB)',  value : 4,  components: 4, size:8  },
           { text: 'RGBWW (8-bit, sRGB)',  value : 5,  components: 5, size:8  },
