@@ -29,11 +29,11 @@
 			    "xb" : 0.14050, "yb" : 0.03910
 			  },
 			  "components": [
-			    { "artnet": 0, "e131" : 0, "offset": 0, "value": 0 },
-			    { "artnet": 0, "e131" : 0, "offset": 1, "value": 0 },
-			    { "artnet": 0, "e131" : 0, "offset": 2, "value": 0 },
-			    { "artnet": 0, "e131" : 0, "offset": 3, "value": 0 },
-			    { "artnet": 0, "e131" : 0, "offset": 4, "value": 0 }
+			    { "artnet": 0, "e131" : 0, "channel": 1, "value": 0 },
+			    { "artnet": 0, "e131" : 0, "channel": 2, "value": 0 },
+			    { "artnet": 0, "e131" : 0, "channel": 3, "value": 0 },
+			    { "artnet": 0, "e131" : 0, "channel": 4, "value": 0 },
+			    { "artnet": 0, "e131" : 0, "channel": 5, "value": 0 }
 			  ]
 			}, 
 			{ "outputtype": 1,
@@ -46,11 +46,11 @@
 			    "xb" : 0.14050, "yb" : 0.03910
 			  },
 			  "components": [
-			    { "artnet": 0, "e131" : 0, "offset": 4, "value": 0 },
-			    { "artnet": 0, "e131" : 0, "offset": 5, "value": 0 },
-			    { "artnet": 0, "e131" : 0, "offset": 6, "value": 0 },
-			    { "artnet": 0, "e131" : 0, "offset": 7, "value": 0 },
-			    { "artnet": 0, "e131" : 0, "offset": 8, "value": 0 }
+			    { "artnet": 0, "e131" : 0, "channel": 6, "value": 0 },
+			    { "artnet": 0, "e131" : 0, "channel": 7, "value": 0 },
+			    { "artnet": 0, "e131" : 0, "channel": 8, "value": 0 },
+			    { "artnet": 0, "e131" : 0, "channel": 9, "value": 0 },
+			    { "artnet": 0, "e131" : 0, "channel": 10, "value": 0 }
 			  ]
 			}
 		],
