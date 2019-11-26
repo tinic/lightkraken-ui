@@ -27,37 +27,25 @@
     <div class="left_universe">ArtNet Mapping</div>
     <div class="right_universe">
       <div class="universefield" style="font-size: 80%; padding-top:2px;">Universe</div>
-      <div class="offsetfield" style="font-size: 80%; padding-top:2px;">Offset</div>
+      <div class="channelfield" style="font-size: 80%; padding-top:2px;">Channel</div>
     </div>
     <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
       <div class="left_universe">{{ item.text }}</div>
       <div class="right_universe">
-        <input class="universefield" v-bind:style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).artnet">
-        <input class="offsetfield" v-bind:style="{ border : validateChannelOffset(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).offset">
-        <span v-if="dmxLength() == 2 && !isMobile()" class="footnote">
-            DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
-        </span>
-        <span v-if="dmxLength() == 1 && !isMobile()" class="footnote">
-            DMX Channel: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }}</span>
-        </span>
+        <input class="universefield" v-bind:style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).artnet.universe">
+        <input class="channelfield" v-bind:style="{ border : validateArtnetDMXChannel(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).artnet.channel">
       </div>
     </div>
     <div class="left_universe">E1.31 Mapping</div>
     <div class="right_universe">
       <div class="universefield" style="font-size: 80%; padding-top:2px;">Universe</div>
-      <div class="offsetfield" style="font-size: 80%; padding-top:2px;">Offset</div>
+      <div class="channelfield" style="font-size: 80%; padding-top:2px;">Channel</div>
     </div>
     <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
       <div class="left_universe">{{ item.text }}</div>
       <div class="right_universe">
-        <input class="universefield" v-bind:style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).e131">
-        <input class="offsetfield" v-bind:style="{ border : validateChannelOffset(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).offset">
-        <span v-if="dmxLength() == 2 && !isMobile()" class="footnote">
-            DMX Channels: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }} ... {{ dmxIndex(itemIndex) + 1 }}</span>
-        </span>
-        <span v-if="dmxLength() == 1 && !isMobile()" class="footnote">
-            DMX Channel: <span style="font-weight:600;">{{ dmxIndex(itemIndex) }}</span>
-        </span>
+        <input class="universefield" v-bind:style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).e131.universe">
+        <input class="channelfield" v-bind:style="{ border : validateE131DMXChannel(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).e131.channel">
       </div>
     </div>
     <div class="left_color">Startup Color</div>
@@ -155,7 +143,7 @@ export default {
         return this.checkFloat(pwm, 0, 100);
       },
       validateArtnetUniverse(index) {
-          var value = this.rgbComponents(index).artnet;
+          var value = this.rgbComponents(index).artnet.universe;
           if (this.checkInteger(value, 0, 32767)) {
             return true;
           } else {
@@ -163,8 +151,8 @@ export default {
           }
       },
       validateE131Universe(index) {
-          var value = this.rgbComponents(index).e131;
-          if (this.checkInteger(value, 0, 32767)) {
+          var value = this.rgbComponents(index).e131.universe;
+          if (this.checkInteger(value, 1, 63999)) {
             return true;
           } else {
             return false;
@@ -178,9 +166,17 @@ export default {
             return false;
           }
       },
-      validateChannelOffset(index) {
-          var value = this.rgbComponents(index).offset;
-          if (this.checkInteger(value, 0, 255)) {
+      validateArtnetDMXChannel(index) {
+          var value = this.rgbComponents(index).artnet.channel;
+          if (this.checkInteger(value, 1, 512)) {
+            return true;
+          } else {
+            return false;
+          }
+      },
+      validateE131DMXChannel(index) {
+          var value = this.rgbComponents(index).e131.channel;
+          if (this.checkInteger(value, 1, 512)) {
             return true;
           } else {
             return false;
@@ -234,7 +230,7 @@ export default {
   width: 60px;
 }
 
-*.offsetfield {
+*.channelfield {
   float: left;
   position: relative;
   left: 10px;
