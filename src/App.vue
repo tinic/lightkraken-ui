@@ -165,7 +165,7 @@ export default {
         return 'http://my-json-server.typicode.com/tinic/lightkraken-ui/';
       }
       if(process.env.NODE_ENV === "test") {
-        return 'http://lightkraken-09dfe272/';
+        return 'http://lightkraken-09dfe271/';
       }
       return '/';
     }
