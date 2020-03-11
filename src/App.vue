@@ -55,7 +55,7 @@
         v-bind:savingSomething="savingSomething"
         v-bind:baseURL="baseURL"
         v-bind:settings="settings"/>
-      <div class="credit">Lightkraken was designed and built<br>by Tinic Uro in 2019</div>
+      <div class="credit">Lightkraken was designed and built<br>by Tinic Uro in 2020</div>
     </div>
   </div>
 </template>
