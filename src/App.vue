@@ -104,9 +104,7 @@ export default {
           { text: 'RGB (8-bit, sRGB)', value : 2, components: 3, size:8 },
           { text: 'RGB+W (8-bit, sRGB)', value : 3, components: 4, size:8 },
           { text: 'RGB (16-bit, Device)', value : 0, components: 3, size:16 },
-          { text: 'RGB+W (16-bit, Device)', value : 1, components: 4, size:16 },
-          { text: 'RGB (16-bit, sRGB)', value : 2, components: 3, size:16 },
-          { text: 'RGB+W (16-bit, sRGB)', value : 3, components: 4, size:16 }
+          { text: 'RGB+W (16-bit, Device)', value : 1, components: 4, size:16 }
       ],
       stripOutputTypes: [
           { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3, globillum: false },
@@ -134,10 +132,7 @@ export default {
           { text: 'RGB+W+WW (8-bit, sRGB)',  value : 5,  components: 5, size:8  },
           { text: 'RGB (16-bit, Device)',  value : 0,  components: 3, size:16  },
           { text: 'RGB+W (16-bit, Device)',  value : 1,  components: 4, size:16  },
-          { text: 'RGB+W+WW (16-bit, Device)',  value : 2,  components: 5, size:16  },
-          { text: 'RGB (16-bit, sRGB)',  value : 3,  components: 3, size:16  },
-          { text: 'RGB+W (16-bit, sRGB)',  value : 4,  components: 4, size:16  },
-          { text: 'RGB+W+WW (16-bit, sRGB)',  value : 5,  components: 5, size:16  }
+          { text: 'RGB+W+WW (16-bit, Device)',  value : 2,  components: 5, size:16  }
       ],
       rgbOutputTypes: [
           { text: 'RGB (14-bit)',  value : 0,  components: 3, size:8  },
