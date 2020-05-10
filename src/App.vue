@@ -121,7 +121,7 @@ export default {
           { text: 'LPD8806 (RGB)', value : 11, clock : 0, components: 3, globillum: false },
           { text: 'TLS3001 (RGB)', value : 12, clock : 0, components: 3, globillum: false },
           { text: 'TM1829 (RGB)',  value : 13, clock : 0, components: 3, globillum: false },
-          { text: 'WS2816 (RGB)',  value : 13, clock : 0, components: 3, globillum: false }
+          { text: 'WS2816 (RGB)',  value : 14, clock : 0, components: 3, globillum: false }
       ],
       rgbInputTypes: [
           { text: 'RGB (8-bit, Device)',  value : 0,  components: 3, size:8  },
