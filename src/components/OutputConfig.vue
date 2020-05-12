@@ -9,12 +9,6 @@
         </option>
       </select>
     </div>
-      <div class="left" v-if="outputModes[settings.outputconfig].strips !== 0">
-        <label for="broadcast">Drive strip{{ outputModes[settings.outputconfig].strips > 1 ? "s" : ""}} using interrupt</label>
-      </div>
-      <div class="right" v-if="outputModes[settings.outputconfig].strips !== 0">
-        <input class="checkbox" type="checkbox" id="outputmode" v-model="settings.outputmode">
-      </div>
     <div class="spacer" style="clear: both;"></div>
   </div>
 </template> 

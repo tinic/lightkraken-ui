@@ -168,9 +168,6 @@ export default {
     };
   },
   computed: {
-    outputMode() {
-      return this.settings ? this.settings.outputmode : 0;
-    },
     baseURL() {
       if(process.env.NODE_ENV === "development") {
         return 'http://my-json-server.typicode.com/tinic/lightkraken-ui/';
@@ -206,7 +203,7 @@ export default {
         // Live patch LED type
         for (var c = 0; c < this.settings.stripconfig.length; c++) {
           if (this.stripOutputTypes[this.settings.stripconfig[c].type].clock === 1 &&
-              this.showConfigs[this.settings.outputmode].clock[c] === 0) {
+              this.showConfigs[this.settings.outputconfig].clock[c] === 0) {
               for (var d = 0; d <this.stripOutputTypes.length; d++) {
                 if (this.stripOutputTypes[d].clock == 0) {
                   this.settings.stripconfig[c].type = this.stripOutputTypes[d].value;
@@ -219,10 +216,10 @@ export default {
     patchRGBType() {
         // Live patch RGB type
         for (var c = 0; c < this.settings.rgbconfig.length; c++) {
-          if (this.showConfigs[this.settings.outputmode].components[c] != 0 &&
-              this.showConfigs[this.settings.outputmode].components[c] != this.rgbTypes[this.settings.rgbconfig[c].type].components) {
+          if (this.showConfigs[this.settings.outputconfig].components[c] != 0 &&
+              this.showConfigs[this.settings.outputconfig].components[c] != this.rgbTypes[this.settings.rgbconfig[c].type].components) {
             for (var d = 0; d <this.rgbTypes.length; d++) {
-              if (this.showConfigs[this.settings.outputmode].components[c] == this.rgbTypes[d].components) {
+              if (this.showConfigs[this.settings.outputconfig].components[c] == this.rgbTypes[d].components) {
                 this.settings.rgbconfig[c].type = this.rgbTypes[d].value;
                 break;
               }
