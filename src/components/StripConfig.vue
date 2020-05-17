@@ -172,11 +172,12 @@ export default {
         return 180 + (Math.max(0,this.universesFiltered(this.stripConfig()).length-1)) * 32;
       },
       maxLEDLength() {
-        var components = Math.max(this.stripOutputType().components, this.stripInputType().components);
+        var components = Math.max(this.stripOutputType().components * this.stripOutputType().bitslen, 
+                                  this.stripInputType().components * this.stripInputType().bitslen) / 8;
         return (parseInt(512 / components)) * this.stripConfig().universes.length;
       },
       universesDMXLength(index) {
-        var components = this.stripInputType().components;
+        var components = ( this.stripInputType().components * this.stripInputType().bitslen) / 8;
         var perUniverse = parseInt(512 / components);
         if ((parseInt(512 / components) * (index + 1)) <= this.stripConfig().length) {
           return perUniverse * components;
@@ -184,7 +185,8 @@ export default {
         return (this.stripConfig().length % perUniverse) * components;
       },
       universesFiltered(stripconfig) {
-        var components = this.stripOutputTypes[stripconfig.outputtype].components;
+        var components = (this.stripOutputTypes[stripconfig.outputtype].components *
+                          this.stripOutputTypes[stripconfig.outputtype].bitslen ) / 8;
         function filterUniverses(universe, index) {
           if ((parseInt(512 / components) * (index + 0)) < stripconfig.length) {
             return true;

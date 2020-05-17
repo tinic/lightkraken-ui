@@ -99,50 +99,50 @@ export default {
           { strip: [false, false], rgb : [true,  false], clock:[0, 0], components:[5, 0] }
       ],
       stripInputTypes: [
-          { text: 'RGB (8-bit, Device)', value : 0, components: 3, size:8 },
-          { text: 'RGB+W (8-bit, Device)', value : 1, components: 4, size:8 },
-          { text: 'RGB (8-bit, sRGB)', value : 2, components: 3, size:8 },
-          { text: 'RGB+W (8-bit, sRGB)', value : 3, components: 4, size:8 },
-          { text: 'RGB (16-bit MSB, Device)', value : 4, components: 3, size:16 },
-          { text: 'RGB+W (16-bit MSB, Device)', value : 5, components: 4, size:16 },
-          { text: 'RGB (16-bit LSB, Device)', value : 6, components: 3, size:16 },
-          { text: 'RGB+W (16-bit LSB, Device)', value : 7, components: 4, size:16 }
+          { text: 'RGB (8-bit, Device)', value : 0, components: 3, bitslen:8 },
+          { text: 'RGB+W (8-bit, Device)', value : 1, components: 4, bitslen:8 },
+          { text: 'RGB (8-bit, sRGB)', value : 2, components: 3, bitslen:8 },
+          { text: 'RGB+W (8-bit, sRGB)', value : 3, components: 4, bitslen:8 },
+          { text: 'RGB (16-bit MSB, Device)', value : 4, components: 3, bitslen:16 },
+          { text: 'RGB+W (16-bit MSB, Device)', value : 5, components: 4, bitslen:16 },
+          { text: 'RGB (16-bit LSB, Device)', value : 6, components: 3, bitslen:16 },
+          { text: 'RGB+W (16-bit LSB, Device)', value : 7, components: 4, bitslen:16 }
       ],
       stripOutputTypes: [
-          { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3, globillum: false },
-          { text: 'SK6812 (RGB)',  value : 1,  clock : 0, components: 3, globillum: false },
-          { text: 'TM1804 (RGB)',  value : 2,  clock : 0, components: 3, globillum: false },
-          { text: 'UCS1904 (RGB)', value : 3,  clock : 0, components: 3, globillum: false },
-          { text: 'GS8208 (RGB)',  value : 4,  clock : 0, components: 3, globillum: false },
-          { text: 'SK6812 (RGBW)', value : 5,  clock : 0, components: 4, globillum: false },
-          { text: 'APA102 (RGB)',  value : 6,  clock : 1, components: 3, globillum: true  },
-          { text: 'APA107 (RGB)',  value : 7,  clock : 1, components: 3, globillum: true  },
-          { text: 'P9813 (RGB)',   value : 8,  clock : 1, components: 3, globillum: false },
-          { text: 'SK9822 (RGB)',  value : 9,  clock : 1, components: 3, globillum: true  },
-          { text: 'HDS107S (RGB)', value : 10, clock : 1, components: 3, globillum: false },
-          { text: 'LPD8806 (RGB)', value : 11, clock : 0, components: 3, globillum: false },
-          { text: 'TLS3001 (RGB)', value : 12, clock : 0, components: 3, globillum: false },
-          { text: 'TM1829 (RGB)',  value : 13, clock : 0, components: 3, globillum: false },
-          { text: 'WS2816 (RGB)',  value : 14, clock : 0, components: 3, globillum: false }
+          { text: 'WS2812 (RGB)',  value : 0,  clock : 0, components: 3, globillum: false, bitslen:8 },
+          { text: 'SK6812 (RGB)',  value : 1,  clock : 0, components: 3, globillum: false, bitslen:8 },
+          { text: 'TM1804 (RGB)',  value : 2,  clock : 0, components: 3, globillum: false, bitslen:8 },
+          { text: 'UCS1904 (RGB)', value : 3,  clock : 0, components: 3, globillum: false, bitslen:8 },
+          { text: 'GS8208 (RGB)',  value : 4,  clock : 0, components: 3, globillum: false, bitslen:8 },
+          { text: 'SK6812 (RGBW)', value : 5,  clock : 0, components: 4, globillum: false, bitslen:8 },
+          { text: 'APA102 (RGB)',  value : 6,  clock : 1, components: 3, globillum: true , bitslen:8 },
+          { text: 'APA107 (RGB)',  value : 7,  clock : 1, components: 3, globillum: true , bitslen:8 },
+          { text: 'P9813 (RGB)',   value : 8,  clock : 1, components: 3, globillum: false, bitslen:8 },
+          { text: 'SK9822 (RGB)',  value : 9,  clock : 1, components: 3, globillum: true , bitslen:8 },
+          { text: 'HDS107S (RGB)', value : 10, clock : 1, components: 3, globillum: false, bitslen:8 },
+          { text: 'LPD8806 (RGB)', value : 11, clock : 0, components: 3, globillum: false, bitslen:8 },
+          { text: 'TLS3001 (RGB)', value : 12, clock : 0, components: 3, globillum: false, bitslen:8 },
+          { text: 'TM1829 (RGB)',  value : 13, clock : 0, components: 3, globillum: false, bitslen:8 },
+          { text: 'WS2816 (RGB)',  value : 14, clock : 0, components: 3, globillum: false, bitslen:16 }
       ],
       rgbInputTypes: [
-          { text: 'RGB (8-bit, Device)',  value : 0,  components: 3, size:8  },
-          { text: 'RGB+W (8-bit, Device)',  value : 1,  components: 4, size:8  },
-          { text: 'RGB+W+WW (8-bit, Device)',  value : 2,  components: 5, size:8  },
-          { text: 'RGB (8-bit, sRGB)',  value : 3,  components: 3, size:8  },
-          { text: 'RGB+W (8-bit, sRGB)',  value : 4,  components: 4, size:8  },
-          { text: 'RGB+W+WW (8-bit, sRGB)',  value : 5,  components: 5, size:8  },
-          { text: 'RGB (16-bit MSB, Device)',  value : 6,  components: 3, size:16  },
-          { text: 'RGB+W (16-bit MSB, Device)',  value : 7,  components: 4, size:16  },
-          { text: 'RGB+W+WW (16-bit MSB, Device)',  value : 8,  components: 5, size:16  },
-          { text: 'RGB (16-bit LSB, Device)',  value : 9,  components: 3, size:16  },
-          { text: 'RGB+W (16-bit LSB, Device)',  value : 10,  components: 4, size:16  },
-          { text: 'RGB+W+WW (16-bit LSB, Device)',  value : 11,  components: 5, size:16  }
+          { text: 'RGB (8-bit, Device)',  value : 0,  components: 3, bitslen:8  },
+          { text: 'RGB+W (8-bit, Device)',  value : 1,  components: 4, bitslen:8  },
+          { text: 'RGB+W+WW (8-bit, Device)',  value : 2,  components: 5, bitslen:8  },
+          { text: 'RGB (8-bit, sRGB)',  value : 3,  components: 3, bitslen:8  },
+          { text: 'RGB+W (8-bit, sRGB)',  value : 4,  components: 4, bitslen:8  },
+          { text: 'RGB+W+WW (8-bit, sRGB)',  value : 5,  components: 5, bitslen:8  },
+          { text: 'RGB (16-bit MSB, Device)',  value : 6,  components: 3, bitslen:16  },
+          { text: 'RGB+W (16-bit MSB, Device)',  value : 7,  components: 4, bitslen:16  },
+          { text: 'RGB+W+WW (16-bit MSB, Device)',  value : 8,  components: 5, bitslen:16  },
+          { text: 'RGB (16-bit LSB, Device)',  value : 9,  components: 3, bitslen:16  },
+          { text: 'RGB+W (16-bit LSB, Device)',  value : 10,  components: 4, bitslen:16  },
+          { text: 'RGB+W+WW (16-bit LSB, Device)',  value : 11,  components: 5, bitslen:16  }
       ],
       rgbOutputTypes: [
-          { text: 'RGB (14-bit)',  value : 0,  components: 3, size:8  },
-          { text: 'RGB+W (14-bit)',  value : 1,  components: 4, size:8  },
-          { text: 'RGB+W+WW (14-bit)',  value : 2,  components: 5, size:8  },
+          { text: 'RGB (14-bit)',  value : 0,  components: 3, bitslen:8  },
+          { text: 'RGB+W (14-bit)',  value : 1,  components: 4, bitslen:8  },
+          { text: 'RGB+W+WW (14-bit)',  value : 2,  components: 5, bitslen:8  },
       ],
       pinTable: [
         [ 
@@ -170,10 +170,10 @@ export default {
   computed: {
     baseURL() {
       if(process.env.NODE_ENV === "development") {
-        return 'http://my-json-server.typicode.com/tinic/lightkraken-ui/';
+        return 'http://lightkraken-714ea6c6/';
       }
       if(process.env.NODE_ENV === "test") {
-        return 'http://lightkraken-09dfe271/';
+        return 'http://lightkraken-714ea6c6/';
       }
       return '/';
     }
