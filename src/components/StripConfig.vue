@@ -1,78 +1,173 @@
 <template>
   <div class="strip">
-    <div class="header">LED Strip ({{ terminalNames[stripIndex] }})</div>
-    <div class="left">LED type</div>
-    <div class="right">
-    <select v-model="stripConfig().outputtype">
-      <option v-for="stripType in stripOutputTypesFiltered(showConfigs[settings.outputconfig], stripIndex)" 
-              v-bind:value="stripType.value" v-bind:key="stripType.id" >{{ stripType.text }}
-      </option>
-    </select>
+    <div class="header">
+      LED Strip ({{ terminalNames[stripIndex] }})
     </div>
-    <div class="left">Input Data Type</div>
+    <div class="left">
+      LED type
+    </div>
     <div class="right">
-    <select v-model="stripConfig().inputtype">
-      <option v-for="stripInputType in stripInputTypes" 
-              v-bind:value="stripInputType.value" v-bind:key="stripInputType.id" >{{ stripInputType.text }}
-      </option>
-    </select>
+      <select v-model="stripConfig().outputtype">
+        <option
+          v-for="stripType in stripOutputTypesFiltered(showConfigs[settings.outputconfig], stripIndex)" 
+          :value="stripType.value"
+          :key="stripType.id"
+        >
+          {{ stripType.text }}
+        </option>
+      </select>
+    </div>
+    <div class="left">
+      Input Data Type
+    </div>
+    <div class="right">
+      <select v-model="stripConfig().inputtype">
+        <option
+          v-for="stripInputTypeI in stripInputTypes" 
+          :value="stripInputTypeI.value"
+          :key="stripInputTypeI.id"
+        >
+          {{ stripInputTypeI.text }}
+        </option>
+      </select>
     </div>
     <div v-if="hasGlobIllum()">
-		<div class="left">Global Illumination</div>
-		<div class="right">
-			<input class="smallnumber" v-bind:style="{ border : validateGlobIllum() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().globillum">
-      <span class="footnote">
-        %
-      </span>
-		</div>
+      <div class="left">
+        Global Illumination
+      </div>
+      <div class="right">
+        <input
+          class="smallnumber"
+          :style="{ border : validateGlobIllum() ? '2px solid green' : '2px solid red' }"
+          v-model="stripConfig().globillum"
+        >
+        <span class="footnote">
+          %
+        </span>
+      </div>
     </div>
-		<div class="left">Limit Brightness</div>
-		<div class="right">
-			<input class="smallnumber" v-bind:style="{ border : validateCompLimit() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().complimit">
+    <div class="left">
+      Limit Brightness
+    </div>
+    <div class="right">
+      <input
+        class="smallnumber"
+        :style="{ border : validateCompLimit() ? '2px solid green' : '2px solid red' }"
+        v-model="stripConfig().complimit"
+      >
       <span class="footnote">
         %
       </span>
-		</div>
-		<div class="left">Number of LEDs</div>
-		<div class="right">
-			<input class="smallnumber" v-bind:style="{ border : validateLEDs() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().length">
-      <span v-if="!isMobile()" class="footnote">
+    </div>
+    <div class="left">
+      Number of LEDs
+    </div>
+    <div class="right">
+      <input
+        class="smallnumber"
+        :style="{ border : validateLEDs() ? '2px solid green' : '2px solid red' }"
+        v-model="stripConfig().length"
+      >
+      <span
+        v-if="!isMobile()"
+        class="footnote"
+      >
         Maximum: <span style="font-weight:600;">{{ maxLEDLength() }}</span>
       </span>
-		</div>
-    <div class="universe" v-for="(item, itemIndex) in universesFiltered(stripConfig())" v-bind:key="item.id">
-      <div v-if="itemIndex == 0" class="left_universe">ArtNet Universe{{ (universesFiltered(stripConfig()).length == 1 ||
-                                                                       universesFiltered(stripConfig()).length == 0 ) ? "" : "s" }}</div>
-      <div v-else class="left_universe"></div>
+    </div>
+    <div
+      class="universe"
+      v-for="(item, itemIndex) in universesFiltered(stripConfig())"
+      :key="item.id"
+    >
+      <div
+        v-if="itemIndex == 0"
+        class="left_universe"
+      >
+        ArtNet Universe{{ (universesFiltered(stripConfig()).length == 1 ||
+          universesFiltered(stripConfig()).length == 0 ) ? "" : "s" }}
+      </div>
+      <div
+        v-else
+        class="left_universe"
+      />
       <div class="right_universe">
-        <input class="smallnumber" v-bind:style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="item.artnet">
-        <span v-if="!isMobile()" class="footnote">
-            DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(itemIndex) }}</span>
+        <input
+          class="smallnumber"
+          :style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }"
+          v-model="item.artnet"
+        >
+        <span
+          v-if="!isMobile()"
+          class="footnote"
+        >
+          DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(itemIndex) }}</span>
         </span>
       </div>
-		</div>
-    <div class="universe" v-for="(item, itemIndex) in universesFiltered(stripConfig())" v-bind:key="item.id">
-      <div v-if="itemIndex == 0" class="left_universe">E1.31 Universe{{ (universesFiltered(stripConfig()).length == 1 ||
-                                                                       universesFiltered(stripConfig()).length == 0 ) ? "" : "s" }}</div>
-      <div v-else class="left_universe"></div>
+    </div>
+    <div
+      class="universe"
+      v-for="(item, itemIndex) in universesFiltered(stripConfig())"
+      :key="item.id"
+    >
+      <div
+        v-if="itemIndex == 0"
+        class="left_universe"
+      >
+        E1.31 Universe{{ (universesFiltered(stripConfig()).length == 1 ||
+          universesFiltered(stripConfig()).length == 0 ) ? "" : "s" }}
+      </div>
+      <div
+        v-else
+        class="left_universe"
+      />
       <div class="right_universe">
-        <input class="smallnumber" v-bind:style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="item.e131">
-        <span v-if="!isMobile()" class="footnote">
-            DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(itemIndex) }}</span>
+        <input
+          class="smallnumber"
+          :style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }"
+          v-model="item.e131"
+        >
+        <span
+          v-if="!isMobile()"
+          class="footnote"
+        >
+          DMX Channels: <span style="font-weight:600;">1 ... {{ universesDMXLength(itemIndex) }}</span>
         </span>
       </div>
-		</div>
-    <div class="universe">
-      <div class="left_color">Startup Color</div>
-      <div class="right_color"><ColorSwatch v-bind:change="colorChange" v-bind:initial="initialColor"/></div>
     </div>
     <div class="universe">
-      <div v-if="compLength() >= 4" class="left_color">Startup White</div>
-      <div v-if="compLength() >= 4" class="right_universe">
-        <input class="smallnumber" v-bind:style="{ border : validateAlphaValue() ? '2px solid green' : '2px solid red' }" v-model="stripConfig().color.a">
+      <div class="left_color">
+        Startup Color
+      </div>
+      <div class="right_color">
+        <ColorSwatch
+          :change="colorChange"
+          :initial="initialColor"
+        />
       </div>
     </div>
-    <div class="spacer" style="clear: both;"></div>
+    <div class="universe">
+      <div
+        v-if="compLength() >= 4"
+        class="left_color"
+      >
+        Startup White
+      </div>
+      <div
+        v-if="compLength() >= 4"
+        class="right_universe"
+      >
+        <input
+          class="smallnumber"
+          :style="{ border : validateAlphaValue() ? '2px solid green' : '2px solid red' }"
+          v-model="stripConfig().color.a"
+        >
+      </div>
+    </div>
+    <div
+      class="spacer"
+      style="clear: both;"
+    />
   </div>
 </template>
 
@@ -209,13 +304,34 @@ export default {
   computed: {
   },
   props: {
-    stripIndex: Number,
-    terminalNames: Array,
-    settings: Object,
-    stripOutputTypes: Array,
-    stripInputTypes: Array,
-    showConfigs: Array,
-    settingsInternal: Object
+    stripIndex: {
+      type:Number,
+      default:0
+    },
+    terminalNames: {
+      type:Array,
+      default: function() { return [] }
+    },
+    settings: {
+      type:Object,
+      default: function() { return {} }
+    },
+    stripOutputTypes: {
+      type:Array,
+      default: function() { return [] }
+    },
+    stripInputTypes: {
+      type:Array,
+      default: function() { return [] }
+    },
+    showConfigs: {
+      type:Array,
+      default: function() { return [] }
+    },
+    settingsInternal: {
+      type:Object,
+      default: function() { return {} }
+    },
   },
   components: {
     ColorSwatch

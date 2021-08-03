@@ -1,9 +1,27 @@
 <template>
   <div class="actions">
-    <input class="button" v-on:click="save" type="button" value="Save Configuration" />
-    <input class="button" v-on:click="reset" type="button" value="Reset Configuration" />
-    <input class="button" v-on:click="reboot" type="button" value="Reboot Into Upgrade Mode" />
-    <div class="spacer" style="clear: both;"></div>
+    <input
+      class="button"
+      @click="save"
+      type="button"
+      value="Save Configuration"
+    >
+    <input
+      class="button"
+      @click="reset"
+      type="button"
+      value="Reset Configuration"
+    >
+    <input
+      class="button"
+      @click="reboot"
+      type="button"
+      value="Reboot Into Upgrade Mode"
+    >
+    <div
+      class="spacer"
+      style="clear: both;"
+    />
   </div>
 </template> 
 
@@ -11,8 +29,16 @@
 export default {
   name: "ActionBar",
   props: {
-      baseURL:String,
-      settings:Object
+      baseURL: {
+        type:String,
+        default: "",
+      },
+      settings: {
+        type:Object,
+        default: function() {
+          return { }
+        }
+      },
   },
   methods: {
       save() {

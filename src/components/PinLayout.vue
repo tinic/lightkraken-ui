@@ -1,21 +1,37 @@
 <template>
   <div>
     <div class="status">
-    <span class="terminal">{{ terminalNames[0] }}
-      <div v-bind:key="pin.id" 
-           v-for="(pin, index) in pinTable[settings.outputconfig][stripOutputTypes[settings.stripconfig[0].outputtype].clock].slice(0, 4)">
-        <div class="PIN" :class="pin.c">{{ index }}<br />{{ pin.t }}</div>
-      </div>
-    </span>
-    <span class="terminal">{{ terminalNames[1] }}
-      <div v-bind:key="pin.id" 
-           v-for="(pin,index) in pinTable[settings.outputconfig][stripOutputTypes[settings.stripconfig[1].outputtype].clock].slice(4, 8)">
-        <div class="PIN" :class="pin.c">{{ index+4 }}<br />{{ pin.t }}</div>
-      </div>
-    </span>
-    <div class="spacer" style="clear: both;"></div>
+      <span class="terminal">{{ terminalNames[0] }}
+        <div
+          :key="pin.id" 
+          v-for="(pin, index) in pinTable[settings.outputconfig][stripOutputTypes[settings.stripconfig[0].outputtype].clock].slice(0, 4)"
+        >
+          <div
+            class="PIN"
+            :class="pin.c"
+          >{{ index }}<br>{{ pin.t }}</div>
+        </div>
+      </span>
+      <span class="terminal">{{ terminalNames[1] }}
+        <div
+          :key="pin.id" 
+          v-for="(pin,index) in pinTable[settings.outputconfig][stripOutputTypes[settings.stripconfig[1].outputtype].clock].slice(4, 8)"
+        >
+          <div
+            class="PIN"
+            :class="pin.c"
+          >{{ index+4 }}<br>{{ pin.t }}</div>
+        </div>
+      </span>
+      <div
+        class="spacer"
+        style="clear: both;"
+      />
     </div>
-    <div class="spacer" style="clear: both;"></div>
+    <div
+      class="spacer"
+      style="clear: both;"
+    />
   </div>
 </template>
 
@@ -23,10 +39,22 @@
 export default {
   name: "PinLayout",
   props: {
-    settings: Object,
-    terminalNames: Array,
-    stripOutputTypes: Array,
-    pinTable: Array
+    settings: {
+      type:Object,
+      default: function() { return {} }
+    },
+    terminalNames: {
+      type:Array,
+      default: function() { return [] }
+    },
+    stripOutputTypes: {
+      type:Array,
+      default: function() { return [] }
+    },
+    pinTable: {
+      type:Array,
+      default: function() { return [] }
+    }
   },
   methods: {
       isMobile() {

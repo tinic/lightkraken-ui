@@ -1,41 +1,85 @@
 <template>
   <div class="status">
-    <div class="header">Network Interface</div>
+    <div class="header">
+      Network Interface
+    </div>
     <div class="mainsetting">
       <div class="left">
         <label for="broadcast">Accept DMX broadcast</label>
       </div>
       <div class="right">
-        <input class="checkbox" type="checkbox" id="broadcast" v-model="settings.broadcast">
+        <input
+          class="checkbox"
+          type="checkbox"
+          id="broadcast"
+          v-model="settings.broadcast"
+        >
       </div>
       <div class="left">
         <label for="dhcp">Use DHCP</label>
       </div>
       <div class="right">
-        <input class="checkbox" type="checkbox" id="dhcp" v-model="settings.dhcp">
+        <input
+          class="checkbox"
+          type="checkbox"
+          id="dhcp"
+          v-model="settings.dhcp"
+        >
       </div>
     </div>
-    <div class="ip4setting" v-if="settings.dhcp !== undefined && settings.dhcp == false">  
-      <div class="left">IPv4 Address</div>
-      <div class="right">
-        <input class="ipsetting" v-bind:style="{ border : checkIPv4Address() ? '2px solid green' : '2px solid red' }" v-model="settings.ipv4address" type="text"/>
-      </div>
-      <div class="left">IPv4 Netmask</div>
-      <div class="right">
-        <input class="ipsetting" v-bind:style="{ border : checkIPv4Netmask() ? '2px solid green' : '2px solid red' }" v-model="settings.ipv4netmask" type="text"/>
-      </div>
-      <div class="left">IPv4 Gateway</div>
-      <div class="right">
-        <input class="ipsetting" v-bind:style="{ border : checkIPv4Gateway() ? '2px solid green' : '2px solid red' }" v-model="settings.ipv4gateway" type="text"/>
-      </div>
-    </div>
+    <div
+      class="ip4setting"
+      v-if="settings.dhcp !== undefined && settings.dhcp == false"
+    >  
       <div class="left">
-        <label for="tag">Description</label>
+        IPv4 Address
       </div>
       <div class="right">
-        <textarea maxlength="255" class="text" id="tag" v-model="settings.tag"/>
+        <input
+          class="ipsetting"
+          :style="{ border : checkIPv4Address() ? '2px solid green' : '2px solid red' }"
+          v-model="settings.ipv4address"
+          type="text"
+        >
       </div>
-    <div class="spacer" style="clear: both;"></div>
+      <div class="left">
+        IPv4 Netmask
+      </div>
+      <div class="right">
+        <input
+          class="ipsetting"
+          :style="{ border : checkIPv4Netmask() ? '2px solid green' : '2px solid red' }"
+          v-model="settings.ipv4netmask"
+          type="text"
+        >
+      </div>
+      <div class="left">
+        IPv4 Gateway
+      </div>
+      <div class="right">
+        <input
+          class="ipsetting"
+          :style="{ border : checkIPv4Gateway() ? '2px solid green' : '2px solid red' }"
+          v-model="settings.ipv4gateway"
+          type="text"
+        >
+      </div>
+    </div>
+    <div class="left">
+      <label for="tag">Description</label>
+    </div>
+    <div class="right">
+      <textarea
+        maxlength="255"
+        class="text"
+        id="tag"
+        v-model="settings.tag"
+      />
+    </div>
+    <div
+      class="spacer"
+      style="clear: both;"
+    />
   </div>
 </template> 
 
@@ -43,7 +87,9 @@
 export default {
   name: "NetworkInterface",
   props: {
-    settings: Object
+    settings: {
+      type:Object,
+      default: function() { return {} }}
   },
   beforeMount() {
   },

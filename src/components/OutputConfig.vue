@@ -1,15 +1,29 @@
 <template>
   <div class="output">
-    <div class="header">Output Config</div>
-    <div class="left">Output Mode</div>
+    <div class="header">
+      Output Config
+    </div>
+    <div class="left">
+      Output Mode
+    </div>
     <div class="right">
-      <select v-on:change="changeMode()" v-model="settings.outputconfig">
-        <option v-for="mode in outputModes" v-bind:value="mode.value" 
-                v-bind:key="mode.id">{{ mode.text }}
+      <select
+        @change="changeMode()"
+        v-model="settings.outputconfig"
+      >
+        <option
+          v-for="mode in outputModes"
+          :value="mode.value" 
+          :key="mode.id"
+        >
+          {{ mode.text }}
         </option>
       </select>
     </div>
-    <div class="spacer" style="clear: both;"></div>
+    <div
+      class="spacer"
+      style="clear: both;"
+    />
   </div>
 </template> 
 
@@ -17,9 +31,18 @@
 export default {
   name: "OutputConfig",
   props: {
-    outputModes: Array,
-    settings: Object,
-    settingsInternal: Object
+    outputModes: {
+      type:Array,
+      default: function() { return [] }
+    },
+    settings: {
+      type:Object,
+      default: function() { return {}}
+    },
+    settingsInternal: {
+      type:Object,
+      default: function() { return {}}
+    }
   },
   methods: {
       changeMode() {

@@ -1,64 +1,168 @@
 <template>
   <div class="rgb">
-    <div class="header">Analog RGB ({{ terminalNames[rgbIndex] }})</div>
-    <div class="left">Input Data Type</div>
-    <div class="right">
-    <select v-model="rgbConfig().inputtype">
-      <option v-for="rgbInputType in rgbInputTypes" 
-              v-bind:value="rgbInputType.value" v-bind:key="rgbInputType.id" >{{ rgbInputType.text }}
-      </option>
-    </select>
+    <div class="header">
+      Analog RGB ({{ terminalNames[rgbIndex] }})
     </div>
-    <div class="left">Output Type</div>
-    <div class="right">
-    <select v-model="rgbConfig().outputtype">
-      <option v-for="rgbOutputType in rgbOutputTypeFiltered(showConfigs[settings.outputconfig], rgbIndex)" 
-              v-bind:value="rgbOutputType.value" v-bind:key="rgbOutputType.id" >{{ rgbOutputType.text }}
-      </option>
-    </select>
+    <div class="left">
+      Input Data Type
     </div>
-		<div class="left">Limit Brightness</div>
-		<div class="right">
-			<input class="smallnumber" v-bind:style="{ border : validatePwmLimit() ? '2px solid green' : '2px solid red' }" v-model="rgbConfig().pwmlimit">
+    <div class="right">
+      <select v-model="rgbConfig().inputtype">
+        <option
+          v-for="rgbInputTypeI in rgbInputTypes" 
+          :value="rgbInputTypeI.value"
+          :key="rgbInputTypeI.id"
+        >
+          {{ rgbInputTypeI.text }}
+        </option>
+      </select>
+    </div>
+    <div class="left">
+      Output Type
+    </div>
+    <div class="right">
+      <select v-model="rgbConfig().outputtype">
+        <option
+          v-for="rgbOutputType in rgbOutputTypeFiltered(showConfigs[settings.outputconfig], rgbIndex)" 
+          :value="rgbOutputType.value"
+          :key="rgbOutputType.id"
+        >
+          {{ rgbOutputType.text }}
+        </option>
+      </select>
+    </div>
+    <div class="left">
+      Limit Brightness
+    </div>
+    <div class="right">
+      <input
+        class="smallnumber"
+        :style="{ border : validatePwmLimit() ? '2px solid green' : '2px solid red' }"
+        v-model="rgbConfig().pwmlimit"
+      >
       <span class="footnote">
         %
       </span>
-		</div>
-    <div class="left_universe">ArtNet Mapping</div>
-    <div class="right_universe">
-      <div class="universefield" style="font-size: 80%; padding-top:2px;">Universe</div>
-      <div class="channelfield" style="font-size: 80%; padding-top:2px;">Channel</div>
     </div>
-    <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
-      <div class="left_universe">{{ item.text }}</div>
-      <div class="right_universe">
-        <input class="universefield" v-bind:style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).artnet.universe">
-        <input class="channelfield" v-bind:style="{ border : validateArtnetDMXChannel(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).artnet.channel">
+    <div class="left_universe">
+      ArtNet Mapping
+    </div>
+    <div class="right_universe">
+      <div
+        class="universefield"
+        style="font-size: 80%; padding-top:2px;"
+      >
+        Universe
+      </div>
+      <div
+        class="channelfield"
+        style="font-size: 80%; padding-top:2px;"
+      >
+        Channel
       </div>
     </div>
-    <div class="left_universe">E1.31 Mapping</div>
-    <div class="right_universe">
-      <div class="universefield" style="font-size: 80%; padding-top:2px;">Universe</div>
-      <div class="channelfield" style="font-size: 80%; padding-top:2px;">Channel</div>
-    </div>
-    <div v-for="(item, itemIndex) in componentsSplice()" v-bind:key="item.id">
-      <div class="left_universe">{{ item.text }}</div>
+    <div
+      v-for="(item, itemIndex) in componentsSplice()"
+      :key="item.id"
+    >
+      <div class="left_universe">
+        {{ item.text }}
+      </div>
       <div class="right_universe">
-        <input class="universefield" v-bind:style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).e131.universe">
-        <input class="channelfield" v-bind:style="{ border : validateE131DMXChannel(itemIndex) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(itemIndex).e131.channel">
+        <input
+          class="universefield"
+          :style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }"
+          v-model="rgbComponents(itemIndex).artnet.universe"
+        >
+        <input
+          class="channelfield"
+          :style="{ border : validateArtnetDMXChannel(itemIndex) ? '2px solid green' : '2px solid red' }"
+          v-model="rgbComponents(itemIndex).artnet.channel"
+        >
       </div>
     </div>
-    <div class="left_color">Startup Color</div>
-    <div class="right_color"><ColorSwatch v-bind:change="colorChange" v-bind:initial="initialColor"/></div>
-    <div v-if="compLength() >= 4" class="left_color">Startup White</div>
-    <div v-if="compLength() >= 4" class="right_universe">
-      <input class="universefield" v-bind:style="{ border : validateComponentValue(3) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(3).value">
+    <div class="left_universe">
+      E1.31 Mapping
     </div>
-    <div v-if="compLength() >= 5" class="left_color">Startup Warm White</div>
-    <div v-if="compLength() >= 5" class="right_universe">
-      <input class="universefield" v-bind:style="{ border : validateComponentValue(4) ? '2px solid green' : '2px solid red' }" v-model="rgbComponents(4).value">
+    <div class="right_universe">
+      <div
+        class="universefield"
+        style="font-size: 80%; padding-top:2px;"
+      >
+        Universe
+      </div>
+      <div
+        class="channelfield"
+        style="font-size: 80%; padding-top:2px;"
+      >
+        Channel
+      </div>
     </div>
-    <div class="spacer" style="clear: both;"></div>
+    <div
+      v-for="(item, itemIndex) in componentsSplice()"
+      :key="item.id"
+    >
+      <div class="left_universe">
+        {{ item.text }}
+      </div>
+      <div class="right_universe">
+        <input
+          class="universefield"
+          :style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }"
+          v-model="rgbComponents(itemIndex).e131.universe"
+        >
+        <input
+          class="channelfield"
+          :style="{ border : validateE131DMXChannel(itemIndex) ? '2px solid green' : '2px solid red' }"
+          v-model="rgbComponents(itemIndex).e131.channel"
+        >
+      </div>
+    </div>
+    <div class="left_color">
+      Startup Color
+    </div>
+    <div class="right_color">
+      <ColorSwatch
+        :change="colorChange"
+        :initial="initialColor"
+      />
+    </div>
+    <div
+      v-if="compLength() >= 4"
+      class="left_color"
+    >
+      Startup White
+    </div>
+    <div
+      v-if="compLength() >= 4"
+      class="right_universe"
+    >
+      <input
+        class="universefield"
+        :style="{ border : validateComponentValue(3) ? '2px solid green' : '2px solid red' }"
+        v-model="rgbComponents(3).value"
+      >
+    </div>
+    <div
+      v-if="compLength() >= 5"
+      class="left_color"
+    >
+      Startup Warm White
+    </div>
+    <div
+      v-if="compLength() >= 5"
+      class="right_universe"
+    >
+      <input
+        class="universefield"
+        :style="{ border : validateComponentValue(4) ? '2px solid green' : '2px solid red' }"
+        v-model="rgbComponents(4).value"
+      >
+    </div>
+    <div
+      class="spacer"
+      style="clear: both;"
+    />
   </div>
 </template>
 
@@ -67,13 +171,34 @@ import ColorSwatch from "./ColorSwatch.vue";
 export default {
   name: "RGBConfig",
   props: {
-    rgbIndex: Number,
-    terminalNames: Array,
-    rgbInputTypes: Array,
-    rgbOutputTypes: Array,
-    settings: Object,
-    showConfigs: Array,
-    settingsInternal: Object
+    rgbIndex: {
+      type:Number,
+      default:0
+    },
+    terminalNames:  {
+      type:Array,
+      default: function() { return [] }
+    },
+    rgbInputTypes:  {
+      type:Array,
+      default: function() { return [] }
+    },
+    rgbOutputTypes:  {
+      type:Array,
+      default: function() { return [] }
+    },
+    settings: {
+      type:Object,
+      default: function() { return {} }
+    },
+    showConfigs:  {
+      type:Array,
+      default: function() { return [] }
+    },
+    settingsInternal: {
+      type:Object,
+      default: function() { return {} }
+    }
   },
   data() {
     return {

@@ -1,61 +1,70 @@
 <template>
   <div id="app">
-    <div v-if="this.loadingSomething === true">
-    </div>
-    <div v-if="this.savingSomething === true">
-    </div>
+    <div v-if="this.loadingSomething === true" />
+    <div v-if="this.savingSomething === true" />
     <div v-if="this.statusLoading === false">
       <Status
-        v-bind:status="status"/>
+        :status="status"
+      />
     </div>
     <div v-if="this.settingsLoading === false">
       <PinLayout
-        v-bind:terminalNames="terminalNames"
-        v-bind:stripOutputTypes="stripOutputTypes"
-        v-bind:settings="settings"
-        v-bind:pinTable="pinTable"/>
+        :terminal-names="terminalNames"
+        :strip-output-types="stripOutputTypes"
+        :settings="settings"
+        :pin-table="pinTable"
+      />
       <NetworkInterface
-        v-bind:settings="settings"/>
+        :settings="settings"
+      />
       <OutputConfig
-        v-bind:outputModes="outputModes"
-        v-bind:settings="settings"/>
+        :output-modes="outputModes"
+        :settings="settings"
+      />
       <StripConfig
         v-if="this.showConfigs[this.settings.outputconfig].strip[0] === true"
-        v-bind:stripIndex=0
-        v-bind:terminalNames="terminalNames"
-        v-bind:stripOutputTypes="stripOutputTypes"
-        v-bind:stripInputTypes="stripInputTypes"
-        v-bind:showConfigs="showConfigs"
-        v-bind:settings="settings"/>
+        :strip-index="0"
+        :terminal-names="terminalNames"
+        :strip-output-types="stripOutputTypes"
+        :strip-input-types="stripInputTypes"
+        :show-configs="showConfigs"
+        :settings="settings"
+      />
       <RGBConfig
         v-if="this.showConfigs[this.settings.outputconfig].rgb[0] === true"
-        v-bind:rgbIndex=0
-        v-bind:terminalNames="terminalNames"
-        v-bind:rgbInputTypes="rgbInputTypes"
-        v-bind:rgbOutputTypes="rgbOutputTypes"
-        v-bind:showConfigs="showConfigs"
-        v-bind:settings="settings"/>
+        :rgb-index="0"
+        :terminal-names="terminalNames"
+        :rgb-input-types="rgbInputTypes"
+        :rgb-output-types="rgbOutputTypes"
+        :show-configs="showConfigs"
+        :settings="settings"
+      />
       <StripConfig 
         v-if="this.showConfigs[this.settings.outputconfig].strip[1] === true"
-        v-bind:stripIndex=1
-        v-bind:terminalNames="terminalNames"
-        v-bind:stripOutputTypes="stripOutputTypes"
-        v-bind:stripInputTypes="stripInputTypes"
-        v-bind:showConfigs="showConfigs"
-        v-bind:settings="settings"/>
+        :strip-index="1"
+        :terminal-names="terminalNames"
+        :strip-output-types="stripOutputTypes"
+        :strip-input-types="stripInputTypes"
+        :show-configs="showConfigs"
+        :settings="settings"
+      />
       <RGBConfig 
         v-if="this.showConfigs[this.settings.outputconfig].rgb[1] === true"
-        v-bind:rgbIndex=1
-        v-bind:terminalNames="terminalNames"
-        v-bind:rgbInputTypes="rgbInputTypes"
-        v-bind:rgbOutputTypes="rgbOutputTypes"
-        v-bind:showConfigs="showConfigs"
-        v-bind:settings="settings"/>
+        :rgb-index="1"
+        :terminal-names="terminalNames"
+        :rgb-input-types="rgbInputTypes"
+        :rgb-output-types="rgbOutputTypes"
+        :show-configs="showConfigs"
+        :settings="settings"
+      />
       <ActionBar
-        v-bind:savingSomething="savingSomething"
-        v-bind:baseURL="baseURL"
-        v-bind:settings="settings"/>
-      <div class="credit">Lightkraken was designed and built<br>by Tinic Uro in 2020</div>
+        :saving-something="savingSomething"
+        :base-u-r-l="baseURL"
+        :settings="settings"
+      />
+      <div class="credit">
+        Lightkraken was designed and built<br>by Tinic Uro in 2020
+      </div>
     </div>
   </div>
 </template>
@@ -69,7 +78,7 @@ import Status from "./components/Status.vue";
 import PinLayout from "./components/PinLayout.vue";
 import NetworkInterface from "./components/NetworkInterface.vue";
 export default {
-  name: "app",
+  name: "App",
   data() {
     return {
       loadingSomething: false,
@@ -170,7 +179,7 @@ export default {
   computed: {
     baseURL() {
       if(process.env.NODE_ENV === "development") {
-        return 'http://lightkraken-714ea6c6/';
+        return 'http://localhost:3000/';
       }
       if(process.env.NODE_ENV === "test") {
         return 'http://lightkraken-714ea6c6/';

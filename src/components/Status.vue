@@ -1,31 +1,36 @@
 <template>
   <div class="status">
-    <div class="header">Current Status</div>
-    <div class="item">
-    <span class="left">Firmware</span>
-    <span class="statusfield">{{ status.buildnumber }}</span>
+    <div class="header">
+      Current Status
     </div>
     <div class="item">
-    <span class="left">IPv4 address</span>
-    <span class="statusfield">{{ status.ipv4address }}</span>
+      <span class="left">Firmware</span>
+      <span class="statusfield">{{ status.buildnumber }}</span>
     </div>
     <div class="item">
-    <span class="left">IPv4 netmask</span>
-    <span class="statusfield">{{ status.ipv4netmask }}</span>
+      <span class="left">IPv4 address</span>
+      <span class="statusfield">{{ status.ipv4address }}</span>
     </div>
     <div class="item">
-    <span class="left">IPv4 gateway</span>
-    <span class="statusfield">{{ status.ipv4gateway }}</span>
+      <span class="left">IPv4 netmask</span>
+      <span class="statusfield">{{ status.ipv4netmask }}</span>
     </div>
     <div class="item">
-    <span class="left">MAC Address</span>
-    <span class="statusfield">{{ status.macaddress }}</span>
+      <span class="left">IPv4 gateway</span>
+      <span class="statusfield">{{ status.ipv4gateway }}</span>
     </div>
     <div class="item">
-    <span class="left">Hostname</span>
-    <span class="statusfield">{{ status.hostname }}</span>
+      <span class="left">MAC Address</span>
+      <span class="statusfield">{{ status.macaddress }}</span>
     </div>
-    <div class="spacer" style="clear: both;"></div>
+    <div class="item">
+      <span class="left">Hostname</span>
+      <span class="statusfield">{{ status.hostname }}</span>
+    </div>
+    <div
+      class="spacer"
+      style="clear: both;"
+    />
   </div>
 </template>
 
@@ -33,7 +38,10 @@
 export default {
   name: "Status",
   props: {
-    status: Object
+    status: {
+      type:Object,
+      default: function() { return {} }
+    }
   }
 };
 </script>

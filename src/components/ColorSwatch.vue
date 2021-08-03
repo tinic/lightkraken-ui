@@ -1,43 +1,100 @@
 <template>
   <div>
     <div class="color-picker">
-        <div class="color-picker__overlay" v-if="isVisible" v-on:click="hide"></div>
-        <transition name="pop">
-        <div class="color-picker__flyout" v-if="isVisible">
-            <div class="color-chip" v-bind:style="{'background': color}">
+      <div
+        class="color-picker__overlay"
+        v-if="isVisible"
+        @click="hide"
+      />
+      <transition name="pop">
+        <div
+          class="color-picker__flyout"
+          v-if="isVisible"
+        >
+          <div
+            class="color-chip"
+            :style="{'background': color}"
+          >
             <div class="color-chip__inner">
-                <div class="color-chip__title">HSL</div>
-                <div class="color-chip__subtitle">{{ hslColorString }}</div>
-                <div class="color-chip__title">RGB</div>
-                <div class="color-chip__subtitle">{{ rgbColorString }}</div>
+              <div class="color-chip__title">
+                HSL
+              </div>
+              <div class="color-chip__subtitle">
+                {{ hslColorString }}
+              </div>
+              <div class="color-chip__title">
+                RGB
+              </div>
+              <div class="color-chip__subtitle">
+                {{ rgbColorString }}
+              </div>
             </div>
+          </div>
+          <div class="color-picker__inner">
+            <div
+              class="control"
+              :style="gradientH"
+            >
+              <input
+                type="range"
+                min="0"
+                max="360"
+                v-model="h"
+                @change="emitColor()"
+              >
             </div>
-            <div class="color-picker__inner">
-            <div class="control" v-bind:style="gradientH">
-                <input type="range" min="0" max="360" v-model="h" v-on:change="emitColor()" />
+            <div
+              class="control"
+              :style="gradientS"
+            >
+              <input
+                type="range"
+                min="0"
+                max="100"
+                v-model="s"
+                @change="emitColor()"
+              >
             </div>
-            <div class="control" v-bind:style="gradientS">
-                <input type="range" min="0" max="100" v-model="s" v-on:change="emitColor()" />
+            <div
+              class="control"
+              :style="gradientL"
+            >
+              <input
+                type="range"
+                min="0"
+                max="100"
+                v-model="l"
+                @change="emitColor()"
+              >
             </div>
-            <div class="control" v-bind:style="gradientL">
-                <input type="range" min="0" max="100" v-model="l" v-on:change="emitColor()" />
-            </div>
-            </div>
+          </div>
         </div>
-        </transition>
-        <div class="swatch" v-bind:style="{'background': color}" v-on:click="toggle"></div>
+      </transition>
+      <div
+        class="swatch"
+        :style="{'background': color}"
+        @click="toggle"
+      />
     </div>
-    <div class="spacer" style="clear: both;"></div>
+    <div
+      class="spacer"
+      style="clear: both;"
+    />
   </div>
-
 </template>
 
 <script>
 export default {
   name: "ColorSwatch",
   props: {
-    change : Function,
-    initial : Function
+    change : {
+      type:Function,
+      default: function() { return "" }
+    },
+    initial : {
+      type:Function,
+      default: function() { return "" }
+    },
   },
   data: function() { 
     return {
