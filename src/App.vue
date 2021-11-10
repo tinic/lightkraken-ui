@@ -105,9 +105,10 @@ export default {
          "Terminal B",
       ],
       startupModes: [
-          { text: 'Startup Color', value : 0 },
-          { text: 'White Tracer', value : 1 },
-          { text: 'Rainbow', value : 2 },
+          { text: 'Color', value : 0 },
+          { text: 'Rainbow', value : 1 },
+          { text: 'Tracer', value : 2 },
+          { text: 'Solid Tracer', value : 3 },
       ],
       outputModes: [
           { text: '2 x RGB Strip', value : 0, strips : 2 },
