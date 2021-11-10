@@ -2,21 +2,21 @@
   <div class="actions">
     <input
       class="button"
-      @click="save"
       type="button"
       value="Save Configuration"
+      @click="save"
     >
     <input
       class="button"
-      @click="reset"
       type="button"
       value="Reset Configuration"
+      @click="reset"
     >
     <input
       class="button"
-      @click="reboot"
       type="button"
       value="Reboot Into Upgrade Mode"
+      @click="reboot"
     >
     <div
       class="spacer"

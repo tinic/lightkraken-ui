@@ -3,8 +3,8 @@
     <div class="status">
       <span class="terminal">{{ terminalNames[0] }}
         <div
-          :key="pin.id" 
-          v-for="(pin, index) in pinTable[settings.outputconfig][stripOutputTypes[settings.stripconfig[0].outputtype].clock].slice(0, 4)"
+          v-for="(pin, index) in pinTable[settings.outputconfig][stripOutputTypes[settings.stripconfig[0].outputtype].clock].slice(0, 4)" 
+          :key="pin.id"
         >
           <div
             class="PIN"
@@ -14,8 +14,8 @@
       </span>
       <span class="terminal">{{ terminalNames[1] }}
         <div
-          :key="pin.id" 
-          v-for="(pin,index) in pinTable[settings.outputconfig][stripOutputTypes[settings.stripconfig[1].outputtype].clock].slice(4, 8)"
+          v-for="(pin,index) in pinTable[settings.outputconfig][stripOutputTypes[settings.stripconfig[1].outputtype].clock].slice(4, 8)" 
+          :key="pin.id"
         >
           <div
             class="PIN"

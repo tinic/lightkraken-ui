@@ -10,8 +10,8 @@
       <select v-model="stripConfig().outputtype">
         <option
           v-for="stripType in stripOutputTypesFiltered(showConfigs[settings.outputconfig], stripIndex)" 
-          :value="stripType.value"
           :key="stripType.id"
+          :value="stripType.value"
         >
           {{ stripType.text }}
         </option>
@@ -24,8 +24,8 @@
       <select v-model="stripConfig().inputtype">
         <option
           v-for="stripInputTypeI in stripInputTypes" 
-          :value="stripInputTypeI.value"
           :key="stripInputTypeI.id"
+          :value="stripInputTypeI.value"
         >
           {{ stripInputTypeI.text }}
         </option>
@@ -37,9 +37,9 @@
       </div>
       <div class="right">
         <input
+          v-model="stripConfig().globillum"
           class="smallnumber"
           :style="{ border : validateGlobIllum() ? '2px solid green' : '2px solid red' }"
-          v-model="stripConfig().globillum"
         >
         <span class="footnote">
           %
@@ -51,9 +51,9 @@
     </div>
     <div class="right">
       <input
+        v-model="stripConfig().complimit"
         class="smallnumber"
         :style="{ border : validateCompLimit() ? '2px solid green' : '2px solid red' }"
-        v-model="stripConfig().complimit"
       >
       <span class="footnote">
         %
@@ -64,9 +64,9 @@
     </div>
     <div class="right">
       <input
+        v-model="stripConfig().length"
         class="smallnumber"
         :style="{ border : validateLEDs() ? '2px solid green' : '2px solid red' }"
-        v-model="stripConfig().length"
       >
       <span
         v-if="!isMobile()"
@@ -76,9 +76,9 @@
       </span>
     </div>
     <div
-      class="universe"
       v-for="(item, itemIndex) in universesFiltered(stripConfig())"
       :key="item.id"
+      class="universe"
     >
       <div
         v-if="itemIndex == 0"
@@ -93,9 +93,9 @@
       />
       <div class="right_universe">
         <input
+          v-model="item.artnet"
           class="smallnumber"
           :style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }"
-          v-model="item.artnet"
         >
         <span
           v-if="!isMobile()"
@@ -106,9 +106,9 @@
       </div>
     </div>
     <div
-      class="universe"
       v-for="(item, itemIndex) in universesFiltered(stripConfig())"
       :key="item.id"
+      class="universe"
     >
       <div
         v-if="itemIndex == 0"
@@ -123,9 +123,9 @@
       />
       <div class="right_universe">
         <input
+          v-model="item.e131"
           class="smallnumber"
           :style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }"
-          v-model="item.e131"
         >
         <span
           v-if="!isMobile()"
@@ -146,6 +146,23 @@
         />
       </div>
     </div>
+     <div class="left">
+      Startup Mode
+    </div>
+    <div class="right">
+      <select
+        v-model="stripConfig().startupmode"
+      >
+        <option
+          v-for="mode in startupModes"
+          :key="mode.id" 
+          :value="mode.value"
+        >
+          {{ mode.text }}
+        </option>
+      </select>
+    </div>
+
     <div class="universe">
       <div
         v-if="compLength() >= 4"
@@ -158,9 +175,9 @@
         class="right_universe"
       >
         <input
+          v-model="stripConfig().color.a"
           class="smallnumber"
           :style="{ border : validateAlphaValue() ? '2px solid green' : '2px solid red' }"
-          v-model="stripConfig().color.a"
         >
       </div>
     </div>
@@ -175,9 +192,48 @@
 import ColorSwatch from "./ColorSwatch.vue";
 export default {
   name: "StripConfig",
+  components: {
+    ColorSwatch
+  },
+  props: {
+    stripIndex: {
+      type:Number,
+      default:0
+    },
+    startupModes: {
+      type:Array,
+      default: function() { return [] }
+    },
+    terminalNames: {
+      type:Array,
+      default: function() { return [] }
+    },
+    settings: {
+      type:Object,
+      default: function() { return {} }
+    },
+    stripOutputTypes: {
+      type:Array,
+      default: function() { return [] }
+    },
+    stripInputTypes: {
+      type:Array,
+      default: function() { return [] }
+    },
+    showConfigs: {
+      type:Array,
+      default: function() { return [] }
+    },
+    settingsInternal: {
+      type:Object,
+      default: function() { return {} }
+    },
+  },
   data() {
     return {
     }
+  },
+  computed: {
   },
   methods: {
       isMobile() {
@@ -300,41 +356,6 @@ export default {
           }
           return this.stripOutputTypes.filter(filterStripType);
       }
-  },
-  computed: {
-  },
-  props: {
-    stripIndex: {
-      type:Number,
-      default:0
-    },
-    terminalNames: {
-      type:Array,
-      default: function() { return [] }
-    },
-    settings: {
-      type:Object,
-      default: function() { return {} }
-    },
-    stripOutputTypes: {
-      type:Array,
-      default: function() { return [] }
-    },
-    stripInputTypes: {
-      type:Array,
-      default: function() { return [] }
-    },
-    showConfigs: {
-      type:Array,
-      default: function() { return [] }
-    },
-    settingsInternal: {
-      type:Object,
-      default: function() { return {} }
-    },
-  },
-  components: {
-    ColorSwatch
   }
 };
 </script>

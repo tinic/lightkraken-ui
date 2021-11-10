@@ -2,14 +2,14 @@
   <div>
     <div class="color-picker">
       <div
-        class="color-picker__overlay"
         v-if="isVisible"
+        class="color-picker__overlay"
         @click="hide"
       />
       <transition name="pop">
         <div
-          class="color-picker__flyout"
           v-if="isVisible"
+          class="color-picker__flyout"
         >
           <div
             class="color-chip"
@@ -36,10 +36,10 @@
               :style="gradientH"
             >
               <input
+                v-model="h"
                 type="range"
                 min="0"
                 max="360"
-                v-model="h"
                 @change="emitColor()"
               >
             </div>
@@ -48,10 +48,10 @@
               :style="gradientS"
             >
               <input
+                v-model="s"
                 type="range"
                 min="0"
                 max="100"
-                v-model="s"
                 @change="emitColor()"
               >
             </div>
@@ -60,10 +60,10 @@
               :style="gradientL"
             >
               <input
+                v-model="l"
                 type="range"
                 min="0"
                 max="100"
-                v-model="l"
                 @change="emitColor()"
               >
             </div>
@@ -160,6 +160,14 @@ export default {
       }
     }
   },
+  mounted: function () {
+    var rgb = this.initial();
+    var hsv = this.rgb2hsv(rgb.r, rgb.g, rgb.b);
+    this.h = hsv.h * 360;
+    this.s = hsv.s * 100;
+    this.l = hsv.v * 100;
+    this.hide();
+  },
   methods: {
     emitColor() {
       this.change(this.hsv2rgb(parseFloat(this.h) / 360, parseFloat(this.s) / 100, parseFloat(this.l) / 100));
@@ -244,14 +252,6 @@ export default {
     toggle: function() {
       this.isVisible = !this.isVisible;
     }
-  },
-  mounted: function () {
-    var rgb = this.initial();
-    var hsv = this.rgb2hsv(rgb.r, rgb.g, rgb.b);
-    this.h = hsv.h * 360;
-    this.s = hsv.s * 100;
-    this.l = hsv.v * 100;
-    this.hide();
   }
 };
 </script>

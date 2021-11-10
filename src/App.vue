@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <div v-if="this.loadingSomething === true" />
-    <div v-if="this.savingSomething === true" />
-    <div v-if="this.statusLoading === false">
+    <div v-if="loadingSomething === true" />
+    <div v-if="savingSomething === true" />
+    <div v-if="statusLoading === false">
       <Status
         :status="status"
       />
     </div>
-    <div v-if="this.settingsLoading === false">
+    <div v-if="settingsLoading === false">
       <PinLayout
         :terminal-names="terminalNames"
         :strip-output-types="stripOutputTypes"
@@ -22,39 +22,43 @@
         :settings="settings"
       />
       <StripConfig
-        v-if="this.showConfigs[this.settings.outputconfig].strip[0] === true"
+        v-if="showConfigs[settings.outputconfig].strip[0] === true"
         :strip-index="0"
         :terminal-names="terminalNames"
         :strip-output-types="stripOutputTypes"
         :strip-input-types="stripInputTypes"
         :show-configs="showConfigs"
+        :startup-modes="startupModes"
         :settings="settings"
       />
       <RGBConfig
-        v-if="this.showConfigs[this.settings.outputconfig].rgb[0] === true"
+        v-if="showConfigs[settings.outputconfig].rgb[0] === true"
         :rgb-index="0"
         :terminal-names="terminalNames"
         :rgb-input-types="rgbInputTypes"
         :rgb-output-types="rgbOutputTypes"
         :show-configs="showConfigs"
+        :startup-modes="startupModes"
         :settings="settings"
       />
       <StripConfig 
-        v-if="this.showConfigs[this.settings.outputconfig].strip[1] === true"
+        v-if="showConfigs[settings.outputconfig].strip[1] === true"
         :strip-index="1"
         :terminal-names="terminalNames"
         :strip-output-types="stripOutputTypes"
         :strip-input-types="stripInputTypes"
         :show-configs="showConfigs"
+        :startup-modes="startupModes"
         :settings="settings"
       />
       <RGBConfig 
-        v-if="this.showConfigs[this.settings.outputconfig].rgb[1] === true"
+        v-if="showConfigs[settings.outputconfig].rgb[1] === true"
         :rgb-index="1"
         :terminal-names="terminalNames"
         :rgb-input-types="rgbInputTypes"
         :rgb-output-types="rgbOutputTypes"
         :show-configs="showConfigs"
+        :startup-modes="startupModes"
         :settings="settings"
       />
       <ActionBar
@@ -79,6 +83,15 @@ import PinLayout from "./components/PinLayout.vue";
 import NetworkInterface from "./components/NetworkInterface.vue";
 export default {
   name: "App",
+  components: {
+    RGBConfig,
+    StripConfig,
+    OutputConfig,
+    ActionBar,
+    Status,
+    PinLayout,
+    NetworkInterface
+  },
   data() {
     return {
       loadingSomething: false,
@@ -90,6 +103,11 @@ export default {
       terminalNames: [
          "Terminal A",
          "Terminal B",
+      ],
+      startupModes: [
+          { text: 'Startup Color', value : 0 },
+          { text: 'White Tracer', value : 1 },
+          { text: 'Rainbow', value : 2 },
       ],
       outputModes: [
           { text: '2 x RGB Strip', value : 0, strips : 2 },
@@ -187,6 +205,17 @@ export default {
       return '/';
     }
   },
+  watch: {
+    outputMode() {
+      if (this.settings) {
+        this.patchLEDType();
+        this.patchRGBType();
+      }
+    }
+  },
+  mounted() {
+    this.load();
+  },
   methods: {
     load() {
       this.loadingSomething = true;
@@ -236,26 +265,6 @@ export default {
           }
         }
     }
-  },
-  watch: {
-    outputMode() {
-      if (this.settings) {
-        this.patchLEDType();
-        this.patchRGBType();
-      }
-    }
-  },
-  mounted() {
-    this.load();
-  },
-  components: {
-    RGBConfig,
-    StripConfig,
-    OutputConfig,
-    ActionBar,
-    Status,
-    PinLayout,
-    NetworkInterface
   }
 }; 
 </script>

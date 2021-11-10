@@ -9,10 +9,10 @@
       </div>
       <div class="right">
         <input
-          class="checkbox"
-          type="checkbox"
           id="broadcast"
           v-model="settings.broadcast"
+          class="checkbox"
+          type="checkbox"
         >
       </div>
       <div class="left">
@@ -20,25 +20,25 @@
       </div>
       <div class="right">
         <input
-          class="checkbox"
-          type="checkbox"
           id="dhcp"
           v-model="settings.dhcp"
+          class="checkbox"
+          type="checkbox"
         >
       </div>
     </div>
     <div
-      class="ip4setting"
       v-if="settings.dhcp !== undefined && settings.dhcp == false"
+      class="ip4setting"
     >  
       <div class="left">
         IPv4 Address
       </div>
       <div class="right">
         <input
+          v-model="settings.ipv4address"
           class="ipsetting"
           :style="{ border : checkIPv4Address() ? '2px solid green' : '2px solid red' }"
-          v-model="settings.ipv4address"
           type="text"
         >
       </div>
@@ -47,9 +47,9 @@
       </div>
       <div class="right">
         <input
+          v-model="settings.ipv4netmask"
           class="ipsetting"
           :style="{ border : checkIPv4Netmask() ? '2px solid green' : '2px solid red' }"
-          v-model="settings.ipv4netmask"
           type="text"
         >
       </div>
@@ -58,9 +58,9 @@
       </div>
       <div class="right">
         <input
+          v-model="settings.ipv4gateway"
           class="ipsetting"
           :style="{ border : checkIPv4Gateway() ? '2px solid green' : '2px solid red' }"
-          v-model="settings.ipv4gateway"
           type="text"
         >
       </div>
@@ -70,10 +70,10 @@
     </div>
     <div class="right">
       <textarea
-        maxlength="255"
-        class="text"
         id="tag"
         v-model="settings.tag"
+        maxlength="255"
+        class="text"
       />
     </div>
     <div

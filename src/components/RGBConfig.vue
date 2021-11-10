@@ -10,8 +10,8 @@
       <select v-model="rgbConfig().inputtype">
         <option
           v-for="rgbInputTypeI in rgbInputTypes" 
-          :value="rgbInputTypeI.value"
           :key="rgbInputTypeI.id"
+          :value="rgbInputTypeI.value"
         >
           {{ rgbInputTypeI.text }}
         </option>
@@ -24,8 +24,8 @@
       <select v-model="rgbConfig().outputtype">
         <option
           v-for="rgbOutputType in rgbOutputTypeFiltered(showConfigs[settings.outputconfig], rgbIndex)" 
-          :value="rgbOutputType.value"
           :key="rgbOutputType.id"
+          :value="rgbOutputType.value"
         >
           {{ rgbOutputType.text }}
         </option>
@@ -36,9 +36,9 @@
     </div>
     <div class="right">
       <input
+        v-model="rgbConfig().pwmlimit"
         class="smallnumber"
         :style="{ border : validatePwmLimit() ? '2px solid green' : '2px solid red' }"
-        v-model="rgbConfig().pwmlimit"
       >
       <span class="footnote">
         %
@@ -70,14 +70,14 @@
       </div>
       <div class="right_universe">
         <input
+          v-model="rgbComponents(itemIndex).artnet.universe"
           class="universefield"
           :style="{ border : validateArtnetUniverse(itemIndex) ? '2px solid green' : '2px solid red' }"
-          v-model="rgbComponents(itemIndex).artnet.universe"
         >
         <input
+          v-model="rgbComponents(itemIndex).artnet.channel"
           class="channelfield"
           :style="{ border : validateArtnetDMXChannel(itemIndex) ? '2px solid green' : '2px solid red' }"
-          v-model="rgbComponents(itemIndex).artnet.channel"
         >
       </div>
     </div>
@@ -107,14 +107,14 @@
       </div>
       <div class="right_universe">
         <input
+          v-model="rgbComponents(itemIndex).e131.universe"
           class="universefield"
           :style="{ border : validateE131Universe(itemIndex) ? '2px solid green' : '2px solid red' }"
-          v-model="rgbComponents(itemIndex).e131.universe"
         >
         <input
+          v-model="rgbComponents(itemIndex).e131.channel"
           class="channelfield"
           :style="{ border : validateE131DMXChannel(itemIndex) ? '2px solid green' : '2px solid red' }"
-          v-model="rgbComponents(itemIndex).e131.channel"
         >
       </div>
     </div>
@@ -138,9 +138,9 @@
       class="right_universe"
     >
       <input
+        v-model="rgbComponents(3).value"
         class="universefield"
         :style="{ border : validateComponentValue(3) ? '2px solid green' : '2px solid red' }"
-        v-model="rgbComponents(3).value"
       >
     </div>
     <div
@@ -154,9 +154,9 @@
       class="right_universe"
     >
       <input
+        v-model="rgbComponents(4).value"
         class="universefield"
         :style="{ border : validateComponentValue(4) ? '2px solid green' : '2px solid red' }"
-        v-model="rgbComponents(4).value"
       >
     </div>
     <div
@@ -170,6 +170,9 @@
 import ColorSwatch from "./ColorSwatch.vue";
 export default {
   name: "RGBConfig",
+  components: {
+    ColorSwatch
+  },
   props: {
     rgbIndex: {
       type:Number,
@@ -326,9 +329,6 @@ export default {
           }
           return this.rgbOutputTypes.filter(filterRGBType);
       }
-  },
-  components: {
-    ColorSwatch
   }
 };
 </script>

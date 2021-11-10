@@ -8,13 +8,13 @@
     </div>
     <div class="right">
       <select
-        @change="changeMode()"
         v-model="settings.outputconfig"
+        @change="changeMode()"
       >
         <option
           v-for="mode in outputModes"
-          :value="mode.value" 
-          :key="mode.id"
+          :key="mode.id" 
+          :value="mode.value"
         >
           {{ mode.text }}
         </option>

@@ -55,6 +55,7 @@
 		],
 		"stripconfig": [
 			{ "outputtype": 0,
+			  "startupmode": 0,
 			  "inputtype": 1,
 			  "globillum": 100.0,
 			  "complimit": 100.0,
@@ -81,6 +82,7 @@
 			  ]
 			}, 
 			{ "outputtype": 1,
+			  "startupmode": 0,
 			  "inputtype": 2,
 			  "globillum": 100.0,
 			  "complimit": 100.0,
