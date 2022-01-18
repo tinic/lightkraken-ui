@@ -146,7 +146,7 @@
         />
       </div>
     </div>
-     <div class="left">
+    <div class="left">
       Startup Mode
     </div>
     <div class="right">
