@@ -18,7 +18,7 @@
       </select>
     </div>
     <div class="left">
-      Input Data Type
+      Input Data Type {{ hasGlobIllum() }}
     </div>
     <div class="right">
       <select v-model="stripConfig().inputtype">
@@ -31,7 +31,7 @@
         </option>
       </select>
     </div>
-    <div v-if="true">
+    <div v-if="hasGlobIllum()">
       <div class="left">
         Global Illumination
       </div>
