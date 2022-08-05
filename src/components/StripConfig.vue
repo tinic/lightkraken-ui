@@ -18,7 +18,7 @@
       </select>
     </div>
     <div class="left">
-      Input Data Type {{ hasGlobIllum() }} {{ stripOutputType().value }}
+      Input Data Type
     </div>
     <div class="right">
       <select v-model="stripConfig().inputtype">

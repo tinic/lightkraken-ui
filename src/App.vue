@@ -152,7 +152,6 @@ export default {
           { text: 'TLS3001 (RGB)', value : 12, clock : 0, components: 3, globillum: false, bitslen:8  },
           { text: 'TM1829 (RGB)',  value : 13, clock : 0, components: 3, globillum: false, bitslen:8  },
           { text: 'WS2816 (RGB)',  value : 14, clock : 0, components: 3, globillum: false, bitslen:16 },
-          { text: 'WS2816 (RGB)',  value : 14, clock : 0, components: 3, globillum: false, bitslen:16 },
           { text: 'WS2801 (RGB)',  value : 15, clock : 1, components: 3, globillum: false, bitslen:8  },
           { text: 'HD108 (RGB)',   value : 16, clock : 1, components: 3, globillum: true,  bitslen:16 }
       ],
