@@ -31,7 +31,7 @@
         </option>
       </select>
     </div>
-    <div v-if="hasGlobIllum()">
+    <div v-if="hasGlobIllum() === true">
       <div class="left">
         Global Illumination
       </div>
